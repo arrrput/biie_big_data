@@ -93,8 +93,10 @@
                                     <td>{{ $datas->name }}</td>
                                     {{-- <td>{{ date('d M Y', strtotime($datas->created_at)); }}</td> --}}
                                     <td>
-                                        <a href="#" class="btn btn-primary">Approve</a>
-                                        <a href="#" class="btn btn-danger">Reject</a>
+                                        {{--  --}}
+                                        {{-- {{ route('reject.download',$datas->id) }} --}}
+                                        <a href="{{ route('approve.download',$datas->id) }}" class="btn btn-primary">Approve</a>
+                                        <a href="{{ route('reject.download',$datas->id) }}" class="btn btn-danger">Reject</a>
                                     </td>
                                 </tr>
                                 @endforeach

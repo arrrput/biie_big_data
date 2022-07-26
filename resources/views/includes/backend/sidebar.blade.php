@@ -46,7 +46,9 @@
                 <i class="nav-icon fas fa-download"></i>
                 <p>
                   Request Download
-                  <span class="right badge badge-danger">{{ $req_download }}</span>
+                  <span class="right badge badge-danger">@if ($req_download > 0)
+                    {{ $req_download }}
+                  @endif</span>
                 </p>
               </a>
             </li>

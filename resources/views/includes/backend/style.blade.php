@@ -8,3 +8,5 @@
 <link rel="stylesheet" href="{{ URL::asset('dist/css/adminlte.min.css') }}">
 {{-- datatables --}}
 <link rel="stylesheet" href="http://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ URL::asset('plugins/chart.js/Chart.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('plugins/chart.js/Chart.min.css') }}">

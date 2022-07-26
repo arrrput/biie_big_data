@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BangunanController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstateRequestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login' );
 });
 
 Route::get('/admin', function(){
@@ -32,12 +33,13 @@ Route::get('/etis', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard',[DashboardController::class,'index']);
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('home',[HomeController::class, 'index'])->name('home');
     Route::resource('users', UserController::class);
@@ -53,6 +55,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('download/{file}', [BangunanController::class, 'downloadMaster'])->name('download.master');
     Route::get('downloadPhoto/{file}', [BangunanController::class, 'downloadPhoto'])->name('download.photo');
     Route::get('estate-request', [EstateRequestController::class,'index'])->name('request.download');
+    Route::get('estate-approve/{param}',[EstateRequestController::class,'approve'])->name('approve.download');
+    Route::get('estate-reject/{param}',[EstateRequestController::class,'cancel'])->name('reject.download');
 
 
 });
