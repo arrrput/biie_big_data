@@ -77,36 +77,39 @@
                                 <p> {{ $data->deskripsi }}</p>
                                 <h5><i class="fa fa-list"></i> {{ $data->kategori->name }}</h5>
                                 
-                                
+                                @if ($reject>0)
+                                    <button class="btn btn-danger"><i class="fa fa-ban"></i> Reject</button>
+                                @else
 
                                 @if ($data->status == 2)
-                                    @if ($total > 0)
-                                        @forelse ( $download->data as $data )
-                                            <a href="{{ route('download.master', $data->name) }}" class="btn btn-danger mt-2"><i class="fa fa-download"></i> {{ $data->keterangan }}</a>
-                                        @empty
-                                            <button class="btn btn-primary"><i class="fa fa-o-clock"></i> Waiting</button>
-                                        @endforelse
-                                    @elseif ($pending > 0)
-                                        <button class="btn btn-primary"><i class="fa fa-clock-o"></i> Waiting</button>
-                                    @else
-                                        <form method="POST" action="{{ route('request.download') }}">
-                                            @csrf
-                                            <input type="hidden" value="{{ $param }}" name="kode_bangunan"/>
-                                            <input type="submit" class="btn btn-primary " value="Request Download">
-                                        </form>
-                                        
-                                    @endif
-                                @endif
-
-                                @if ($data->status == 1)
-                                
-                                    @foreach ($data->dataEstate as $download)
-                                        @if ($download->type == 2)
-                                            <a href="{{ route('download.master', $download->name) }}" class="btn btn-danger mt-2"><i class="fa fa-download"></i> {{ $download->keterangan }}</a>
-                                        @elseif ($download->type == 1)
-                                            <a href="{{ route('download.photo', $download->name) }}" class="btn btn-danger mt-2"><i class="fa fa-download"></i> {{ $download->keterangan }}</a>
+                                        @if ($total > 0)
+                                            @forelse ( $download->data as $data )
+                                                <a href="{{ route('download.master', $data->name) }}" class="btn btn-danger mt-2"><i class="fa fa-download"></i> {{ $data->keterangan }}</a>
+                                            @empty
+                                                <button class="btn btn-primary"><i class="fa fa-o-clock"></i> Waiting</button>
+                                            @endforelse
+                                        @elseif ($pending > 0)
+                                            <button class="btn btn-primary"><i class="fa fa-clock-o"></i> Waiting</button>
+                                        @else
+                                            <form method="POST" action="{{ route('request.download') }}">
+                                                @csrf
+                                                <input type="hidden" value="{{ $param }}" name="kode_bangunan"/>
+                                                <input type="submit" class="btn btn-primary " value="Request Download">
+                                            </form>
+                                            
                                         @endif
-                                    @endforeach
+                                    @endif
+
+                                    @if ($data->status == 1)
+                                    
+                                        @foreach ($data->dataEstate as $download)
+                                            @if ($download->type == 2)
+                                                <a href="{{ route('download.master', $download->name) }}" class="btn btn-danger mt-2"><i class="fa fa-download"></i> {{ $download->keterangan }}</a>
+                                            @elseif ($download->type == 1)
+                                                <a href="{{ route('download.photo', $download->name) }}" class="btn btn-danger mt-2"><i class="fa fa-download"></i> {{ $download->keterangan }}</a>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 @endif
                                 
                             </div>

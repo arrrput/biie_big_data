@@ -18,5 +18,7 @@ class DataModel extends Model
     public function download(){
     	return $this->belongsTo(EstateDownload::class);
     }
-
+    public function listdowload(){
+    	return $this->belongsTo(EstateDownload::class);
+    }
 }

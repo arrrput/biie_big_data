@@ -113,9 +113,14 @@ class BangunanController extends Controller
                     ->where('user_id','=', Auth::user()->id)
                     ->where('status','=','1')
                     ->first();
+        $reject = EstateDownload::select('*')
+            ->where('kode_bangunan','=', $param)
+            ->where('user_id','=', Auth::user()->id)
+            ->where('status','=','2')
+            ->count();
         //$jml_download = $download->user_id->count();
 
-        return view('backend.bangunan.show', compact('param','data','download','total','pending'));
+        return view('backend.bangunan.show', compact('param','data','download','total','pending','reject'));
     }
 
     public function downloadMaster($file){

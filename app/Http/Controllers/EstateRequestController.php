@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EstateDownload;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class EstateRequestController extends Controller
 {
@@ -12,6 +13,8 @@ class EstateRequestController extends Controller
     function __construct()
     {
          $this->middleware('permission:estate-request-download', ['only' => ['index','show']]);
+         $this->middleware('permission:list-download', ['only' => ['mylistDownload']]);
+         
     }
 
 
@@ -40,5 +43,20 @@ class EstateRequestController extends Controller
             ->update(['status' => 2]);
 
         return to_route('request.download')->with('message','Request telah dicancel');
+    }
+
+    public function mylistDownload(){ 
+        $download_list = EstateDownload::where('user_id','=', Auth::User()->id)
+                ->whereNot('status',0)->get();
+
+        $list = DB::table('table_estate_download')
+            ->whereNot('table_estate_download.status','=',0)
+            ->where('user_id','=', Auth::user()->id)
+            ->join('table_data','table_data.kode_bangunan', '=','table_estate_download.kode_bangunan')
+            ->select('table_estate_download.id','table_estate_download.kode_bangunan','table_estate_download.status',
+                'table_data.name','table_data.type')
+            ->get();
+
+        return view('backend.bangunan.listdownload',compact('download_list','list'));
     }
 }

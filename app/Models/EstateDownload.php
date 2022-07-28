@@ -19,4 +19,5 @@ class EstateDownload extends Model
         return $this->hasMany(DataModel::class,'kode_bangunan','kode_bangunan');
     }
 
+
 }

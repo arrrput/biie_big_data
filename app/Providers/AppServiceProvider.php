@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\DataModel;
 use App\Models\EstateDownload;
 use App\Models\KategoriModel;
 use Carbon\Carbon;
@@ -35,8 +36,10 @@ class AppServiceProvider extends ServiceProvider
         $kategori = KategoriModel::all();
         $request_download = EstateDownload::where('status','=', 0)
                             ->count();
+       
 
         view()->share('shareData', $kategori);
         view()->share('req_download', $request_download);
+        
     }
 }

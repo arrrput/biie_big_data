@@ -55,9 +55,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('download/{file}', [BangunanController::class, 'downloadMaster'])->name('download.master');
     Route::get('downloadPhoto/{file}', [BangunanController::class, 'downloadPhoto'])->name('download.photo');
     Route::get('estate-request', [EstateRequestController::class,'index'])->name('request.download');
+    Route::post('estate-request', [BangunanController::class,'requestDownload'])->name('request.download');
     Route::get('estate-approve/{param}',[EstateRequestController::class,'approve'])->name('approve.download');
     Route::get('estate-reject/{param}',[EstateRequestController::class,'cancel'])->name('reject.download');
-
+    Route::get('mylist_download',[EstateRequestController::class, 'mylistDownload'])->name('mylist.download');
+    
 
 });
 

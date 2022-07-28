@@ -52,7 +52,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>{{ $tot_file_draw }}</h3>
                         <p>Drawing File</p>
                     </div>
                     <div class="icon">
@@ -65,7 +65,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>15</h3>
+                        <h3>{{ $request_accept }}</h3>
                         <p>Accept Request</p>
                     </div>
                     <div class="icon">
@@ -78,7 +78,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>37</h3>
+                        <h3>{{ $request_pending }}</h3>
                         <p>Request Download</p>
                     </div>
                     <div class="icon">
@@ -91,7 +91,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>6</h3>
+                        <h3>{{ $request_reject }}</h3>
                         <p>Reject Download</p>
                     </div>
                     <div class="icon">

@@ -53,7 +53,19 @@
               </a>
             </li>
           @endcan
-          
+          @can('list-download')
+          <li class="nav-item">
+            <a href="{{ route('mylist.download') }}" class="nav-link <?php  if (request()->routeIs('mylist.download') ) {echo 'active';}?>">
+              <i class="nav-icon fas fa-download"></i>
+              <p>
+                List Download
+                
+              </p>
+            </a>
+          </li>
+            
+          @endcan
+
           @role('admin')
 
           <li class="nav-header">Manage User</li>
@@ -80,7 +92,7 @@
           
           
           {{-- <li class="nav-item">
-            <a href="{{ route('profile') }}" class="nav-link  <?php  if (request()->routeIs('profile') ) {echo 'active';}?>">
+            <a href="{{ route('profile') }}" class="nav-link  @php  if (request()->routeIs('profile') ) {echo 'active';} @php">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 User Profile

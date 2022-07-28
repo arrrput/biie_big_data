@@ -15,8 +15,8 @@
 
   <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}"/>
   <script src="{{ URL::asset('js/app.js') }}" defer></script>
-
-
+{{-- livewire --}}
+  @livewireStyles
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -53,7 +53,7 @@
 <script src="{{ URL::asset('plugins/chart.js/Chart.min.css') }}"></script>
 
 <script src="{{ URL::asset('plugins/chart.js/Chart.min.js') }}"></script>
-
+@livewireScripts
 <script>
     var toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
     var currentTheme = localStorage.getItem('theme');
