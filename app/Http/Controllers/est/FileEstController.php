@@ -2,17 +2,28 @@
 
 namespace App\Http\Controllers\est;
 
-use File;
+use App\Exports\DormitoryExport;
+use App\Exports\FactoryExport;
 use App\Models\DataModel;
+use App\Models\EstCategory;
 use Illuminate\Http\Request;
 use App\Models\BangunanModel;
 use App\Models\EstateDownload;
+use App\Models\est\FactoryModel;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\EstCategory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use App\Models\est\EstDormCategoryModel;
+use App\Models\est\EstTownTypeModel;
+use App\Models\est\FactoryCategoryModel;
+use App\Models\est\FactoryImport;
+use App\Models\est\MetereadingSatuanModel;
+use Carbon\Carbon;
+
+use Maatwebsite\Excel\Facades\Excel;
 
 class FileEstController extends Controller
 {
@@ -313,6 +324,118 @@ class FileEstController extends Controller
 
         return to_route('estate.ars', $request->kode_bangunan)->with('status','Request Berhasil dikirimkan');
     }
+
+
+    public function list(Request $request){
+
+        
+        if($request->ajax()){
+
+            $sop = FactoryModel::select('table_estate_factory.id','status_building' ,'lot','name_tenant','id_factory_category','status_vacant','hod','eol','land_area','satuan','table_est_factory_category.name as category')
+                ->join('table_est_factory_category' ,'table_estate_factory.id_factory_category','table_est_factory_category.id')
+                ->get();
+
+            $datatables =  datatables()->of($sop);
+            return $datatables
+                  ->addIndexColumn()
+                  ->addColumn('action', 'backend/est/list_action')
+                  ->rawColumns(['action'])
+                 ->addColumn('status', function($row){
+                     if($row->status_vacant == 1){
+                         return 'SALES';
+                     }else if($row->status_vacant == 2){
+                        return 'RENTAL';
+                     }else if($row->status_vacant == 3){
+                         return 'VACANT';
+                     }
+                     else if($row->status_vacant == 4){
+                        return 'PT BIIE';
+                    }
+                 })
+                 ->addColumn('status_building', function($row){
+                     if($row->status_building != null){
+                        return ' '.$row->status_building.' %';
+                     }else{
+                         return '-';
+                     }
+                    
+                })
+                 ->addIndexColumn()
+                 ->make(true);
+        }
+
+        $meter = MetereadingSatuanModel::select('*')->get();
+        $kategori = FactoryCategoryModel::select('*')->get();
+        $blok = EstDormCategoryModel::select('*')->get();
+        $town = EstTownTypeModel::select('*')->get();
+        return view('backend.est.list', compact('kategori', 'blok','town','meter'));
+    }
+
+    public function listAdd(Request $request){
+        // dd($request->all());
+        $request->validate([
+            'category' => 'required',
+            'occupied' => 'required',
+        ]);
+
+        $fm = FactoryModel::updateOrCreate(
+            ['id' => $request->id],
+            [
+            'id_factory_category' => $request->input('category'),
+            'lot' => $request->input('lot'),
+            'name_tenant' => $request->input('tenant'),
+            'status_vacant' => $request->input('occupied'),
+            'hod' => $request->input('hod'),
+            'eol' => $request->input('eol'),
+            'land_area' => $request->input('land_area'),
+            'satuan' => $request->input('satuan'),
+            'status_building' => $request->input('status_building')
+            ]
+            
+        );
+        Session::flash('success', 'This is a message!'); 
+        return response()->json(['data' => $fm, 'success' => true, 'message' => 'success'], 200);
+
+    }
+
+    public function listShow($id){
+
+        $show = FactoryModel::select('table_estate_factory.*','table_est_factory_category.name')
+                    ->where('table_estate_factory.id',$id)
+                    ->join('table_est_factory_category', 'table_est_factory_category.id','table_estate_factory.id_factory_category')
+                    ->first();
+
+        return Response()->json($show);
+    }
+
+    public function destroyList($id){
+
+        FactoryModel::find($id)->delete($id);
+
+            return Response()->json([
+                'message' => 'Data deleted successfully!'
+            ]);
+
+    }
+
+    public function export_excel()
+	{
+        $now = Carbon::now();
+		return Excel::download(new FactoryExport, 'Dormitory-'.$now.'.xlsx');
+	}
+
+    public function import_excel(Request $request) 
+	{
+		$this->validate($request, [
+			'file' => 'required|mimes:csv,xls,xlsx'
+		]);
+ 
+		Excel::import(new FactoryImport, $request->file('file')->store('temp') );
+ 
+		Session::flash('success','Data Factory Berhasil Diimport!');
+ 
+		return redirect('/estate/list/factory');
+	}
 
 
 }

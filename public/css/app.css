@@ -1,7 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
 
+.colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
+}
 
-
+.dataTables_length select{
+  /*Example*/
+  padding-left: 10px !important;
+  padding-right: 20px !important;
+}
 /*
 ! tailwindcss v3.0.24 | MIT License | https://tailwindcss.com
 *//*

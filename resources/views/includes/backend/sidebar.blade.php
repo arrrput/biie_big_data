@@ -18,7 +18,7 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
@@ -50,10 +50,18 @@
 
               
               @if (Auth::user()->id_department == 3 || Auth::user()->hasRole('admin'))
+              
+              <li class="nav-item">
+                <a href="{{ route('estate.list') }}" class="nav-link <?php  if (request()->routeIs('estate.list')) {echo 'active';}?>">
+                  <i class="fa fa-list nav-icon"></i>
+                  <p>Add List</p>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a href="{{ route('estate.index') }}" class="nav-link <?php  if (request()->routeIs('estate.index')) {echo 'active';}?>">
                   <i class="fa fa-check nav-icon"></i>
-                  <p>Add File</p>
+                  <p>Add Document</p>
                 </a>
               </li>
               @endif
@@ -121,12 +129,20 @@
             <a href="#" class="nav-link <?php  if (request()->routeIs('gmo.*') || request()->routeIs('gmo')) {echo 'active';}?>">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                  GMO
+                  IT
                   <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               @if (Auth::user()->id_department == 2  || Auth::user()->hasRole('admin'))
+
+              <li class="nav-item">
+                <a href="{{ route('gmo.list') }}" class="nav-link <?php  if (request()->routeIs('gmo.list')) {echo 'active';}?>">
+                  <i class="fa fa-list nav-icon"></i>
+                  <p>Add List</p>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a href="{{ route('gmo') }}" class="nav-link <?php  if (request()->routeIs('gmo')) {echo 'active';}?>">
                   <i class="fa fa-check nav-icon"></i>
@@ -188,8 +204,8 @@
           </li>
 
           {{-- AML --}}
-          <li class="nav-item has-treeview menu-close">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview <?php  if (request()->routeIs('aml.*')) {echo 'menu-open';}?>">
+            <a href="#" class="nav-link <?php  if (request()->routeIs('aml.*')) {echo 'active';}?>">
               <i class="nav-icon fas fa-mail-bulk"></i>
               <p>
                   AML
@@ -197,6 +213,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{ route('aml.perizinan') }}" class="nav-link <?php  if (request()->routeIs('aml.perizinan')) {echo 'active';}?>">
+                  <i class="fa fa-list nav-icon"></i>
+                  <p>Add List</p>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a href="#" class="nav-link ">
                   <i class="fa fa-check nav-icon"></i>
@@ -255,8 +279,8 @@
           </li>
 
           {{-- HRD --}}
-          <li class="nav-item has-treeview menu-close">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview <?php  if (request()->routeIs('hrga.*') || request()->routeIs('hrga')) {echo 'menu-open';}?>">
+            <a href="#" class="nav-link <?php  if (request()->routeIs('hrga.*') || request()->routeIs('hrga')) {echo 'active';}?>">
               <i class="nav-icon fas fa-user-shield"></i>
               <p>
                   HRD
@@ -264,6 +288,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{ route('hrga.employee') }}" class="nav-link <?php  if (request()->routeIs('hrga.employee')) {echo 'active';}?>">
+                  <i class="fa fa-list nav-icon"></i>
+                  <p>Add List</p>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a href="#" class="nav-link ">
                   <i class="fa fa-check nav-icon"></i>
@@ -282,6 +314,47 @@
                 <a href="#" class="nav-link ">
                   <i class="fa fa-download nav-icon"></i>
                   <p>GMO Request</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+           {{-- FIN --}}
+           <li class="nav-item has-treeview <?php  if (request()->routeIs('fin.*')) {echo 'menu-open';}?>">
+            <a href="#" class="nav-link <?php  if (request()->routeIs('fin.*')) {echo 'active';}?>">
+              <i class="nav-icon fas fa-dollar-sign"></i>
+              <p>
+                  FIN
+                  <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{ route('fin.halal') }}" class="nav-link <?php  if (request()->routeIs('fin.halal')) {echo 'active';}?>">
+                  <i class="fa fa-list nav-icon"></i>
+                  <p>Add List</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="fa fa-check nav-icon"></i>
+                  <p>Add File</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="fa fa-folder nav-icon"></i>
+                  <p>FIN File</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="fa fa-download nav-icon"></i>
+                  <p>FIN Request</p>
                 </a>
               </li>
             </ul>
@@ -385,6 +458,39 @@
                 <a href="#" class="nav-link ">
                   <i class="fa fa-download nav-icon"></i>
                   <p>GMO Request</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {{-- HSE --}}
+          <li class="nav-item has-treeview menu-close">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-heartbeat"></i>
+              <p>
+                  HSE
+                  <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="fa fa-check nav-icon"></i>
+                  <p>Add File</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="fa fa-folder nav-icon"></i>
+                  <p>HSE File</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="fa fa-download nav-icon"></i>
+                  <p>HSE Request</p>
                 </a>
               </li>
             </ul>

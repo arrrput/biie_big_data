@@ -391,13 +391,10 @@ class BangunanController extends Controller
     }
 
     public function fileEst(){
-
         $arsitektur = BangunanModel::select('kode_bangunan')->where('status','=',1)
         ->where('status_akses','=', 1)
         ->where('id_est_category', '=', 1 )
         ->count();
-
-        
 
         return view('backend.est.index', compact('arsitektur'));
     }

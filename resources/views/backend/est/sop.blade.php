@@ -191,7 +191,7 @@
 
 @push('prepend-script')
     <script>
-        // header request token
+    // header request token
     var SITEURL = '{{URL::to('')}}';
 
     $.ajaxSetup({

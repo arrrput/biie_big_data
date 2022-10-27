@@ -1,0 +1,29 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+
+<!-- CSRF Token -->
+<meta name="_token" content="{{ csrf_token() }}">
+
+<link rel="icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}" />
+
+<!-- fonts library -->
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="{{ asset('assets/js/app.js') }}"></script>
+
+<link rel="stylesheet" href="{{ asset('assets/css/all.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/line-awesome-1.3.0/css/line-awesome.min.css') }}">
+
+{{-- sweet alert --}}
+<link rel="stylesheet" href="{{ asset('plugins/animate/animate.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/basic-ui/custom_sweetalert.css') }}">
+
+<!-- Stack array for including inline css or head elements -->
+@stack('plugin-styles')
+
+@stack('custom-style')
+

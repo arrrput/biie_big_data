@@ -1,209 +1,115 @@
-@extends('layouts.backend')
+@extends('layouts.master')
 
-@section('title')
-    Estate
-@endsection
-
-@section('content')
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-        
-                <div class="col-sm-12">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Selamat datang, <b>{{ Auth::user()->name }} </b></li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-           
-            @if (session('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-               {{ session('message') }}.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            @endif
-        </div><!-- /.container-fluid -->
-    </div>
-
-    <section class="content">
-        <div class="container-fluid">
-
-        {{-- Modal Due Date --}}
-        <div class="modal modal-success"  id="myModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-success" role="document">
-            <div class="modal-content bg-danger">
-                <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-bell"></i> Notifications DueDate  </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                @php $key =0; @endphp
-                <ul class="list-group">
-                @foreach ($list_date as $data)
-                    <li class="list-group-item d-flex justify-content-between align-items-center bg-danger">
-                        {{ $list_date[$key]['title'] }} - {{ $list_date[$key]['due_date'] }}.
-                    </li>
-                    @php $key++; @endphp
-                @endforeach </p>
-                
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            </div>
-        </div>
-        {{-- End Modal DueDate --}}
-
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-        @if (session('status'))
-          <div class="alert alert-primary alert-dismissible fade show" role="alert">
-             {{ session('status') }}.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          @endif
-         
-          {{-- <div class="row m-2">
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>{{ $tot_file_draw }}</h3>
-                        <p>Drawing File</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>{{ $request_accept }}</h3>
-                        <p>Accept Request</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>{{ $request_pending }}</h3>
-                        <p>Request Download</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>{{ $request_reject }}</h3>
-                        <p>Reject Download</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-          </div> --}}
-
-          
-
-          <div class="col-12">
-              @can('estate-create')
-             
-              @endcan
-            
-          
-            <div class="card card-success ml-2 mr-2">
-                
-                {{-- card header --}}
-                <div class="card-header">
-                    <h3 class="card-title">Big Data </h3>
-
-                    <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    </div>
-                </div>
-                {{-- end card header --}}
-                {{-- <div class="card-body">
-                    <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div> --}}
-                <div class="card-body">
-                    <h2>Welcome to Big Data</h2>
-                    <h4>PT BINTAN INTI INDUSTRIAL ESTATE</h4>
-                </div>
-                @can('list-estate')
-                
-                    
-                @endcan
-                
-            </div>
-        
-        </div>       
-        
-            
-    </section>
-
-</div>
-
-@endsection
-
-@push('prepend-script')
-    <script>
-        var i = 0;
-    $("#dynamic-ar").click(function () {
-        ++i;
-        $("#dynamicAddRemove").append('<tr><td><input type="file" name="addMoreInputFields['+ i +'][name]" placeholder="Nama Barang" class="form-control" /></td> <td><select class="custom-select rounded-0" placeholder="" id="jenis_barang" name="addMoreInputFields[' + i + '][type]"><option disable>-- Type File -- </option><option value="1">Photo</option><option value="2">File Master (*.cad, or etc)</option></select></td>  <td><input type="text" name="addMoreInputFields[' + i + '][keterangan]" placeholder="Keterangan" class="form-control" /></td> <td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="fa fa-trash"></i></button></td></tr>');
-    });
-    $(document).on('click', '.remove-input-field', function () {
-        $(this).parents('tr').remove();
-    });
-
-    $(document).ready( function () {
-        $('#tableDashboard').DataTable();
-    });
-
-    </script>
+@push('plugin-styles')
+    {!! Html::style('assets/css/loader.css') !!}
+    {!! Html::style('plugins/apex/apexcharts.css') !!}
+    {!! Html::style('assets/css/dashboard/dashboard_2.css') !!}
+    {!! Html::style('plugins/flatpickr/flatpickr.css') !!}
+    {!! Html::style('plugins/flatpickr/custom-flatpickr.css') !!}
+    {!! Html::style('assets/css/elements/tooltip.css') !!}
 @endpush
 
-@if ($n > 0)    
-@push('prepend-script')
-<script>
-    $('#myModal').modal('show');
-    $(document).ready( function () {
-        var audio = new Audio("{{ URL::asset('audio/notifikasi.mp3') }}");
-        audio.play();
-    });
-    
-</script>
+@section('content')
+    <!--  Navbar Starts / Breadcrumb Area  -->
+    <div class="sub-header-container">
+        <header class="header navbar navbar-expand-sm">
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                <i class="las la-bars"></i>
+            </a>
+            <ul class="navbar-nav flex-row">
+                <li>
+                    <div class="page-header">
+                        <nav class="breadcrumb-one" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                
+                                <li class="breadcrumb-item active" aria-current="page"><span>{{__('Dashboard')}}</span></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav d-flex align-center ml-auto right-side-filter">
+               
+                
+                <li class="nav-item custom-dropdown-icon">
+                    <a href="javascript: void(0);" data-original-title="{{__('Filter')}}" data-placement="bottom" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dash-btn btn-sm ml-2 bs-tooltip">
+                        <i class="las la-filter"></i>
+                    </a>
+                    
+                </li>
+            </ul>
+        </header>
+    </div>
+    <!--  Navbar Ends / Breadcrumb Area  -->
+    <!-- Main Body Starts -->
+    <div class="layout-px-spacing">
+        <div class="row layout-top-spacing">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                <div class="widget top-welcome">
+                    <div class="f-100">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="media">
+                                    <div class="mr-3">
+                                        <img src="{{asset('storage/profile/'.Auth::user()->image)}}" alt="" class="avatar-md rounded-circle img-thumbnail">
+                                    </div>
+                                    <div class="align-self-center media-body">
+                                        <div class="text-muted">
+                                            <p class="mb-2 text-primary"> {{ __('Welcome to BIIE Big Data') }}</p>
+                                            <h5 class="mb-1"> {{ Auth()->user()->name }}</h5>
+                                            <p class="mb-0"> {{ __('GMO') }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-self-center col-lg-5">
+                                <div class="text-lg-center mt-4 mt-lg-0">
+                                    <div class="row">
+                                        
+                                        <div class="col-3">
+                                            <div>
+                                                <p class="text-muted text-truncate mb-2"> {{ __('Team') }}</p>
+                                                <h5 class="mb-0"> {{ __('6') }}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div>
+                                                <p class="text-muted text-truncate mb-2"> {{ __('Department') }}</p>
+                                                <h5 class="mb-0"> {{ __('11') }}</h5>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-3">
+                                            <div>
+                                                <p class="text-muted text-truncate mb-2"> {{ __('Sellers') }}</p>
+                                                <h5 class="mb-0"> {{ __('98') }}</h5>
+                                            </div>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-none d-lg-flex col-lg-3 align-items-end justify-content-center flex-column">
+                                <button class="btn btn-primary">
+                                    {{ __('My Profile') }}
+                                </button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <!-- Main Body Ends -->
+@endsection
 
-@endpush    
-@endif
+@push('plugin-scripts')
+    {!! Html::script('assets/js/loader.js') !!}
+    {!! Html::script('plugins/apex/apexcharts.min.js') !!}
+    {!! Html::script('plugins/flatpickr/flatpickr.js') !!}
+    {!! Html::script('assets/js/dashboard/dashboard_2.js') !!}
+@endpush
+
+@push('custom-scripts')
+
+@endpush

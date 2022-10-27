@@ -403,11 +403,11 @@
                             <table id="list" class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col">kode_env</th>
+                                        <th scope="col">kode</th>
                                         <th scope="col">name</th>
                                         <th scope="col">category</th>
                                         <th scope="col">sub_category</th>
-                                        <th scope="col">action</th>
+                                        <th scope="col" style="width:70px;">action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -447,7 +447,7 @@
 
             });
 
-             $('#list').DataTable({
+            $('#list').DataTable({
             processing: true,
             serverSide: true,
             ajax: {

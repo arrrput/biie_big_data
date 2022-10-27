@@ -336,7 +336,7 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputName" class="form-label">Title<span class="text-danger">(*)</span></label>
+                                    <label for="exampleInputName" class="form-label">Type<span class="text-danger">(*)</span></label>
                 
                                     {{-- {!! Form::text('title', null, array('placeholder' => 'Title','class' => 'form-control')) !!} --}}
 

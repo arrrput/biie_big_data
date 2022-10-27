@@ -55,7 +55,7 @@
                 
                 {{-- card header --}}
                 <div class="card-header">
-                    <h3 class="card-title">{{ $param }} </h3>
+                    <h3 class="card-title">{{ $title->name }} </h3>
 
                     <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -99,9 +99,14 @@
                                                 <td>{{ $list->kode_env }}</td>
                                                 <td>{{$list->name}} </td>
                                                 <td>
-                                                    <a href="{{ route('env.download', $list->file) }}" class="btn btn-sm btn-danger">
-                                                        <i class="fa fa-download"></i> Download 
-                                                    </a>
+                                                    @if (Auth::user()->id_department == 4 || Auth::user()->hasRole('admin'))
+                                                        <a href="{{ route('env.download', $list->file) }}" class="btn btn-sm btn-danger">
+                                                            <i class="fa fa-download"></i> Download 
+                                                        </a>
+                                                    @else 
+                                                        <button class="btn btn-sm btn-primary" > Request</button>
+                                                    @endif
+
                                                 </td>
                                             </tr>
                                         @endforeach

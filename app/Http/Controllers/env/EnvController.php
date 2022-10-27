@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Env\EnvFileUploadModel;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class EnvController extends Controller
@@ -209,37 +210,72 @@ class EnvController extends Controller
 
     public function folder(){
 
-        $folder = DB::table('env_file')->select(array('id_category', DB::raw('COUNT(id_category) as total'), 'env_category.name as name') )
+        if(Auth::user()->id_department == 4 || Auth::user()->hasRole('admin')){
+            $folder = DB::table('env_file')->select(array('id_category', DB::raw('COUNT(id_category) as total'), 'env_category.name as name') )
                 ->join('env_category','env_file.id_category','env_category.id')
                 ->join('env_upload_file','env_file.kode_env','env_upload_file.kode_env')
                 ->groupBy('id_category')
                 ->orderBy('id_category')
                 ->get();
+        }else{
+            $folder = DB::table('env_file')->select(array('env_file.id_category', DB::raw('COUNT(env_file.id_category) as total'), 'env_category.name as name','status_akses'))
+                ->where('env_file.status_akses',1)
+                ->join('env_category','env_file.id_category','env_category.id')
+                ->join('env_upload_file','env_file.kode_env','env_upload_file.kode_env')
+                //->where('env_file.status_akses','=',1)
+                ->groupBy('id_category')
+                ->orderBy('id_category')
+                ->get();
+        }
+        
+        
         return view('backend.env.folder', compact('folder'));
     }
 
     public function folderCategory($param){
         $id_cat = EnvCategory::select('id')->where('name',$param)->first();
         
-        $folder = DB::table('env_file')->select(array('id_sub_category', DB::raw('COUNT(id_sub_category) as total'),'env_file.id', 'env_sub_category.name as name','env_file.id_category') )
+        if(Auth::user()->id_department == 4 || Auth::user()->hasRole('admin')){
+            $folder = DB::table('env_file')->select(array('id_sub_category', DB::raw('COUNT(id_sub_category) as total'),'env_file.id', 'env_sub_category.name as name','env_file.id_category') )
                 ->where('env_file.id_category','=',$id_cat->id)
                 ->join('env_sub_category','env_file.id_sub_category','env_sub_category.id')
                 ->join('env_upload_file','env_file.kode_env','env_upload_file.kode_env')
                 ->groupBy('id_sub_category')
                 ->orderBy('id_sub_category')
                 ->get();
+        }else{
+            $folder = DB::table('env_file')->select(array('id_sub_category', DB::raw('COUNT(id_sub_category) as total'),'env_file.id', 'env_sub_category.name as name','env_file.id_category') )
+                ->where('env_file.id_category','=',$id_cat->id)
+                ->where('env_file.status_akses',1)
+                ->join('env_sub_category','env_file.id_sub_category','env_sub_category.id')
+                ->join('env_upload_file','env_file.kode_env','env_upload_file.kode_env')
+                ->groupBy('id_sub_category')
+                ->orderBy('id_sub_category')
+                ->get();
+        }
+        
         
         return view('backend.env.category-folder', compact('folder'));
     }
 
     public function fileInFolder($param){
 
-        $list = DB::table('env_upload_file')->select('env_file.kode_env','env_upload_file.file','env_upload_file.name','env_file.id_sub_category')
+        $title = EnvSubCategory::select('*')->where('id', $param)->first();
+        if(Auth::user()->id_department == 4 || Auth::user()->hasRole('admin')){
+ 
+            $list = DB::table('env_upload_file')->select('env_file.kode_env','env_upload_file.file','env_upload_file.name','env_file.id_sub_category')
                     ->join('env_file','env_upload_file.kode_env', 'env_file.kode_env')
                     ->where('env_file.id_sub_category',$param)
                     ->get();
+        }else{
+            $list = DB::table('env_upload_file')->select('env_file.kode_env','env_upload_file.file','env_upload_file.name','env_file.id_sub_category')
+                    ->join('env_file','env_upload_file.kode_env', 'env_file.kode_env')
+                    ->where('env_file.id_sub_category',$param)
+                    ->where('env_file.status_akses',1)
+                    ->get();
+        }
         
-         return view('backend.env.file', compact('list','param'));
+         return view('backend.env.file', compact('list','param','title'));
     }
 
     public function downloadEnv($file){

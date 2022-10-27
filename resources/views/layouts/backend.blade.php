@@ -12,6 +12,7 @@
   @stack('addon-style')
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+  
 
   <!-- Scripts -->
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -19,7 +20,8 @@
   <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}"/>
 
   <script src="{{ URL::asset('js/app.js') }}" defer></script>
-{{-- livewire --}}
+
+  {{-- livewire --}}
   @livewireStyles
 
   <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
@@ -37,8 +39,69 @@
       alert(JSON.stringify(data));
     });
   </script>
+
+
+<script type="text/javascript">
+  /// some script
+  
+  // jquery ready start
+  $(document).ready(function() {
+    // jQuery code
+  
+    //////////////////////// Prevent closing from click inside dropdown
+      $(document).on('click', '.dropdown-menu', function (e) {
+        e.stopPropagation();
+      });
+  
+      // make it as accordion for smaller screens
+      if ($(window).width() < 992) {
+        $('.dropdown-menu a').click(function(e){
+          e.preventDefault();
+            if($(this).next('.submenu').length){
+              $(this).next('.submenu').toggle();
+            }
+            $('.dropdown').on('hide.bs.dropdown', function () {
+           $(this).find('.submenu').hide();
+        })
+        });
+    }
+    
+  }); // jquery end
+  </script>
+  
+  <style type="text/css">
+    @media (min-width: 992px){
+      .dropdown-menu .dropdown-toggle:after{
+        border-top: .3em solid transparent;
+          border-right: 0;
+          border-bottom: .3em solid transparent;
+          border-left: .3em solid;
+      }
+  
+      .dropdown-menu .dropdown-menu{
+        margin-left:150px; margin-right: 0;
+      }
+  
+      .dropdown-menu li{
+        position: relative;
+      }
+      .nav-item .submenu{ 
+        display: none;
+        position: absolute;
+        left:100%; top:-7px;
+      }
+      .nav-item .submenu-left{ 
+        right:100%; left:auto;
+      }
+  
+      .dropdown-menu > li:hover{ background-color: #f1f1f1 }
+      .dropdown-menu > li:hover > .submenu{
+        display: block;
+      }
+    }
+  </style>
 </head>
-<body class="hold-transition sidebar-mini layout-navbar-fixed">
+<body class="hold-transition sidebar-mini layout-top-nav">
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -46,10 +109,11 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  @include('includes.backend.sidebar')
+  {{-- @include('includes.backend.sidebar') --}}
 
   <!-- Content Wrapper. Contains page content -->
   @yield('content')
+  @include('sweetalert::alert')
   <!-- /.content-wrapper -->
 
   @include('includes.backend.footer')
@@ -59,7 +123,7 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
+
 <!-- jQuery -->
 <script src="{{ URL::asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
@@ -70,8 +134,6 @@
 <script src="{{ URL::asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
 {{-- <script src="{{ URL::asset('dist/js/demo.js') }}"></script> --}}
 
-<script src="{{ URL::asset('plugins/chart.js/Chart.min.css') }}"></script>
-
 <script src="{{ URL::asset('plugins/chart.js/Chart.min.js') }}"></script>
 @livewireScripts
 <script>
@@ -80,6 +142,22 @@
     var mainHeader = document.querySelector('.main-header');
     var sideBar = document.querySelector('.main-sidebar');
   
+    // Toast message
+    var toastMixin = Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        animation: false,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
     if (currentTheme) {
       if (currentTheme === 'dark') {
         if (!document.body.classList.contains('dark-mode')) {
@@ -359,6 +437,10 @@
       options: stackedBarChartOptions
     })
   })
+
+  $(".dataTables_length").select({
+    width : '80px'
+});
   </script>
   @stack('prepend-script')
 </body>

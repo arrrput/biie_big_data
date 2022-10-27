@@ -75,7 +75,7 @@
                                 <h5><i class="fa fa-list"></i> {{ $list->category }}  ({{ $list->subcategory }})</h5>
                                 <p> {{ $list->name }}</p>
                                 <h3>Document List</h3>
-                                <table class="table table-stripped" id="tbl_data">
+                                <table class="table table-striped" style="width: 100%;" id="tbl_data">
                                     <thead>
                                         <tr>
                                             <td>No</td>

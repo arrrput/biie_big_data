@@ -32,7 +32,7 @@ class DashboardController extends Controller
                 'due_date' => Carbon::parse($date->due_date)->diffForHumans() ];
                 $b++;
             }
-            $key++;
+            $key++; 
         } //dd($list_date);
 
         $n = count($list_date);
