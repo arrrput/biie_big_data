@@ -4,6 +4,7 @@ namespace App\Http\Controllers\aml;
 
 use App\Http\Controllers\Controller;
 use App\Models\aml\PerizinanModel;
+use App\Models\aml\PermitOwnerModel;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Variable\Periodic;
 
@@ -25,7 +26,9 @@ class PerizinanController extends Controller
                   ->make(true);
         }
 
-        return view('backend.aml.perizinan');
+        $permit_owner =  PermitOwnerModel::all();
+
+        return view('backend.aml.perizinan',compact('permit_owner'));
     }
 
     public function store(Request $request)

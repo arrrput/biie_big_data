@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\aml\PerizinanController;
+use App\Http\Controllers\aml\PermitController;
 use App\Http\Controllers\BangunanController;
+use App\Http\Controllers\bdv\BievOccupancyController;
 use App\Http\Controllers\cdd\CddController;
+use App\Http\Controllers\crs\InvestorVisitController;
 use App\Http\Controllers\crs\TenantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\env\EnvController;
@@ -21,6 +24,7 @@ use App\Http\Controllers\ssd\SsdFileController;
 use App\Http\Controllers\est\TownCenterController;
 use App\Http\Controllers\est\UtilitiesController;
 use App\Http\Controllers\fin\HalalController;
+use App\Http\Controllers\fin\LavController;
 use App\Http\Controllers\fin\ProcurementController;
 use App\Http\Controllers\gmo\GmoListController;
 use App\Http\Controllers\gmo\UserListController;
@@ -30,9 +34,12 @@ use App\Http\Controllers\hrga\EmployeeController;
 use App\Http\Controllers\hrga\RecruitmentController;
 use App\Http\Controllers\ims\AksesDocumentController;
 use App\Http\Controllers\ims\MasterDocumentController;
+use App\Http\Controllers\pod\BeaconController;
 use App\Http\Controllers\pod\ExportCargoController;
 use App\Http\Controllers\pod\ImportCargoController;
 use App\Http\Controllers\pod\PODController;
+use App\Http\Controllers\pod\PortFacilityController;
+use App\Http\Controllers\pod\SbnpController;
 use App\Http\Controllers\UserController;
 use App\Models\hrga\EmployeeModel;
 use Illuminate\Support\Facades\Route;
@@ -303,6 +310,13 @@ Route::group(['middleware' => ['auth']], function() {
         Route::delete('procurement/delete/{id}', [ProcurementController::class, 'destroy'])->name('fin.procurement.delete');
         Route::get('procurement/download/{file}', [ProcurementController::class, 'downloadDoc'])->name('fin.download.procurement');
 
+        //LAV Status
+        Route::get('lav',[LavController::class, 'index'])->name('fin.lav');
+        Route::post('lav/add', [LavController::class, 'store'])->name('fin.lav.add');
+        Route::get('lav/show/{id}', [LavController::class, 'show'])->name('fin.lav.show');
+        Route::delete('lav/delete/{id}', [LavController::class, 'destroy'])->name('fin.lav.delete');
+        Route::get('lav/download', [LavController::class, 'export_excel'])->name('fin.download.lav');
+        Route::post('lav/import',[LavController::class, 'import_excel'])->name('fin.import');
     }); 
 
     Route::prefix("aml")->group(function(){
@@ -310,6 +324,14 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('perizinan/add', [PerizinanController::class, 'store'])->name('aml.perizinan.add');
         Route::get('perizinan/show/{id}', [PerizinanController::class, 'show'])->name('aml.perizinan.show');
         Route::delete('perizinan/delete/{id}', [PerizinanController::class, 'destroy'])->name('aml.perizinan.delete');
+
+        //permit
+        Route::get('permit',[PermitController::class, 'index'])->name('aml.permit');
+        Route::post('permit/add', [PermitController::class, 'store'])->name('aml.permit.add');
+        Route::get('permit/show/{id}', [PermitController::class, 'show'])->name('aml.permit.show');
+        Route::delete('permit/delete/{id}', [PermitController::class, 'destroy'])->name('aml.permit.delete');
+        Route::get('permit_owner/{param}', [PermitController::class, 'getPermitType'])->name('aml.permit_owner');
+        Route::get('download_permit/{file}', [PermitController::class, 'downloadPermit'])->name('aml.download_permit');
     });
 
     Route::prefix("pod")->group(function(){
@@ -328,6 +350,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('manpower/show/{id}', [TenantController::class, 'showMan'])->name('crs.manpower.show');
         Route::delete('manpower/delete/{id}', [TenantController::class, 'destroyMan'])->name('crs.manpower.delete');
 
+        // Investor
+        Route::get('visitor',[InvestorVisitController::class, 'index'])->name('crs.investor_add');
+        Route::post('add_visitor',[InvestorVisitController::class, 'store'])->name('crs.investor_add.store');
     });
 
     Route::prefix("pod")->group(function(){
@@ -345,6 +370,21 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('cargo-export/add', [ExportCargoController::class, 'store'])->name('pod.cargo-export.add');
         Route::get('cargo-export/show/{id}', [ExportCargoController::class, 'show'])->name('pod.cargo-export.show');
         Route::delete('cargo-export/delete/{id}', [ExportCargoController::class, 'destroy'])->name('pod.cargo-export.delete');
+        // Sbnp report
+        Route::get('sbnp',[SbnpController::class, 'index'])->name('pod.sbnp');
+        Route::post('sbnp/add', [SbnpController::class, 'store'])->name('pod.sbnp.add');
+        Route::get('sbnp/show/{id}', [SbnpController::class, 'show'])->name('pod.sbnp.show');
+        Route::delete('sbnp/delete/{id}', [SbnpController::class, 'destroy'])->name('pod.sbnp.delete');
+        // Beacon
+        Route::get('beacon',[BeaconController::class, 'index'])->name('pod.beacon');
+        Route::post('beacon/add', [BeaconController::class, 'store'])->name('pod.beacon.add');
+        Route::get('beacon/show/{id}', [BeaconController::class, 'show'])->name('pod.beacon.show');
+        Route::delete('beacon/delete/{id}', [BeaconController::class, 'destroy'])->name('pod.beacon.delete');
+        // Port Facility
+         Route::get('port_permit',[PortFacilityController::class, 'index'])->name('pod.port_permit');
+         Route::post('port_permit/add', [PortFacilityController::class, 'store'])->name('pod.port_permit.add');
+         Route::get('port_permit/show/{id}', [PortFacilityController::class, 'show'])->name('pod.port_permit.show');
+         Route::delete('port_permit/delete/{id}', [PortFacilityController::class, 'destroy'])->name('pod.port_permit.delete');
     });
 
     // ims
@@ -374,6 +414,16 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('activity/add', [CddController::class, 'storeAct'])->name('cdd.activity.add');
         Route::get('activity/show/{id}', [CddController::class, 'showAct'])->name('cdd.activity.show');
         Route::delete('activity/delete/{id}', [CddController::class, 'destroyAct'])->name('cdd.activity.delete');
+    });
+
+
+    // bdv
+    Route::prefix("bdv")->group(function(){
+        Route::get('index',[BievOccupancyController::class, 'index'])->name('bdv');
+        Route::get('occcupancy/show/{id}', [BievOccupancyController::class, 'show'])->name('bdv.occcupancy.show');
+        Route::post('occcupancy/add', [BievOccupancyController::class, 'store'])->name('bdv.occcupancy.add');
+        Route::delete('occcupancy/delete/{id}', [BievOccupancyController::class, 'destroy'])->name('bdv.occcupancy.delete');
+        
     });
 
 });

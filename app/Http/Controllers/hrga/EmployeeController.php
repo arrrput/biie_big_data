@@ -198,16 +198,18 @@ class EmployeeController extends Controller
             'driver' => 'required',
             'km' => 'required',
             'date' => 'required',
-
+            'price' => 'required',
         ]);
 
         $fm = GasolineModel::updateOrCreate(
-            ['id' => $request->input('id')],
             [
-            'merk_plat_no' => $request->input('merk_plat'),
-            'driver' => $request->input('driver'),
-            'km' => $request->input('km'),
-            'date' => $request->input('date')
+                'id' => $request->input('id')],
+            [
+                'merk_plat_no' => $request->input('merk_plat'),
+                'driver' => $request->input('driver'),
+                'km' => $request->input('km'),
+                'date' => $request->input('date'),
+                'price' => $request->input('price')
             ]
             
         );

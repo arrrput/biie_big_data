@@ -9,6 +9,6 @@ class GasolineModel extends Model
 {
     use HasFactory;
     public $table = 'hrga_gasoline';
-    protected $fillable = ['merk_plat_no','driver','km','date'];
+    protected $fillable = ['merk_plat_no','driver','km','date','price'];
 
 }

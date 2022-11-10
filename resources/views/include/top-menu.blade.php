@@ -209,8 +209,17 @@
             </a>
         </li>
 
+        <li class="menu {{ active_class(['bdv/*']) }} main-single-menu">
+            <a href="{{ route('bdv') }}" aria-expanded="false" class="dropdown-toggle">
+                <div class="">
+                    <i class="las la-hotel"></i>
+                    <span>BDV</span>
+                </div>
+            </a>
+        </li>
+
         <li class="menu {{ active_class(['fin/*']) }} main-single-menu">
-            <a href="{{ route('fin.halal') }}" aria-expanded="false" class="dropdown-toggle">
+            <a href="{{ route('fin.procurement') }}" aria-expanded="false" class="dropdown-toggle">
                 <div class="">
                     <i class="la la-dollar"></i>
                     <span>FIN</span>

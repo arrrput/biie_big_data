@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @push('plugin-styles')
+    {!! Html::style('plugins/select2/select2.min.css') !!}
+    {!! Html::style('assets/css/forms/form-widgets.css') !!}
     {!! Html::style('assets/css/ui-elements/breadcrumbs.css') !!}
     {!! Html::style('plugins/table/datatable/datatables.css') !!}
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
@@ -224,6 +226,85 @@
         </div>
     </div>
 
+    {{-- Modal Investor Visit --}}
+    <div class="modal fade bd-example-modal-xl" style="overflow:hidden;" id="visitor_add" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="javascript:void(0)" id="form_visitor_add" name="form_visitor_add" method="POST" >                   
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title block text-primary" id="no_emp">
+                    <i class="las la-tasks"></i>
+                    Investor Visit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">                            
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">Facility <span class="text-danger">(*)</span></label>
+                            <input type="hidden" name="id_manpower" id="id_manpower"/>
+                            <select class="form-control multiple" multiple="multiple" id="select2insidemodal">
+                                <option value="AF">{{__('Afghanistan')}}</option>
+                                <option value="BS">{{__('Bahamas')}}</option>
+                                <option value="KH" selected>{{__('Cambodia')}}</option>
+                                <option value="DK">{{__('Denmark')}}</option>
+                                <option value="EC">{{__('Ecuador')}}</option>
+                                <option value="FK">{{__('Falkland Islands (Malvinas)')}}</option>
+                                <option value="GA">{{__('Gabon')}}</option>
+                                <option value="HT">{{__('Haiti')}}</option>
+                                <option value="IS">{{__('Iceland')}}</option>
+                                <option value="JM">{{__('Jamaica')}}</option>
+                                <option value="KE">{{__('Kenya')}}</option>
+                                <option value="LA">{{__('Lao People\'s Democratic Republic')}}</option>
+                                <option value="MO">{{__('Macao')}}</option>
+                                <option value="NA">{{__('Namibia')}}</option>
+                                <option value="OM">{{__('Oman')}}</option>
+                                <option value="PK">{{__('Pakistan')}}</option>
+                                <option value="QA">{{__('Qatar')}}</option>
+                                <option value="RO">{{__('Romania')}}</option>
+                                <option value="SN">{{__('Senegal')}}</option>
+                                <option value="TH">{{__('Thailand')}}</option>
+                                <option value="UG">{{__('Uganda')}}</option>
+                                <option value="VN">{{__('Viet Nam')}}</option>
+                                <option value="EH">{{__('Western Sahara')}}</option>
+                                <option value="YE">{{__('Yemen')}}</option>
+                                <option value="ZW">{{__('Zimbabwe')}}</option>
+                            </select>
+                            @error('total_tenant')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">Ijin Ke <span class="text-danger">(*)</span> </label>
+                            {!! Form::number('total_employee', null, array('id'=> 'total_employee','placeholder' => 'Total Employee','class' => 'rounded-1 form-control')) !!}
+                            @error('job_title')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                   
+
+                </div>
+            
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btn-save-recruitment" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
     <!-- Main Body Starts -->
     <div class="">
         <div class="layout-top-spacing">
@@ -241,6 +322,12 @@
                                         </li>
                                         <li class="nav-item ">
                                             <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false"><b> {{__('Man Power')}}</b></a>
+                                        </li>
+                                        <li class="nav-item ">
+                                            <a class="nav-link" id="investor-tab" data-toggle="tab" href="#investor" role="tab" aria-controls="investor" aria-selected="false"><b> {{__('Investor Visit')}}</b></a>
+                                        </li>
+                                        <li class="nav-item ">
+                                            <a class="nav-link" id="tenan-tab" data-toggle="tab" href="#tenan" role="tab" aria-controls="tenan" aria-selected="false"><b> {{__('Tenant Database')}}</b></a>
                                         </li>
 
                                     </ul>
@@ -296,6 +383,36 @@
                                                 
                                             </table>
                                         </div>
+
+                                        <div class="tab-pane fade" id="investor" role="tabpanel" aria-labelledby="investor-tab">
+                                            {{-- content man power --}}
+                                            <a href="{{ route('crs.investor_add') }}" class="btn btn-primary btn-sm mb-2 mt-2" >
+                                                <i class="las la-plus sidemenu-right-icon"></i>Add Visitor
+                                            </a>
+
+                                            <table id="table_fas" class="table table-hover" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('No')}}</th>
+                                                    <th>{{__('Company/Organitation')}}</th>
+                                                    <th>{{__('Department')}}</th>
+                                                    <th>{{__('Visit date')}}</th>
+                                                    <th>{{__('Arrival time')}}</th>
+                                                    <th>{{__('Hours received')}}</th>
+                                                    <th>{{__('Hours finish')}}</th>
+                                                    <th class="no-content"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                       
+                                                </tbody>
+                                                
+                                            </table>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="tenan" role="tabpanel" aria-labelledby="tenan-tab">
+
+                                        </div>
                                         
                                     </div>
                                 </div>
@@ -313,19 +430,21 @@
 @endsection
 
 @push('plugin-scripts')
+    {!! Html::script('plugins/select2/select2.min.js') !!}
+    {!! Html::script('assets/js/forms/custom-select2.js') !!}
     {!! Html::script('assets/js/loader.js') !!}
     {!! Html::script('assets/js/loader.js') !!}
     {!! Html::script('plugins/table/datatable/datatables.js') !!}
-    
 @endpush
 
 @push('custom-scripts')
 
 <script>
 
+
     var SITEURL = '{{URL::to('')}}';
 
-    var table_tenant, table_manpower;
+    var table_tenant, table_manpower, table_fas;
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -334,6 +453,10 @@
 
 
     $(document).ready(function() {
+
+        $("#select2insidemodal").select2({
+            dropdownParent: $("#visitor_add")
+        });
 
         // table tenant
         table_tenant = $('#table_tenant').DataTable({
@@ -396,6 +519,16 @@
             //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
             ]
         }); 
+
+
+        table_fas = $('#table_fas').DataTable({
+            "language": {
+                "paginate": {
+                "previous": "<i class='las la-angle-left'></i>",
+                "next": "<i class='las la-angle-right'></i>"
+                }
+            }
+        });
           
     });
 
@@ -549,6 +682,24 @@
                     }
                 });
             }
+    }
+
+    function clearField(){
+        $('#id').val('');
+        $('#id').val('');
+        $('#tenant_name').val('');
+        $('#target_completion').val('');
+        $('#description').val('');
+        $('#id_department').prop('selectedIndex', 0);
+        $('#status').val('');
+        $('#received_by').val('');
+        $('#pic').val('');
+        $('#root_cause').val('');
+        $('#correction').val('');
+        $('#id_manpower').val('');
+        $('#total_tenant ').val('');
+        $('#total_employee ').val('');
+        $('#total_foreign_worker').val('');
     }
 </script>
 @endpush

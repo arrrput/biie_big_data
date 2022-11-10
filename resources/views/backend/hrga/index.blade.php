@@ -82,10 +82,20 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="col-xs-3 col-sm-3 col-md-3">
                         <div class="form-group">
-                            <label for="exampleInputName" class="form-label">DRIVER <span class="text-danger">(*)</span> </label>
+                            <label for="exampleInputName" class="form-label">DATE <span class="text-danger">(*)</span> </label>
                             <input type="date" name="date" id="date" class="date-picker form-control" placeholder="Date" required />
+                            @error('date')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">Price <span class="text-primary">(Rp.)</span> </label>
+                            <input type="number" name="price" id="price" class="form-control" placeholder="Price of fuel" required />
                             @error('date')
                                     <span class="text-danger text-sm">{{ $message }}</span>                              
                             @enderror
@@ -269,7 +279,8 @@
                                                     <tr>
                                                         <th scope="col" style="width: 15px;">No</th>
                                                         <th scope="col">Merk & Plate No</th>
-                                                        <th scope="col">Driver</th>    
+                                                        <th scope="col">Driver</th>  
+                                                        <th scope="col">Price Fuel</th>    
                                                         <th scope="col">KM Car</th>
                                                         <th scope="col">Date</th>
                                                         <th class="no-content"></th>
@@ -343,6 +354,7 @@
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 {data:'merk_plat_no', name : 'merk_plat_no',orderable: true, searchable: true},
                 {data: 'driver', name: 'driver', orderable: true, searchable: true},
+                {data: 'price', name: 'price', orderable: true, searchable: true},
                 {data: 'km', name: 'km', orderable: true, searchable: true},  
                 {data: 'date', name: 'date', orderable: true, searchable: true},          
                 {data:'action', name : 'action',orderable: true, searchable: false},
@@ -397,7 +409,7 @@
             $('#driver').val(res.driver);
             $('#km').val(res.km);
             $('#date').val(res.date);
-
+            $('#price').val(res.price);
             }
         });
     }
