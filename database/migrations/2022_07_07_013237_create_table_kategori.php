@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('kategori', function (Blueprint $table) {
+        Schema::create('kategori', function (Blueprint $table) {
             //
+            $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->timestamps();
         });
     }
 
@@ -25,12 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::create('kategori', function (Blueprint $table) {
-            //
-            $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->timestamps();
-        });
+        
     }
 };

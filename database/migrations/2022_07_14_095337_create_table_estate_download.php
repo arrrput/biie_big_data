@@ -29,6 +29,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_estate_download');
+        Schema::table('table_estate_download', function (Blueprint $table) {
+            //
+        });
     }
 };
