@@ -9,6 +9,7 @@ use App\Models\EstateDownload;
 use App\Models\ims\DownloadMaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -62,6 +63,10 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('theme', $theme);
         });
+
+        if(env('APP_ENV')!== 'local'){
+            URL::forceScheme('https');
+        }
         
     }
 }
