@@ -18,6 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
+    public $request;
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -36,6 +37,18 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+
+        if(env('APP_ENV') === 'production'){
+            $request = new Request();
+            $url = $request->url();
+            $check = strstr($url,'http://');
+            if($check){
+                $newUrl = strlen("http","https",$url);
+                header("Location:".$newUrl);
+
+            }
+
+        }
     }
 
     /**
