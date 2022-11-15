@@ -4,7 +4,8 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       
-        <a class="dropdown-item" href="javascript:void(0)" onClick="editHalal({{ $id }})" data-toggle="modal" data-target="#estate-edit" ><i><span class="fas fa-edit"></span></i> Edit </a>
+      <a class="dropdown-item" href="javascript:void(0)" onClick="editHalal({{ $id }})" data-toggle="modal" data-target="#estate-edit" ><i><span class="fas fa-edit"></span></i> Edit </a> 
+
     
         <a href="javascript:void(0);" id="delete-employee" onClick="deleteHalal({{ $id }})" data-original-title="Delete" class="dropdown-item" ><i><span class="fa fa-trash"></span></i> Delete</a>
       

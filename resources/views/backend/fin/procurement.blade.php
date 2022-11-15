@@ -308,9 +308,12 @@
                                         <li class="nav-item">
                                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Procurement Record')}}</b></a>
                                         </li>
+                                        @can('finlav-manage')
                                         <li class="nav-item">
                                             <a class="nav-link" id="lav-tab" data-toggle="tab" href="#lav" role="tab" aria-controls="lav" aria-selected="true"><b>{{__('LAV Status')}}</b></a>
                                         </li>
+                                        @endcan
+                                        
                                         
                                     </ul>
 
@@ -319,9 +322,11 @@
                                             {{-- content tenant --}}
                                             <div class="table-responsive mb-4">
         
+                                                @can('finpro-add')
                                                 <button class="btn bg-gradient-success text-white btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#pro_add">
                                                     <i class="las la-plus sidemenu-right-icon"></i>Add PR
                                                 </button>
+                                                @endcan
                                                
                                                 <table id="table_pro" class="table table-hover" style="width:100%">
                                                     <thead>
@@ -500,7 +505,7 @@
                 });
             if(data.success == 1){
                 $("#pro_add").modal('hide');
-                table_halal.ajax.reload();
+                table_pro.ajax.reload();
                 
             }
             
