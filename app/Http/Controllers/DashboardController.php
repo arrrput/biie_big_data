@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\EstateDownload;
 use App\Events\NotificationEvent;
 use App\Models\BangunanModel;
+use App\Models\DepartmentModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,6 +39,8 @@ class DashboardController extends Controller
         $n = count($list_date);
         $tot_file_draw = DataModel::all()
             ->count();
+            $my_dept = DepartmentModel::select('name')
+                        ->where('id',Auth::user()->id_department)->first();
 
         $request_pending = EstateDownload::where('status','=', 0)
                 ->count();
@@ -45,6 +48,6 @@ class DashboardController extends Controller
                 ->count();  
         $request_reject = EstateDownload::where('status','=', 2)
                 ->count();  
-            return view('backend.dashboard.index', compact('n','request_pending','request_accept','tot_file_draw','request_reject','list_date'));
+            return view('backend.dashboard.index', compact('my_dept','n','request_pending','request_accept','tot_file_draw','request_reject','list_date'));
         }
 }

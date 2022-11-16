@@ -57,7 +57,7 @@
                                         <div class="text-muted">
                                             <p class="mb-2 text-primary"> {{ __('Welcome to BIIE Big Data') }}</p>
                                             <h5 class="mb-1"> {{ Auth()->user()->name }}</h5>
-                                            <p class="mb-0"> {{ __('GMO') }}</p>
+                                            <p class="mb-0"> {{ $my_dept->name }}</p>
                                         </div>
                                     </div>
                                 </div>
