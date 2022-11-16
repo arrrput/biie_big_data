@@ -822,10 +822,11 @@
                                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                             {{-- content tenant --}}
                                             <div class="table-responsive mb-4">
-
-                                                <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#ship_add">
-                                                    <i class="las la-plus sidemenu-right-icon"></i>Add List
-                                                </button>
+                                                @can('pod-add')
+                                                    <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#ship_add">
+                                                        <i class="las la-plus sidemenu-right-icon"></i>Add List
+                                                    </button>
+                                                @endcan
         
                                                 <table id="table_ship" class="table table-hover" style="width:100%">
                                                     <thead>
@@ -849,9 +850,11 @@
                                         </div>
                                         <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
                                             {{-- content man import --}}
+                                            @can('pod-add')
                                             <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#import_add">
                                                 <i class="las la-plus sidemenu-right-icon"></i>Add List
                                             </button>
+                                            @endcan
 
                                             <table id="table_import" class="table table-hover" style="width:100%">
                                                 <thead>
@@ -876,9 +879,12 @@
 
                                         <div class="tab-pane fade" id="export" role="tabpanel" aria-labelledby="export-tab">
                                             {{-- content man import --}}
+                                            @can('pod-add')
                                             <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#export_add">
                                                 <i class="las la-plus sidemenu-right-icon"></i>Add List
                                             </button>
+                                            @endcan
+                                            
                                             <table id="table_export" class="table table-hover text-center" style="width:100%">
                                                 <thead>
                                                 <tr>
@@ -902,9 +908,12 @@
                                         
                                         <div class="tab-pane fade" id="sbnp" role="tabpanel" aria-labelledby="sbnp-tab">
                                             {{-- content man import --}}
+                                            @can('pod-add')
                                             <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#sbnp_add">
                                                 <i class="las la-plus sidemenu-right-icon"></i>Add Report
                                             </button>
+                                            @endcan
+                                                
                                             <table id="table_sbnp" class="table table-hover text-center" style="width:100%">
                                                 <thead>
                                                 <tr>
@@ -931,9 +940,13 @@
                                         <div class="tab-pane fade" id="abnormal" role="tabpanel" aria-labelledby="abnormal-tab">
 
                                             {{-- content abnormal report sbnp --}}
-                                            <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#abnormal_add">
-                                                <i class="las la-plus sidemenu-right-icon"></i>Add Report
-                                            </button>
+
+                                            @can('pod-add')
+                                                <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#abnormal_add">
+                                                    <i class="las la-plus sidemenu-right-icon"></i>Add Report
+                                                </button>
+                                            @endcan
+                                            
                                             <table id="table_abnormal" class="table table-hover text-center" style="width:100%">
                                                 <thead>
                                                 <tr>
@@ -959,10 +972,11 @@
                                         <div class="tab-pane fade" id="port" role="tabpanel" aria-labelledby="port-tab">
                                           
                                             {{-- content abnormal report sbnp --}}
+                                            @can('pod-add')
                                             <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#port_add">
                                                 <i class="las la-plus sidemenu-right-icon"></i>Add Facility
                                             </button>
-
+                                            @endcan
                                             <table id="table_port" class="table table-hover text-center" style="width:100%">
                                                 <thead>
                                                     <tr>

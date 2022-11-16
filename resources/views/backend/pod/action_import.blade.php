@@ -3,7 +3,12 @@
         <i class="las la-cog"></i>
     </a>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="will-change: transform;">
-        <a class="dropdown-item" href="javascript:void(0);" onClick="editImport({{ $id }})">{{__('Edit')}}</a>
-        <a class="dropdown-item" href="javascript:void(0);" onClick="deleteImport({{ $id }})">{{__('Delete')}}</a>
+        @can('pod-edit')
+            <a class="dropdown-item" href="javascript:void(0);" onClick="editImport({{ $id }})">{{__('Edit')}}</a>    
+        @endcan
+        @can('pod-delete')
+            <a class="dropdown-item" href="javascript:void(0);" onClick="deleteImport({{ $id }})">{{__('Delete')}}</a>
+        @endcan            
+        
     </div>
 </div>

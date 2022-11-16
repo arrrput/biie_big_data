@@ -12,7 +12,7 @@ class PODController extends Controller
 
     function __construct()
     {
-         $this->middleware('role:pod', ['only' => ['index']]);
+         $this->middleware('role:pod||admin', ['only' => ['index']]);
          
     }
 
