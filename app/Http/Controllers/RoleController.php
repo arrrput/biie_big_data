@@ -19,7 +19,7 @@ class RoleController extends Controller
     
     public function create()
     {
-        $permission = Permission::get();
+        $permission = Permission::orderBy('name', 'ASC')->get();
         return view('backend.roles.create',compact('permission'));
     }
     
@@ -50,7 +50,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $permission = Permission::get();
+        $permission = Permission::orderBy('name')->get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();

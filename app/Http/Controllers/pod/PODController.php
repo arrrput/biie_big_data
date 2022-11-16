@@ -10,6 +10,12 @@ class PODController extends Controller
 {
     //
 
+    function __construct()
+    {
+         $this->middleware('role:pod', ['only' => ['index']]);
+         
+    }
+
     public function index(Request $request){
 
         if($request->ajax()){
