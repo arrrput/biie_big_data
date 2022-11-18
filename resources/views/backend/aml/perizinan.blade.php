@@ -291,11 +291,10 @@
                                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                             {{-- content tenant --}}
                                             <div class="table-responsive mb-4">
-
+                                                @can('contract aml-add')
                                                 <button class="btn btn-primary btn-sm pull-left mb-2" onclick="clearField()" data-toggle="modal" data-target="#contract_add"><i class="las la-plus"></i> Add Contract</button>
+                                                @endcan
                                     
-                                    
-
                                                 <table id="table_halal" class="table table-hovered table-sm" style="width: 100%;">
                                                     <thead>
                                                         <tr>
@@ -317,10 +316,12 @@
                                         </div>
                                         <div class="tab-pane fade" id="permit" role="tabpanel" aria-labelledby="permit-tab">
                                             {{-- content man import --}}
+                                            @can('permit aml-add')
                                             <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#permit_add">
                                                 <i class="las la-plus sidemenu-right-icon"></i>Add Permit
                                             </button>
-
+                                            @endcan
+                       
                                             <table id="table_permit" class="table table-hover" style="width:100%">
                                                 <thead>
                                                 <tr>

@@ -11,6 +11,11 @@ use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Variable\Periodic;
 class PerizinanController extends Controller
 {
     //
+    function __construct()
+    {
+         $this->middleware('permission:contract aml-manage||permit aml-manage', ['only' => ['index']]);
+         
+    }
     public function index(Request $request){
 
         if($request->ajax()){
