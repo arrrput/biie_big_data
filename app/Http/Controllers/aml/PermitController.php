@@ -95,4 +95,13 @@ class PermitController extends Controller
 
     	return response()->download($filePath, $file);
     }
+
+    public function destroy($id){
+        $data = PermitDocumentModel::select('document')->where('id', $id)->first();
+        unlink(storage_path('app/public/aml/permit/'.$data->document));
+        PermitDocumentModel::find($id)->delete($id);
+            return Response()->json([
+                'message' => 'Data deleted successfully!'
+            ]);
+    }
 }

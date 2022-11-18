@@ -621,7 +621,7 @@ var table_halal, table_permit;
                 // ajax
                 $.ajax({
                     type:"DELETE",
-                    url: "{{ URL::to('/') }}/aml/perizinan/delete/"+id,
+                    url: "{{ URL::to('/') }}/aml/permit/delete/"+id,
                     data: { id: id},
                     // dataType: 'json',
                     success: function(res){
@@ -630,7 +630,7 @@ var table_halal, table_permit;
                             animation: true,
                             title: 'Delete was successfully!'
                         });
-                        table_halal.ajax.reload();
+                        table_permit.ajax.reload();
                     }
                 });
             }

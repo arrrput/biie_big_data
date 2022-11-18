@@ -211,10 +211,12 @@
                                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                             {{-- content tenant --}}
                                             <div class="table-responsive mb-4">
-        
+                                                @can('cdd proposal-add')
                                                 <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#pro_add">
                                                     <i class="las la-plus sidemenu-right-icon"></i>Add Proposal
-                                                </button>
+                                                </button>                                                    
+                                                @endcan
+
                                                 <table id="table_proposal" class="table table-hovered table-sm table-striped" style="width: 100%;">
                                                     <thead>
                                                         <tr>
@@ -233,9 +235,12 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+                                            @can('cdd activity-add')
                                             <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#act_add">
                                                 <i class="las la-plus sidemenu-right-icon"></i>Add Activity
                                             </button>
+                                            @endcan
+                                            
                                             <table id="table_act" class="table table-hovered table-sm table-striped" style="width: 100%;">
                                                 <thead>
                                                     <tr>

@@ -3,7 +3,13 @@
         <i class="las la-cog"></i>
     </a>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="will-change: transform;">
-        <a class="dropdown-item" href="javascript:void(0);" onClick="editPro({{ $id }})">{{__('Edit')}}</a>
-        <a class="dropdown-item" href="javascript:void(0);" onClick="deletePro({{ $id }})">{{__('Delete')}}</a>
+        @can('cdd proposal-edit')
+        <a class="dropdown-item" href="javascript:void(0);" onClick="editPro({{ $id }})">{{__('Edit')}}</a>            
+        @endcan
+        @can('cdd proposal-delete')
+        <a class="dropdown-item" href="javascript:void(0);" onClick="deletePro({{ $id }})">{{__('Delete')}}</a>            
+        @endcan
+
+
     </div>
 </div>
