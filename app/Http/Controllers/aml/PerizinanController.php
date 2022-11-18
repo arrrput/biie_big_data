@@ -20,7 +20,7 @@ class PerizinanController extends Controller
             $datatables =  datatables()->of($sop);
             return $datatables
                   ->addColumn('action', 'backend/aml/action_perizinan')
-                  ->addColumn('download','backend/fin/download_halal')
+                  ->addColumn('download','backend/aml/download_contract')
                   ->rawColumns(['action','download'])
                   ->addIndexColumn()
                   ->make(true);
@@ -85,5 +85,12 @@ class PerizinanController extends Controller
             return Response()->json([
                 'message' => 'Data deleted successfully!'
             ]);
+    }
+
+    public function downloadContract($file){
+        $filePath = public_path("storage/aml/contract/".$file);
+    	//$fileName = time().'-BIIE.dwg';
+
+    	return response()->download($filePath, $file);
     }
 }

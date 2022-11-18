@@ -304,7 +304,7 @@
                                                             <th scope="col">Contract Type</th>
                                                             <th scope="col">Description</th>
                                                             <th scope="col">Mitra</th>
-                                                            <th scope="col">End Date</th>
+                                                            <th scope="col">Document</th>
                                                             <th class="no-content"></th>
                                                         </tr>
                                                     </thead>
@@ -399,10 +399,10 @@ var table_halal, table_permit;
                 // let name = 'ee'
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 {data:'no_perjanjian', name : 'no_perjanjian',orderable: true, searchable: true},
-                {data: 'type_perjanjian', name: 'type_perjanjian', orderable: true, searchable: true},    
-                {data: 'deskripsi', name: 'deskripsi', orderable: true, searchable: true},  
+                {data: 'type_perjanjian', name: 'type_perjanjian', orderable: true, searchable: true},  
                 {data: 'mitra', name: 'mitra', orderable: true, searchable: true},  
                 {data: 'tgl_berakhir', name: 'tgl_berakhir', orderable: true, searchable: true},  
+                {data: 'download', name: 'download'},  
                 {data: 'action', name: 'action'},
             //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
             ]

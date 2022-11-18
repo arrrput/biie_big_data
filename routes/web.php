@@ -324,6 +324,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('perizinan/add', [PerizinanController::class, 'store'])->name('aml.perizinan.add');
         Route::get('perizinan/show/{id}', [PerizinanController::class, 'show'])->name('aml.perizinan.show');
         Route::delete('perizinan/delete/{id}', [PerizinanController::class, 'destroy'])->name('aml.perizinan.delete');
+        Route::get('download_contract/{file}', [PerizinanController::class, 'downloadContract'])->name('aml.download_contract');
 
         //permit
         Route::get('permit',[PermitController::class, 'index'])->name('aml.permit');

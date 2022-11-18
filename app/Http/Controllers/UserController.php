@@ -80,7 +80,10 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
-            'roles' => 'required'
+            'roles' => 'required',
+            'id_department' => 'required',
+            'nik' => 'required',
+            'section' => 'required'
         ]);
     
         $input = $request->all();
