@@ -79,6 +79,39 @@
                             @enderror
                         </div>
                     </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">DATE<span class="text-danger">(*)</span></label>
+                           
+                            {!! Form::date('date_pro', null, array('id'=> 'date_pro','placeholder' => 'Date','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('date_prop')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">CONTACT PERSON<span class="text-danger">(*)</span></label>
+                           
+                            {!! Form::text('contact_person', null, array('id'=> 'contact_person','placeholder' => 'Contact Person','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('contact_person')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">ADDRESS<span class="text-danger">(*)</span></label>
+                           
+                            <textarea id="address" name="address" class="form-control rounded-1 textarea" rows="3" placeholder="Address"></textarea>
+                            @error('contact_person')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
                 </div>
                
 
@@ -224,6 +257,8 @@
                                                             <th scope="col">Institution Name</th>
                                                             <th scope="col">PIC</th>    
                                                             <th scope="col">Total Donation</th>
+                                                            <th scope="col">Contact Person</th>
+                                                            <th scope="col">Date</th>
                                                             <th class="no-content"></th>
                                                             
                                                         </tr>
@@ -312,6 +347,8 @@
                     {data:'name', name : 'name',orderable: true, searchable: true},
                     {data: 'pic', name: 'pic', orderable: true, searchable: true},  
                     {data:'donation', name : 'donation',orderable: true, searchable: true},
+                    {data:'contact_person', name : 'contact_person',orderable: true, searchable: true},
+                    {data:'tgl', name : 'tgl',orderable: true, searchable: true},
                     {data: 'action', name: 'action'},
             //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
             ]
@@ -420,12 +457,14 @@ function editPro(id){
         url: "{{ URL::to('/') }}/cdd/proposal/show/"+id,
         dataType: 'json',
         success: function(res){
-            $('#pro_add').modal('show');
-            $('#id').val(res.id);
-            $('#name').val(res.name);
-            $('#pic').val(res.pic);
-            $('#donation').val(res.donation);
-
+                $('#pro_add').modal('show');
+                $('#id').val(res.id);
+                $('#name').val(res.name);
+                $('#pic').val(res.pic);
+                $('#donation').val(res.donation);
+                $('#date_pro').val(res.tgl);
+                $('#address').val(res.address);
+                $('#contact_person').val(res.contact_person);
             }
         });
     }
@@ -460,6 +499,9 @@ function editPro(id){
         $('#name').val('');
         $('#pic').val('');
         $('#donation').val('');
+        $('#date_pro').val('');
+        $('#address').val('');
+        $('#contact_person').val('');
 
         $('#id_act').val('');
         $('#activity').val('');

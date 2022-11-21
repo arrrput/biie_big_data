@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\cdd;
 
-use App\Http\Controllers\Controller;
-use App\Models\cdd\CddActivity;
-use App\Models\cdd\CddProposalStatus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\cdd\CddActivity;
+use App\Http\Controllers\Controller;
+use App\Models\cdd\CddProposalStatus;
 
 class CddController extends Controller
 {
@@ -19,6 +20,13 @@ class CddController extends Controller
         return $datatables
               ->addColumn('action', 'backend/cdd/action_proposal')
               ->rawColumns(['action'])
+              ->editColumn('donation', function ($data) {
+                return 'Rp. '.number_format($data->donation, 0);
+                })
+                ->editColumn('tgl', function($data){ 
+                    $formatedDate = Carbon::createFromFormat('Y-m-d', $data->tgl)->format('d M Y'); 
+                    return $formatedDate; 
+                })
               ->addIndexColumn()
               ->make(true);
         }
@@ -47,10 +55,13 @@ class CddController extends Controller
         ]);
 
         $fm = CddProposalStatus::updateOrCreate(
-            ['id' => $request->input('id_dorm')],
+            ['id' => $request->input('id')],
             [
             'name' => $request->input('name'),
             'pic' => $request->input('pic'),
+            'tgl' => $request->input('date_pro'),
+            'address' => $request->input('address'),
+            'contact_person' => $request->input('contact_person'),
             'donation' => $request->input('donation')
             ]
             

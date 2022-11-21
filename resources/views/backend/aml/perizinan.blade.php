@@ -257,7 +257,7 @@
 
         </div>
         <div class="modal-footer">
-            <input type="submit" id="btn-save-contract" class="btn btn-primary" value="Submit" />
+            <input type="submit" id="btn-save-permit" class="btn btn-primary" value="Submit" />
             <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
         </div>
         </div>
@@ -302,7 +302,7 @@
                                                             <th scope="col">Contract Number</th>
                                                             <th scope="col">Contract Type</th>
                                                             <th scope="col">Description</th>
-                                                            <th scope="col">Mitra</th>
+                                                            <th scope="col">End Date</th>
                                                             <th scope="col">Document</th>
                                                             <th class="no-content"></th>
                                                         </tr>
@@ -445,6 +445,7 @@ var table_halal, table_permit;
         $('#contract_form_add').submit(function(e) {
         // document.getElementById("hrga_title").innerHTML = '<i class="fas fa-plus"></i> Add Employee';
         e.preventDefault();
+        document.getElementById("btn-save-contract").disabled = true;
         var formData = new FormData(this);
         $.ajax({
         type:'POST',
@@ -454,6 +455,7 @@ var table_halal, table_permit;
         contentType: false,
         processData: false,
         success: (data) => {
+            document.getElementById("btn-save-contract").disabled = false;
             Swal.fire({
                     type: 'success',
                     icon: 'success',
@@ -478,6 +480,7 @@ var table_halal, table_permit;
 
     // contratct add
     $('#form_permit_add').submit(function(e) {
+        document.getElementById("btn-save-permit").disabled = true;
         // document.getElementById("hrga_title").innerHTML = '<i class="fas fa-plus"></i> Add Employee';
         e.preventDefault();
         var formData = new FormData(this);
@@ -496,6 +499,7 @@ var table_halal, table_permit;
                     showConfirmButton: false,
                     timer: 3000
                 });
+                document.getElementById("btn-save-contract").disabled = false;
             if(data.success == 1){
                 $("#permit_add").modal('hide');
                 table_permit.ajax.reload();

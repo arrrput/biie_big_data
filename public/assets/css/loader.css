@@ -62,7 +62,7 @@ div#load_screen .boxes .box:nth-child(4) {
   animation: box4 var(--duration) linear infinite;
 }
 div#load_screen .boxes .box > div {
-  --background: #5C8DF6;
+  --background: #0ca113;
   --top: auto;
   --right: auto;
   --bottom: auto;
@@ -86,12 +86,12 @@ div#load_screen .boxes .box > div:nth-child(1) {
   --left: 0;
 }
 div#load_screen .boxes .box > div:nth-child(2) {
-  --background: #145af2;
+  --background: #338f3b;
   --right: 0;
   --rotateY: 90deg;
 }
 div#load_screen .boxes .box > div:nth-child(3) {
-  --background: #447cf5;
+  --background: #066813;
   --rotateX: -90deg;
 }
 div#load_screen .boxes .box > div:nth-child(4) {

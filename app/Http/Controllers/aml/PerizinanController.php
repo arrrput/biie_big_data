@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\aml;
 
-use App\Http\Controllers\Controller;
-use App\Models\aml\PerizinanModel;
-use App\Models\aml\PermitOwnerModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\aml\PerizinanModel;
+use App\Http\Controllers\Controller;
+use App\Models\aml\PermitOwnerModel;
 use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Variable\Periodic;
 
 class PerizinanController extends Controller
@@ -24,6 +25,10 @@ class PerizinanController extends Controller
 
             $datatables =  datatables()->of($sop);
             return $datatables
+                ->editColumn('tgl_berakhir', function($data){ 
+                    $formatedDate = Carbon::createFromFormat('Y-m-d', $data->tgl_berakhir)->format('d M Y'); 
+                    return $formatedDate; 
+                })
                   ->addColumn('action', 'backend/aml/action_perizinan')
                   ->addColumn('download','backend/aml/download_contract')
                   ->rawColumns(['action','download'])
