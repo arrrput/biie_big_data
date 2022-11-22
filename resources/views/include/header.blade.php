@@ -208,7 +208,7 @@
                             <span class="text-primary font-15">{{ __('Welcome') }} {{ auth()->user()->name }} !</span>
                         </div>
                         <div class="nav-drop-body account-items pb-0">
-                            <a id="profile-link"  class="account-item" href="{{ url('/pages/profile') }}">
+                            <a id="profile-link"  class="account-item" href="{{ url('/profile') }}">
                                 <div class="media align-center">
                                     <div class="media-left">
                                         <div class="image">

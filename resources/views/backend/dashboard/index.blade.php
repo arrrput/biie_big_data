@@ -88,9 +88,9 @@
                                 </div>
                             </div>
                             <div class="d-none d-lg-flex col-lg-3 align-items-end justify-content-center flex-column">
-                                <button class="btn btn-primary">
+                                <a href="{{ route('profile') }}" class="btn btn-primary" >
                                     {{ __('My Profile') }}
-                                </button>
+                                </a>
                                 
                             </div>
                         </div>

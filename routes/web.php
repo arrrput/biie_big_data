@@ -84,6 +84,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('sendmail',[HomeController::class, 'sendnotification'])->name('home.sendemail');
     Route::resource('users', UserController::class);
 
+    //update profile
+    Route::post('update_profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+
     //Role
     Route::resource('role', RoleController::class);
     Route::get('role',[RoleController::class,'index'])->name('roles.index');
