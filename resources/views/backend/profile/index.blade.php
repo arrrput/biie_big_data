@@ -4,6 +4,7 @@
 {!! Html::style('assets/css/loader.css') !!}
 {!! Html::style('plugins/dropify/dropify.min.css') !!}
 {!! Html::style('assets/css/pages/profile_edit.css') !!}
+{!! Html::style('assets/css/ui-elements/alert.css') !!}
 @endpush
 
 
@@ -28,8 +29,34 @@
           </ul>
       </header>
     </div>
-    <!--  Navbar Ends / Breadcrumb Area  -->
 
+    @foreach ($errors->all() as $error)
+    <div class="alert alert-icon-button-left alert-light-danger text-danger mb-4" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="{{__('Close')}}Close">
+            <i class="las la-times text-danger"></i>
+        </button>
+        <i class="las la-trash-alt text-danger font-20"></i>
+        <strong>{{__('Error!')}}</strong> {{ $error }}
+        <button type="button" class="btn btn-sm bg-gradient-danger float-right mr-2 text-white" data-dismiss="alert" aria-label="{{__('Close')}}">
+            {{__('Dismiss')}}
+        </button>
+    </div>
+    @endforeach 
+
+    @if ($message = Session::get('success'))
+    <div class="alert alert-icon-button-left alert-light-success text-success-teal mb-4" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="{{__('Close')}}">
+            <i class="las la-times text-success-teal"></i>
+        </button>
+        <i class="las la-check-double text-success-teal font-20"></i>
+        <strong>{{__('Success!')}}</strong> {{ $message }}
+        <button type="button" class="btn btn-sm bg-gradient-success float-right mr-2 text-white" data-dismiss="alert" aria-label="{{__('Close')}}">
+            {{__('Dismiss')}}
+        </button>
+    </div>    
+    @endif
+    
+    <!--  Navbar Ends / Breadcrumb Area  -->
     <!-- Main Body Starts -->
     <div class="layout-px-spacing">
       <div class="account-settings-container layout-top-spacing">
@@ -63,9 +90,11 @@
                                               <div class="tab-pane fade show active" id="v-border-pills-general" role="tabpanel" aria-labelledby="v-border-pills-general-tab">
                                                   <div class="row">
                                                       <div class="col-xl-3 col-lg-12 col-md-12">
-                                                        <form class="form_update_ava" id="form_update_ava">
+                                                        <form action="javascript:void(0)" id="form_lav_add" name="form_lav_add" method="POST" enctype="multipart/form-data" >   
+                                                        {{-- <form action="{{ route('profile.update') }}" id="form_lav_add" name="form_lav_add" method="POST" enctype="multipart/form-data">   --}}
+                                                           
                                                           <div class="upload text-center img-thumbnail">
-                                                              <input type="file" id="input-file-max-fs" class="dropify" data-default-file="{{asset('storage/profile/'.Auth::user()->image)}}" data-max-file-size="2M" />
+                                                              <input type="file" name="avatar" id="input-file-max-fs" class="dropify" data-default-file="{{asset('storage/profile/'.Auth::user()->image)}}" data-max-file-size="2M" />
                                                               <p class="mt-2"><i class="flaticon-cloud-upload mr-1"></i> {{__('Upload Picture')}}</p>
                                                               <input type="submit" value="Save" class="btn bg-gradient-warning font-10 btn-block text-white"/>
                                                           </div>
@@ -149,23 +178,27 @@
                                               </div>
                                               <div class="tab-pane fade" id="v-border-pills-about" role="tabpanel" aria-labelledby="v-border-pills-about-tab">
                                                   <div class="row">
+                                                      
                                                       <div class="col-md-12">
-                                                          <div class="form-group">
-                                                              <label for="aboutBio">{{__('Password')}}</label>
-                                                              <input type="password" name="current_password" class="form-control" id="old_pass" placeholder="Old Password" autocomplete="current-password"/>
-                                                          </div>
+                                                        <form method="POST" action="{{ route('profile.password') }}">
+                                                            @csrf
+                                                        <div class="form-group">
+                                                            <label for="Password">{{__('Password')}}</label>
+                                                            <input type="password" name="current_password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="current-password"/>
+                                                        </div>
 
-                                                          <div class="form-group">
-                                                            <label for="aboutBio">{{__('New Password')}}</label>
-                                                            <input type="password" name="new_password" class="form-control" id="new_pass" placeholder="New Password" autocomplete="current-password"/>
-                                                          </div>
-                                                          <div class="form-group">
-                                                            <label for="aboutBio">{{__('Confimn Password')}}</label>
-                                                            <input type="password" name="new_confirm_password" class="form-control" id="old_pass" placeholder="Confirm Password" autocomplete="current-password"/>
-                                                          </div>
+                                                        <div class="form-group">
+                                                          <label for="newPassword">{{__('New Password')}}</label>
+                                                          <input type="password" name="new_password" class="form-control" id="new_password" placeholder="New Password" autocomplete="current-password"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                          <label for="confirmPassword">{{__('Confirm Password')}}</label>
+                                                          <input type="password" name="new_confirm_password" class="form-control" id="old_pass" placeholder="Confirm Password" autocomplete="current-password"/>
+                                                        </div>
 
-                                                          <input type="submit" class="btn bg-gradient-success font-15 btn-block text-white" value="Update Password"/>
-                                                      </div>
+                                                        <input type="submit" class="btn bg-gradient-success font-15 btn-block text-white" value="Update Password"/>
+                                                        </form>
+                                                    </div>
                                                   </div>
                                               </div>
                                               <div class="tab-pane fade" id="v-border-pills-domain" role="tabpanel" aria-labelledby="v-border-pills-domain-tab">
@@ -268,6 +301,47 @@
 
 @push('custom-scripts')
 <script>
-  $('#OpenImgUpload').click(function(){ $('#imgupload').trigger('click'); });
+
+ // header request token
+    var SITEURL = '{{URL::to('')}}';
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // update profile
+    $('#form_lav_add').submit(function(e) {
+        // document.getElementById("hrga_title").innerHTML = '<i class="fas fa-plus"></i> Add Employee';
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+        type:'POST',
+        url: "{{ route('profile.update')}}",
+        data: formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `Profile update succesfully!`,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            if(data.success == 1){
+                
+                
+            }
+            
+        },
+            error: function(data){
+                    console.log(data);
+                }
+            })
+        });
+
 </script>
 @endpush

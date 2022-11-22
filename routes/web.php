@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //update profile
     Route::post('update_profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::post('update_password', [ProfileController::class, 'updatePass'])->name('profile.password');
 
     //Role
     Route::resource('role', RoleController::class);
