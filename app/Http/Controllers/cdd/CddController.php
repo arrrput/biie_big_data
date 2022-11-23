@@ -87,6 +87,13 @@ class CddController extends Controller
         $datatables =  datatables()->of($sop);
         return $datatables
               ->addColumn('action', 'backend/cdd/action_activity')
+              ->editColumn('budget', function ($data) {
+                return 'Rp. '.number_format($data->budget, 0);
+                })
+                ->editColumn('date', function($data){ 
+                    $formatedDate = Carbon::createFromFormat('Y-m-d', $data->date)->format('d M Y'); 
+                    return $formatedDate; 
+                })
               ->rawColumns(['action'])
               ->addIndexColumn()
               ->make(true);
