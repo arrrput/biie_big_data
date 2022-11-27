@@ -153,13 +153,13 @@
                         <li class="menu {{ active_class(['ims/master-doc/file_doc']) }}">
                             <a data-active="{{ is_active_route(['ims/master-doc/file_doc']) }}" href="{{ url('/ims/master-doc/file_doc') }}"> {{__('Master Document File')}} </a>
                         </li>
+                        <li class="menu {{ active_class(['ims/external-doc']) }}">
+                            <a data-active="{{ is_active_route(['ims/external-doc']) }}" href="{{ url('/ims/external-doc') }}"> {{__('External Document')}} </a>
+                        </li>
                         @if ( Auth::user()->hasRole('ims') || Auth::user()->hasRole('admin'))
 
                             <li class="menu {{ active_class(['ims/master-doc/add_doc']) }}">
                                 <a data-active="{{ is_active_route(['ims/master-doc/add_doc']) }}" href="{{ url('/ims/master-doc/add_doc') }}"> {{__('Add Internal Document')}} </a>
-                            </li>
-                            <li class="menu {{ active_class(['ims/master-doc/add_doc']) }}">
-                                <a data-active="{{ is_active_route(['ims/master-doc/add_doc']) }}" href="{{ url('/ims/master-doc/add_doc') }}"> {{__('Eksternal Document')}} </a>
                             </li>
                             <li class="menu {{ active_class(['ims/master-doc/request-access']) }}">
                                 <a data-active="{{ is_active_route(['ims/master-doc/request-access']) }}" href="{{ url('/ims/master-doc/request-access') }}"> {{__('Request')}}

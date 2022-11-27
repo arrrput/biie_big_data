@@ -33,6 +33,7 @@ use App\Http\Controllers\hrga\EmpDormController;
 use App\Http\Controllers\hrga\EmployeeController;
 use App\Http\Controllers\hrga\RecruitmentController;
 use App\Http\Controllers\ims\AksesDocumentController;
+use App\Http\Controllers\ims\ExternalDocController;
 use App\Http\Controllers\ims\MasterDocumentController;
 use App\Http\Controllers\pod\BeaconController;
 use App\Http\Controllers\pod\ExportCargoController;
@@ -406,6 +407,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('master-doc/request-app/{id}',[AksesDocumentController::class, 'approve'])->name('ims.master_doc.request-app');
         Route::get('master-doc/request-reject/{id}',[AksesDocumentController::class, 'reject'])->name('ims.master_doc.request-reject');
 
+        // eksternal document
+        Route::get('external-doc',[ExternalDocController::class, 'index'])->name('ims.external_doc');
+        Route::post('external-doc/add', [ExternalDocController::class, 'store'])->name('ims.external_doc.add');    
+        Route::get('external-doc/show/{id}', [ExternalDocController::class, 'show'])->name('ims.external_doc.show');   
+        Route::get('external-download/{file}', [ExternalDocController::class, 'downloadMaster'])->name('ims.external-download.master'); 
+        Route::delete('external-doc/delete/{id}', [ExternalDocController::class, 'destroy'])->name('ims.external-doc.delete');
     });
 
     // cdd
