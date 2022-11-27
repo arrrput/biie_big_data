@@ -131,7 +131,7 @@ class EnvController extends Controller
         return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                       $btn = '<a href="javascript:void(0);" onClick="deleteData('.$row->id.')" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></a>';
+                       $btn = '<a href="javascript:void(0);" onClick="deleteData('.$row->id.')" class="btn font-15 btn-outline-danger btn-sm"><i class="las la-trash"></i></a>';
                        
                         return $btn;
                 })
@@ -149,9 +149,15 @@ class EnvController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                        $btn = '<button href="javascript:void(0)" onClick="editEnv('.$row->id.')" data-toggle="modal" data-target="#env-edit" class="btn btn-sm btn-outline-success"><i class="fa fa-edit"></i> </button>';
-                       $btn =$btn.' <a href="javascript:void(0);" onClick="deleteFunc('.$row->id.')" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></a>';
-                       
+                    $btn = '<div class="dropdown custom-dropdown">
+                                <a class="dropdown-toggle font-20 text-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="las la-cog"></i>
+                                </a>';
+                    $btn = $btn. ' <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="will-change: transform;">';
+                    $btn = $btn. '<a class="dropdown-item" data-toggle="modal" data-target="#env-edit" href="javascript:void(0);" onClick="editEnv( '.$row->id.')">Edit</a>';
+                    $btn = $btn. '<a class="dropdown-item" href="javascript:void(0);" onClick="deleteFunc('.$row->id.')">Delete</a>';
+                    $btn = $btn. '</div>';
+                      
                         return $btn;
                 })
                 ->rawColumns(['action'])
