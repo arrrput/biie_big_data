@@ -55,7 +55,7 @@
             zoom: 1
         }
       
-        pdfjsLib.getDocument('http://127.0.0.1:8000/storage/ims/masterdocument/{{ $file }}').then((pdf) => {
+        pdfjsLib.getDocument('{{URL::to("/storage/ims/masterdocument/".$file)}}').then((pdf) => {
       
             myState.pdf = pdf;
             render();

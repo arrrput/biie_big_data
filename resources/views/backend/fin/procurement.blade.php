@@ -18,9 +18,8 @@
                     <div class="page-header">
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('IMS')}}</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('Master Document')}}</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>{{__('Document File')}}</span></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('FIN')}}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>{{__('Procurement')}}</span></li>
                             </ol>
                         </nav>
                     </div>
