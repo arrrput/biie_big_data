@@ -320,7 +320,7 @@
                                                 
                                                 
                                                 @can('contract aml-add')
-                                                <button class="btn btn-primary btn-sm pull-left mb-2" onclick="clearField()" data-toggle="modal" data-target="#contract_add"><i class="las la-plus"></i> Add Contract</button>
+                                                    <button class="btn btn-primary btn-sm pull-left mb-2" onclick="clearField()" data-toggle="modal" data-target="#contract_add"><i class="las la-plus"></i> Add Contract</button>
                                                 @endcan
                                     
                                                 <table id="table_halal" class="table table-hovered table-sm" style="width: 100%;">
@@ -356,7 +356,7 @@
                                                             {{__('Dismiss')}}
                                                         </button>
                                                     </div>
-                                                @endforeach
+                                            @endforeach
                                             @can('permit aml-add')
                                             <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#permit_add">
                                                 <i class="las la-plus sidemenu-right-icon"></i>Add Permit
