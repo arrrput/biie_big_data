@@ -5,6 +5,7 @@
     {!! Html::style('plugins/table/datatable/datatables.css') !!}
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('assets/css/basic-ui/tabs.css') !!}
+    {!! Html::style('assets/css/ui-elements/alert.css') !!}
 @endpush
 
 @section('content')
@@ -281,12 +282,18 @@
                                         <li class="nav-item">
                                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
                                                 <b>{{__('Contract')}}</b>
-                                                <span class="badge badge-danger">12</span>
+                                                @if ($total_n > 0)
+                                                    <span class="badge badge-danger">{{ $total_n }}</span>
+                                                @endif
+                                                
                                             </a>
                                         </li>
                                         <li class="nav-item ">
                                             <a class="nav-link" id="permit-tab" data-toggle="tab" href="#permit" role="tab" aria-controls="about" aria-selected="false">
-                                                <b> {{__('Permit')}}</b></a>
+                                                <b> {{__('Permit')}}</b>
+                                                @if ($total_permit > 0)
+                                                    <span class="badge badge-danger">{{ $total_permit }}</span></a>
+                                                @endif
                                         </li>
                                        
                                     </ul>
@@ -295,6 +302,23 @@
                                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                             {{-- content tenant --}}
                                             <div class="table-responsive mb-4">
+                                                
+                                                @foreach ( $list_date as $key => $value )
+                                                    
+                                                    <div class="alert alert-icon-button-left alert-light-warning text-warning mb-4" role="alert">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="{{__('Close')}}">
+                                                            <i class="las la-times text-warning"></i>
+                                                        </button>
+                                                        <i class="las la-exclamation-triangle text-warning font-20"></i>
+                                                        <strong>{{ $list_date[$key]['contract_number'] }} ({{ $list_date[$key]['title'] }})</strong> akan berakhir dalam {{ $list_date[$key]['due_date'] }}
+                                                        <button type="button" class="btn btn-sm bg-gradient-warning float-right mr-2 text-white" data-dismiss="alert" aria-label="{{__('Close')}}">
+                                                            {{__('Dismiss')}}
+                                                        </button>
+                                                    </div>
+                                                @endforeach
+
+                                                
+                                                
                                                 @can('contract aml-add')
                                                 <button class="btn btn-primary btn-sm pull-left mb-2" onclick="clearField()" data-toggle="modal" data-target="#contract_add"><i class="las la-plus"></i> Add Contract</button>
                                                 @endcan
@@ -320,6 +344,19 @@
                                         </div>
                                         <div class="tab-pane fade" id="permit" role="tabpanel" aria-labelledby="permit-tab">
                                             {{-- content man import --}}
+                                            @foreach ( $list_permit as $key => $value )
+                                                    
+                                                    <div class="alert alert-icon-button-left alert-light-warning text-warning mb-4" role="alert">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="{{__('Close')}}">
+                                                            <i class="las la-times text-warning"></i>
+                                                        </button>
+                                                        <i class="las la-exclamation-triangle text-warning font-20"></i>
+                                                        <strong>({{ $list_permit[$key]['title'] }})</strong> akan berakhir dalam {{ $list_permit[$key]['due_date'] }}
+                                                        <button type="button" class="btn btn-sm bg-gradient-warning float-right mr-2 text-white" data-dismiss="alert" aria-label="{{__('Close')}}">
+                                                            {{__('Dismiss')}}
+                                                        </button>
+                                                    </div>
+                                                @endforeach
                                             @can('permit aml-add')
                                             <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#permit_add">
                                                 <i class="las la-plus sidemenu-right-icon"></i>Add Permit
@@ -564,6 +601,7 @@ var table_halal, table_permit;
             $('#end_date').val(res.tgl_berakhir);
             $('#renewal_date').val(res.tgl_perpanjang);
             $('#publication_date').val(res.tgl_penerbitan);
+            $('#bussiness_owner').val(res.bussiness_owner);
             $('#doc').val(res.document);
 
             }

@@ -86,7 +86,7 @@
                                                         @endphp
                                                         @foreach ($sop as $list)
                                                         <tr>
-                                                            <td> {{ $no+1; }}</td>
+                                                            <td> {{ $no =$no+1; }}</td>
                                                             <td><a href="{{ route('ims.viewpdf',$list->document)  }}" target="_blank" class="text-primary"> {{ $list->no_document }} </a> </td>
                                                             <td> {{ $list->title }}</td>
                                                             <td> {{ $list->department }}</td>
@@ -156,7 +156,7 @@
                                                         @endphp
                                                         @foreach ($wi as $list)
                                                         <tr>
-                                                            <td> {{ $no+1; }}</td>
+                                                            <td> {{ $no =$no+1; }}</td>
                                                             <td><a href="{{ route('ims.viewpdf',$list->document) }}" target="_blank" class="text-primary"> {{ $list->no_document }} </a> </td>
                                                             <td> {{ $list->title }}</td>
                                                             <td> {{ $list->department }}</td>
@@ -226,7 +226,7 @@
                                                         @endphp
                                                         @foreach ($form as $list)
                                                         <tr>
-                                                            <td> {{ $no+1; }}</td>
+                                                            <td> {{ $no =$no+1; }}</td>
                                                             <td><a href="{{ route('ims.viewpdf',$list->document) }}" target="_blank" class="text-primary"> {{ $list->no_document }} </a> </td>
                                                             <td> {{ $list->title }}</td>
                                                             <td> {{ $list->department }}</td>
@@ -296,13 +296,13 @@
                                                         @endphp
                                                         @foreach ($edited as $list)
                                                         <tr>
-                                                            <td> {{ $no+1; }}</td>
+                                                            <td> {{ $no =$no+1; }}</td>
                                                             <td><a href="{{ $list->document }}" target="_blank" class="text-primary"> {{ $list->no_document }} </a> </td>
                                                             <td> {{ $list->title }}</td>
                                                             <td> {{ $list->department }}</td>
                                                             <td>
                                                                 @if (Auth()->user()->hasRole('ims') || Auth()->user()->hasRole('admin'))
-                                                                    <a href="{{ route('ims.viewpdf',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                    <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
                                                                         <i class="las la-download"></i>  Download
                                                                     </a>
                                                                 @else

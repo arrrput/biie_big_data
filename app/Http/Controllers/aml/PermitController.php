@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\aml;
 
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Models\aml\PermitTypeModel;
 use App\Http\Controllers\Controller;
 use App\Models\aml\PermitDocumentModel;
-use App\Models\aml\PermitTypeModel;
-use Illuminate\Http\Request;
 
 class PermitController extends Controller
 {
@@ -21,6 +22,14 @@ class PermitController extends Controller
             $datatables =  datatables()->of($sop);
             return $datatables
                   ->addColumn('action', 'backend/aml/action_permit')
+                  ->editColumn('end_date', function($data){ 
+                    $formatedDate = Carbon::createFromFormat('Y-m-d', $data->end_date)->format('d M Y'); 
+                    return $formatedDate; 
+                    })
+                    ->editColumn('issued_date', function($data){ 
+                        $formatedDate = Carbon::createFromFormat('Y-m-d', $data->issued_date)->format('d M Y'); 
+                        return $formatedDate; 
+                        })
                   ->addColumn('download','backend/aml/download_permit')
                   ->rawColumns(['action','download'])
                   ->addIndexColumn()

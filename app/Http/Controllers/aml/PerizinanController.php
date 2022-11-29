@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\aml\PerizinanModel;
 use App\Http\Controllers\Controller;
+use App\Models\aml\PermitDocumentModel;
 use App\Models\aml\PermitOwnerModel;
 use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Variable\Periodic;
 
@@ -38,7 +39,46 @@ class PerizinanController extends Controller
 
         $permit_owner =  PermitOwnerModel::all();
 
-        return view('backend.aml.perizinan',compact('permit_owner'));
+        $data = PerizinanModel::select('*')
+                ->whereDate('tgl_berakhir','>=', Carbon::today())
+                ->get();
+        $now = Carbon::now();
+        $list_date = [];
+        $b=0;
+        $key=0;
+        foreach($data as $date){
+            $beda_hari = $now->diffInDays($date->tgl_berakhir);
+            if($beda_hari < 180  ){
+                $list_date[$b] = ['title' => $date->type_perjanjian, 'selisih_hari' => $beda_hari, 'contract_number' => $date->no_perjanjian,
+                'due_date' => Carbon::parse($date->tgl_berakhir)->diffForHumans() ];
+                $b++;
+            }
+            $key++;
+        }
+        $total_n = count($list_date);
+
+
+        $permit = PermitDocumentModel::select('*')
+                ->whereDate('end_date','>=', Carbon::today())
+                ->get();
+        $now = Carbon::now();
+        $list_permit = [];
+        $permit_b=0;
+        $permit_key=0;
+        foreach($permit as $date){
+            $beda_hari = $now->diffInDays($date->end_date);
+            if($beda_hari < 180  ){
+                $list_permit[$b] = ['title' => $date->name, 'selisih_hari' => $beda_hari,
+                'due_date' => Carbon::parse($date->end_date)->diffForHumans() ];
+                $permit_b++;
+            }
+            $permit_key++;
+        }
+        $total_permit = count($list_permit);
+        $total_n = count($list_date);
+
+
+        return view('backend.aml.perizinan',compact('permit_owner','list_date', 'total_n','total_permit', 'list_permit'));
     }
 
     public function store(Request $request)
