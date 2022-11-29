@@ -279,10 +279,14 @@
                                 <div class="widget-content widget-content-area br-6">
                                     <ul class="nav nav-tabs mb-2 mt-2" id="normaltab" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Contract')}}</b></a>
+                                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                                                <b>{{__('Contract')}}</b>
+                                                <span class="badge badge-danger">12</span>
+                                            </a>
                                         </li>
                                         <li class="nav-item ">
-                                            <a class="nav-link" id="permit-tab" data-toggle="tab" href="#permit" role="tab" aria-controls="about" aria-selected="false"><b> {{__('Permit')}}</b></a>
+                                            <a class="nav-link" id="permit-tab" data-toggle="tab" href="#permit" role="tab" aria-controls="about" aria-selected="false">
+                                                <b> {{__('Permit')}}</b></a>
                                         </li>
                                        
                                     </ul>

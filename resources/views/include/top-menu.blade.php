@@ -233,6 +233,7 @@
             </a>
         </li>
 
+        @if ( Auth::user()->hasRole('Env') || Auth::user()->hasRole('admin'))
         <li class="menu {{ active_class(['env/*']) }} main-single-menu">
             <a href="{{ route('env') }}" aria-expanded="false" class="dropdown-toggle">
                 <div class="">
@@ -241,5 +242,6 @@
                 </div>
             </a>
         </li>
+        @endif
     </ul>
 </nav>

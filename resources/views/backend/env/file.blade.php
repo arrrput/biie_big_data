@@ -1,187 +1,108 @@
-@extends('layouts.backend')
-
-@section('title')
-    ENV File |
-@endsection
+@extends('layouts.master')
+    {!! Html::style('assets/css/ui-elements/breadcrumbs.css') !!}
+    {!! Html::style('plugins/table/datatable/datatables.css') !!}
+    {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
 
 @section('content')
 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-        
-                <div class="col-sm-12 mr-2">
-                    <ol class="breadcrumb float-sm-right ">
-                        <li class="breadcrumb-item">Environment</li>
-                        <li class="breadcrumb-item">File</li>
-                        <li class="breadcrumb-item">{{ $param }}</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-           
-            @if (session('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-               {{ session('message') }}.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            @endif
-        </div><!-- /.container-fluid -->
-    </div>
-
-    <section class="content">
-        <div class="container-fluid">
-        
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
+<!--  Navbar Starts / Breadcrumb Area  -->
+<div class="sub-header-container">
+    <header class="header navbar navbar-expand-sm">
+        <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+            <i class="las la-bars"></i>
+        </a>
+        <ul class="navbar-nav flex-row">
+            <li>
+                <div class="page-header">
+                    <nav class="breadcrumb-one" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('ENV')}}</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('Folder')}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span>{{__('File')}}</span></li>
+                        </ol>
+                    </nav>
                 </div>
-            @endif
-        @if (session('status'))
-          <div class="alert alert-primary alert-dismissible fade show" role="alert">
-             {{ session('status') }}.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          @endif
-         
+            </li>
+        </ul>
+    </header>
+</div>
+<!--  Navbar Ends / Breadcrumb Area  -->
 
-          <div class="col-12">
-            <div class="card card-success">
-                
-                {{-- card header --}}
-                <div class="card-header">
-                    <h3 class="card-title">{{ $title->name }} </h3>
+<!-- Main Body Starts -->
+<div class="layout-px-spacing">
+    <div class="layout-top-spacing mb-2">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="container p-0">
+                    <div class="row layout-top-spacing">
+                        <div class="col-lg-12 layout-spacing">
+                            <!-- Your Content Here -->
 
-                    <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    </div>
-                </div>
-                {{-- end card header --}}
-                <div class="card-body">
-                    
-                        <div class="row">
-                            
-                            <div class="col-sm-12">
-                                {{-- <h1 style="color: rgb(16, 145, 37);"><span><i class="fa fa-home"></i></span> {{ $data->title }}</h1>
-                                <h5><i class="fa fa-list"></i> {{ $data->estKategori->name }}  ({{ $data->estSubKategori->name }})</h5>
-                                <p> {{ $data->name }}</p>--}}
-                                
-                                @can('env-create')
-                                <button href="javascript:void(0)" class="btn btn-sm btn-success pull-right mb-3" id="add_file" data-toggle="modal" data-target="#estate-edit"><i class="fa fa-plus"></i> Add New File</button>
-                                @endcan
-                                
-                                <table class="table table-stripped" id="tbl_data">
-                                    <thead>
-                                        <tr>
-                                            <td>No</td>
-                                            <td>Kode</td>
-                                            <td>Name</td>
-                                            <td>Action</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach($list as $list)
-                                            <tr>
-                                                <td>{{$no++}}</td>
-                                                <td>{{ $list->kode_env }}</td>
-                                                <td>{{$list->name}} </td>
-                                                <td>
-                                                    @if (Auth::user()->id_department == 4 || Auth::user()->hasRole('admin'))
-                                                        <a href="{{ route('env.download', $list->file) }}" class="btn btn-sm btn-danger">
-                                                            <i class="fa fa-download"></i> Download 
-                                                        </a>
-                                                    @else 
-                                                        <button class="btn btn-sm btn-primary" > Request</button>
-                                                    @endif
-
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-
-
-
-                                {{-- <div class="modal fade bd-example-modal-xl" id="estate-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus"></i> Add Document</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        </div>
-                            
-                                        <form action="{{ route('estate.update_data') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <table class="table table-stripped" id="dynamicAddRemove-edit">
+                             <!-- BASIC -->
+                            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                <div class="widget-content widget-content-area br-6">
+                                    <h4 class="table-header"><i class="las la-leaf text-success"></i> {{__('Enviroment Document file')}}</h4>
+                                    <div class="table-responsive mb-4">
+                                        <hr>
+                                        
+                                        @can('env-create')
+                                            <button href="javascript:void(0)" class="btn btn-sm btn-primary pull-right mb-3" id="add_file" data-toggle="modal" data-target="#estate-edit"><i class="fa fa-plus"></i> Add New File</button>
+                                            @endcan
+                                            
+                                            <table class="table table-stripped" id="tbl_data">
+                                                <thead>
+                                                    <tr>
+                                                        <td>No</td>
+                                                        <td>Kode</td>
+                                                        <td>Name</td>
+                                                        <td>Action</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $no = 1;
+                                                    @endphp
+                                                    @foreach($list as $list)
                                                         <tr>
+                                                            <td>{{$no++}}</td>
+                                                            <td>{{ $list->kode_env }}</td>
+                                                            <td>{{$list->name}} </td>
                                                             <td>
-                                                                <input type="hidden" name="addMoreInputFields[0][kd_bangunan]" value="{{ $param }}"  id="ekd_est" class="form-control"/>
-                                                                <input type="file" name="addMoreInputFields[0][name]" placeholder="Nama Barang" class="form-control" />
-                                                            </td>
-                                                            <td>
-                                                                <select class="custom-select rounded-0" placeholder="" id="id_category" name="addMoreInputFields[0][id_category]">
-                                                                    <option disable>-- Pilih Kategori --</option>  
-                                                                    @foreach ($est_kategori as $kat)
-                                                                        <option value="{{ $kat->id }}">{{ $kat->name }}</option>
-                                                                    @endforeach 
-                                                                </select> 
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" name="addMoreInputFields[0][keterangan]" placeholder="Name" class="form-control" />
-                                                            </td> 
-                                                            <td>
-                                                                <button type="button" name="add" id="dynamic-ar-edit" class="btn btn-outline-primary"><i class="fas fa-plus"></i></button>
+                                                                @if (Auth::user()->id_department == 4 || Auth::user()->hasRole('admin'))
+                                                                    <a href="{{ route('env.download', $list->file) }}" class="btn btn-sm bg-gradient-warning text-white">
+                                                                        <i class="las la-download"></i> Download 
+                                                                    </a>
+                                                                @else 
+                                                                    <button class="btn btn-sm btn-primary" > Request</button>
+                                                                @endif
+
                                                             </td>
                                                         </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <input type="submit" value="Submit" class="btn btn-primary"/>  
-                                          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#estate-edit" data-dismiss="modal">Back</button>
-                                        </div>
-                                        </form>
-                                      </div>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+
                                     </div>
-                                </div> --}}
-                                
+                                </div>
                             </div>
                         </div>
-                    
+                    </div>
                 </div>
             </div>
-          </div>
-          
         </div>
-    
-            
-        
-            
-    </section>
-
+    </div>
 </div>
-@endsection
 
-@push('prepend-script')
+
+@endsection
+@push('plugin-scripts')
+   
+    {!! Html::script('assets/js/loader.js') !!}
+    {!! Html::script('plugins/table/datatable/datatables.js') !!}
+    
+@endpush
+
+@push('custom-scripts')
 <script>
 $(document).ready( function () {
     $('#tbl_data').DataTable();

@@ -189,8 +189,8 @@
                 
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-success" value="Submit" />
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
             </div>
             </div>
             </form>
@@ -333,9 +333,9 @@
                 
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-success" value="Submit" />
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-dismiss="modal">Add New File</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal" data-dismiss="modal">Add New File</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
             </div>
             </div>
             </form>
@@ -369,7 +369,7 @@
                                     <input type="text" name="addMoreInputFields[0][name]" placeholder="Name" class="form-control" />
                                 </td> 
                                 <td>
-                                    <button type="button" name="add" id="dynamic-ar-edit" class="btn btn-outline-primary"><i class="fas fa-plus"></i></button>
+                                    <button type="button" name="add" id="dynamic-ar-edit" class="btn btn-outline-primary"><i class="las la-plus"></i></button>
                                 </td>
                             </tr>
                         </table>
@@ -378,7 +378,7 @@
             </div>
             <div class="modal-footer">
               <input type="submit" value="Submit" class="btn btn-primary"/>  
-              <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#estate-edit" data-dismiss="modal">Back</button>
+              <button type="button" class="btn btn-white" data-toggle="modal" data-target="#estate-edit" data-dismiss="modal">Back</button>
             </div>
             </form>
           </div>
@@ -399,7 +399,7 @@
                                  <!-- BASIC -->
                                 <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                                     <div class="widget-content widget-content-area br-6">
-                                        <h4 class="table-header"><i class="lab la-medapps text-success"></i> {{__('Enviroment Document file')}}</h4>
+                                        <h4 class="table-header"><i class="las la-leaf text-success"></i> {{__('Enviroment Document file')}}</h4>
                                         <div class="table-responsive mb-4">
                                             <hr>
                                             @can('ims external-add')
@@ -574,7 +574,7 @@
         dataType: 'json',
         success: function(res){
            
-            document.getElementById("k_bangunan").innerHTML = res.kode_env;
+            // document.getElementById("k_bangunan").innerHTML = res.kode_env;
             kd = res.kode_bangunan;
             //document.getElementById("etitle").innerHTML = res.title;
             console.log(res.id);
@@ -626,10 +626,7 @@
                     type:"DELETE",
                     url: "{{ URL::to('/') }}/env/delete-file/"+id,
                     data: { id: id},
-                    // dataType: 'json',
                     success: function(res){
-                        // var oTable = $('#table_est').dataTable();
-                        // oTable.fnDraw(false);
                         table.ajax.reload();
                     }
                 });
