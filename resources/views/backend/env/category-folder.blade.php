@@ -50,8 +50,8 @@
                                                 <div class="file-manager-right-bottom">
                                                     <div class="mt-4 d-block">
                                                         @php $no=0; @endphp
-                                                        @foreach ($folder as $list)
                                                         <div class="folder-list">
+                                                            @foreach ($folder as $list)
                                                             <a href="{{ route('env.file.folder', $list->id_sub_category) }}">
                                                                 <div class="folder">
                                                                     <p class="main-title">{{ $list->total }} File</p>
@@ -62,10 +62,9 @@
                                                                     <p class="folder-name">{{__('10 Oct 2022')}}</p>
                                                                 </div>
                                                             </a>
-                                                            
+                                                            @endforeach
                                                         </div>
-                                                        @endforeach
-                                                        
+                                                       
                                                     </div>
                                                 </div>
                                             </div>

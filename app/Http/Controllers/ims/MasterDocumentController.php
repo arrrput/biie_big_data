@@ -54,6 +54,16 @@ class MasterDocumentController extends Controller
             $name_file = $request->input('doc');
         }
 
+        if($request->file('stamp') != null){
+            $data = $request->file('stamp');
+            $data->storeAs('public/ims/masterdocument', $data->hashName());
+            $name_stamp = $data
+            ->hashName();
+
+        }else{
+            $name_stamp = $request->input('doc_stamp');
+        }
+
         $fm = MasterDocumentModel::updateOrCreate(
             ['id' => $request->input('id')],
             [
@@ -62,7 +72,8 @@ class MasterDocumentController extends Controller
             'hirarki_doc' => $request->input('hirarki_doc'),
             'id_dept' => $request->input('id_dept'),
             'remark' => $request->input('remark'),
-            'document' => $name_file
+            'document' => $name_file,
+            'stamp' => $name_stamp
             ]
             
         );

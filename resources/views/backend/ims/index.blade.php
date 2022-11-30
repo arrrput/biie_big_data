@@ -54,6 +54,7 @@
                             <label for="exampleInputName" class="form-label">NO DOCUMENT<span class="text-danger">(*)</span></label>
                             <input type="hidden" name="id" id="id"/>
                             <input type="hidden" name="doc" id="doc"/>
+                            <input type="hidden" name="doc_stamp" id="doc_stamp"/>
                             {!! Form::text('no_document', null, array('id'=> 'no_document','placeholder' => 'No Document','class' => 'rounded-1 form-control', 'required')) !!}
                             @error('no_document')
                                     <span class="text-danger text-sm">{{ $message }}</span>                              
@@ -125,6 +126,16 @@
                             <label for="exampleInputName" class="form-label">REMARK</label>
                             <textarea name="remark" id="remark" class="form-control" placeholder="Remark" ></textarea>
                             @error('remark')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">UPLOAD STAMP</label>
+                            <input type="file" name="stamp" id="stamp" class="form-control"  />
+                            @error('stamp')
                                     <span class="text-danger text-sm">{{ $message }}</span>                              
                             @enderror
                         </div>
@@ -345,6 +356,7 @@
     function clearField(){
         $('#id').val('');
         $('#doc').val('');
+        $('#doc_stamp').val('');
         $('#no_document').val('');
         $('#title').val('');
         $('#hirarki_doc').prop('selectedIndex', 0);
@@ -367,6 +379,7 @@
             $('#hirarki_doc').val(res.hirarki_doc);
             $('#id_dept').val(res.id_dept);
             $('#doc').val(res.document);
+            $('#doc_stamp').val(res.stamp);
 
             }
         });
@@ -395,44 +408,6 @@
             }
     }
 
-    //Edit ManPower
-    function editMan(id){
-        $.ajax({
-        type:"GET",
-        url: "{{ URL::to('/') }}/crs/manpower/show/"+id,
-        dataType: 'json',
-        success: function(res){
-            $('#manpower_add').modal('show');
-            $('#id_manpower').val(res.id);
-            $('#total_tenant ').val(res.total_tenant );
-            $('#total_employee ').val(res.total_employee );
-            $('#total_foreign_worker').val(res.total_foreign_worker);
-
-            }
-        });
-    }
-
-    //delete man power
-   function deleteMan(id){
-            if (confirm("Delete this request?") == true) {
-                var id = id;
-                var token = $("meta[name='csrf-token']").attr("content");
-                // ajax
-                $.ajax({
-                    type:"DELETE",
-                    url: "{{ URL::to('/') }}/crs/manpower/delete/"+id,
-                    data: { id: id},
-                    // dataType: 'json',
-                    success: function(res){
-
-                        toastMixin.fire({
-                            animation: true,
-                            title: 'Delete was successfully!'
-                        });
-                        table_tenant.ajax.reload();
-                    }
-                });
-            }
-    }
+    
 </script>
 @endpush
