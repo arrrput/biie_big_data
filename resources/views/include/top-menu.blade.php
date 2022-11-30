@@ -234,14 +234,28 @@
         </li>
 
         @if ( Auth::user()->hasRole('Env') || Auth::user()->hasRole('admin'))
-        <li class="menu {{ active_class(['env/*']) }} main-single-menu">
-            <a href="{{ route('env') }}" aria-expanded="false" class="dropdown-toggle">
+
+        <li class="menu {{ active_class(['env/*','env']) }} main-single-menu">
+            <a href="#starter-kit" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <div class="">
                     <i class="la la-leaf"></i>
-                    <span>ENV</span>
+                    <span> {{__('ENV')}}</span>
+                </div>
+                <div>
+                    <i class="las la-angle-right sidemenu-right-icon"></i>
                 </div>
             </a>
+            <ul class="collapse submenu list-unstyled" id="starter-kit" data-parent="#accordionExample">
+                <li class=" {{ active_class(route('env')) }}">
+                    <a data-active="{{ is_active_route(['env']) }}" href="{{ route('env') }}"> {{__('Environment Document')}} </a>
+                </li>
+                <li class=" {{ active_class(route('env.folder')) }}">
+                    <a data-active="{{ is_active_route(['/env/folder']) }}" href="{{ route('env.folder') }}"> {{__('Environment Folder')}} </a>
+                </li>
+            </ul>
         </li>
+
         @endif
+        
     </ul>
 </nav>

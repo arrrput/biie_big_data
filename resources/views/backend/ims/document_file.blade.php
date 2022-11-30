@@ -297,7 +297,7 @@
                                                         @foreach ($edited as $list)
                                                         <tr>
                                                             <td> {{ $no =$no+1; }}</td>
-                                                            <td><a href="{{ $list->document }}" target="_blank" class="text-primary"> {{ $list->no_document }} </a> </td>
+                                                            <td> {{ $list->no_document }} </td>
                                                             <td> {{ $list->title }}</td>
                                                             <td> {{ $list->department }}</td>
                                                             <td>

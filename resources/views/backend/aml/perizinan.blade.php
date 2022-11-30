@@ -292,8 +292,9 @@
                                             <a class="nav-link" id="permit-tab" data-toggle="tab" href="#permit" role="tab" aria-controls="about" aria-selected="false">
                                                 <b> {{__('Permit')}}</b>
                                                 @if ($total_permit > 0)
-                                                    <span class="badge badge-danger">{{ $total_permit }}</span></a>
+                                                    <span class="badge badge-danger">{{ $total_permit }}</span>
                                                 @endif
+                                            </a>
                                         </li>
                                        
                                     </ul>
