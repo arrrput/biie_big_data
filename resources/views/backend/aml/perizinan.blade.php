@@ -330,8 +330,9 @@
                                                             <th scope="col" style="width: 15px;">No</th>
                                                             <th scope="col">Contract Number</th>
                                                             <th scope="col">Contract Type</th>
+                                                            <th scope="col">Partner</th>
                                                             <th scope="col">Description</th>
-                                                            <th scope="col">End Date</th>
+                                                            <th scope="col">Start End Date</th>
                                                             <th scope="col">Document</th>
                                                             <th class="no-content"></th>
                                                         </tr>
@@ -444,6 +445,7 @@ var table_halal, table_permit;
                 {data:'no_perjanjian', name : 'no_perjanjian',orderable: true, searchable: true},
                 {data: 'type_perjanjian', name: 'type_perjanjian', orderable: true, searchable: true},  
                 {data: 'mitra', name: 'mitra', orderable: true, searchable: true},  
+                {data: 'deskripsi', name: 'deskripsi', orderable: true, searchable: true},  
                 {data: 'tgl_berakhir', name: 'tgl_berakhir', orderable: true, searchable: true},  
                 {data: 'download', name: 'download'},  
                 {data: 'action', name: 'action'},

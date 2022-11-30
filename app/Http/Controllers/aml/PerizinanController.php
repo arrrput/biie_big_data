@@ -27,8 +27,9 @@ class PerizinanController extends Controller
             $datatables =  datatables()->of($sop);
             return $datatables
                 ->editColumn('tgl_berakhir', function($data){ 
+                    $start_date = Carbon::createFromFormat('Y-m-d', $data->tgl_penerbitan)->format('d M Y');
                     $formatedDate = Carbon::createFromFormat('Y-m-d', $data->tgl_berakhir)->format('d M Y'); 
-                    return $formatedDate; 
+                    return  $start_date.' - '.$formatedDate; 
                 })
                   ->addColumn('action', 'backend/aml/action_perizinan')
                   ->addColumn('download','backend/aml/download_contract')
