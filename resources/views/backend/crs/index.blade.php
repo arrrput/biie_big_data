@@ -7,6 +7,7 @@
     {!! Html::style('plugins/table/datatable/datatables.css') !!}
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('assets/css/basic-ui/tabs.css') !!}
+    {!! Html::style('plugins/dropify/dropify.min.css') !!}
 @endpush
 
 @section('content')
@@ -305,6 +306,152 @@
     </div>
 
 
+    {{-- Modal Tenant --}}
+    <div class="modal fade bd-example-modal-xl" id="tenantdb_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="javascript:void(0)" id="tenant_db_add" name="tenant_db_add" method="POST"  enctype="multipart/form-data">                   
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title block text-primary" id="no_emp">
+                    <i class="fa fa-plus"></i> 
+                    Add Tenant Database</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">                            
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">COMPANY NAME <span class="text-danger">(*)</span> </label>
+                            <input type="hidden" name="id_db" id="id_db"/>
+                            <input type="hidden" name="img" id="img"/>
+                            {!! Form::text('company', null, array('id'=> 'company','placeholder' => 'Company Name','class' => 'rounded-1 form-control')) !!}
+                            @error('job_title')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">TYPE OF PRODUCTS <span class="text-danger">(*)</span> </label>
+                            {!! Form::text('type_product', null, array('id'=> 'type_product','placeholder' => 'Type Of Product','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('type_product')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">OCCUPIED FACTORY <span class="text-danger">(*)</span> </label>
+                            {!! Form::text('occupied_factory', null, array('id'=> 'occupied_factory','placeholder' => 'Occupied Factory','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('occupied_factory')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">CONTACT NUMBER <span class="text-danger">(*)</span> </label>
+                            {!! Form::text('contact_no', null, array('id'=> 'contact_no','placeholder' => 'Contact Number','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('contact_no')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">PIC <span class="text-danger">(*)</span> </label>
+                            {!! Form::text('pic', null, array('id'=> 'pic','placeholder' => 'PIC','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('pic')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">DESIGNATION <span class="text-danger">(*)</span> </label>
+                            {!! Form::text('designation', null, array('id'=> 'designation','placeholder' => 'Designation','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('designation')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">Email <span class="text-danger">(*)</span> </label>
+                            {!! Form::text('email', null, array('id'=> 'email','placeholder' => 'Email','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('designation')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">HR MANAGER <span class="text-danger">(*)</span> </label>
+                            {!! Form::text('hr_manager', null, array('id'=> 'hr_manager','placeholder' => 'HR Manager','class' => 'rounded-1 form-control', 'required')) !!}
+                            @error('designation')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">START DATE <span class="text-danger">(*)</span> </label>
+                            {!! Form::date('start_date', null, array('id'=> 'start_date','placeholder' => 'HR Manager','class' => 'date-picker rounded-1 form-control', 'required')) !!}
+                            @error('start_date')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">REMARK </label>
+                            <textarea name="remark" id="remark" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Remark"></textarea>
+                            @error('remark')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">TOTAL EMPLOYEE </label>
+                            {!! Form::number('total_employee', null, array('id'=> 'total_employee','placeholder' => 'Total Employee','class' => 'rounded-1 form-control')) !!}
+                            @error('total_employee')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                            <label for="exampleInputName" class="form-label">UPLOAD PHOTO </label>
+                            <input type="file" name="image" class="rounded-1 form-control" />
+                            
+                        </div>
+                    </div>
+
+                </div>
+            
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btn-save-recruitment" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
+
     <!-- Main Body Starts -->
     <div class="">
         <div class="layout-top-spacing">
@@ -411,7 +558,29 @@
                                         </div>
 
                                         <div class="tab-pane fade" id="tenan" role="tabpanel" aria-labelledby="tenan-tab">
+                                            
+                                            {{-- content man power --}}
+                                            <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#tenantdb_add">
+                                                <i class="las la-plus sidemenu-right-icon"></i>Add Tenant
+                                            </button>
 
+                                            <table id="table_db" class="table table-hover" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('No')}}</th>
+                                                    <th>{{__('Company')}}</th>
+                                                    <th>{{__('Type of Product')}}</th>
+                                                    <th>{{__('Occupied Factory')}}</th>
+                                                    <th>{{__('Start Date')}}</th>
+                                                    <th>{{__('email')}}</th>
+                                                    <th class="no-content"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                       
+                                                </tbody>
+                                                
+                                            </table>
                                         </div>
                                         
                                     </div>
@@ -444,7 +613,7 @@
 
     var SITEURL = '{{URL::to('')}}';
 
-    var table_tenant, table_manpower, table_fas;
+    var table_tenant, table_manpower, table_fas, table_db;
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -484,6 +653,37 @@
                 {data: 'description', name: 'description', orderable: true, searchable: true},            
                 {data:'target_completion', name : 'target_completion',orderable: true, searchable: false},
                 {data:'status', name : 'status',orderable: true, searchable: false},
+                {data:'action', name : 'action',orderable: true, searchable: false},
+            //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
+            ]
+        }); 
+
+                // table tenant database
+        table_db = $('#table_db').DataTable({
+        "language": {
+            "paginate": {
+            "previous": "<i class='las la-angle-left'></i>",
+            "next": "<i class='las la-angle-right'></i>"
+            }
+        },
+        processing: true,
+        serverSide: true,
+        
+        ajax: {
+            
+            url: "{{ route('crs.tenant_db') }}",
+            type: "GET"
+            
+        },
+            columns: [
+                // {data: 'rownum', name: 'id', orderable: false},
+                // let name = 'ee'
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                {data:'company', name : 'company',orderable: true, searchable: true},
+                {data: 'type_product', name: 'type_product', orderable: true, searchable: true},  
+                {data: 'occupied_factory', name: 'occupied_factory', orderable: true, searchable: true},            
+                {data:'start_date', name : 'start_date',orderable: true, searchable: false},
+                {data:'email', name : 'email',orderable: true, searchable: false},
                 {data:'action', name : 'action',orderable: true, searchable: false},
             //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
             ]
@@ -596,6 +796,38 @@
         })
     });
 
+    // tenant database add
+    $('#tenant_db_add').submit(function(e) {
+        // document.getElementById("hrga_title").innerHTML = '<i class="fas fa-plus"></i> Add Employee';
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+        type:'POST',
+        url: "{{ route('crs.tenant_data.add')}}",
+        data: formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `Data succesfully!`,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            if(data.success == 1){
+                $("#tenantdb_add").modal('hide');
+                table_db.ajax.reload();
+                
+            }
+            
+        },
+            error: function(data){
+                console.log(data);
+            }
+        })
+    });
 
     //Edit Tenant
     function editRequest(id){
@@ -661,6 +893,34 @@
         });
     }
 
+    //Edit tenant database
+    function editDb(id){
+        $.ajax({
+        type:"GET",
+        url: "{{ URL::to('/') }}/crs/tenant_data/show/"+id,
+        dataType: 'json',
+        success: function(res){
+            $('#tenantdb_add').modal('show');
+            $('#id_db').val(res.id);
+            $('#company ').val(res.company );
+            $('#img ').val(res.image );
+            $('#type_product').val(res.type_product);
+            $('#start_date').val(res.start_date);
+            $('#occupied_factory').val(res.occupied_factory);
+            $('#contact_no').val(res.contact_no);
+            $('#pic').val(res.pic);
+            $('#designation').val(res.designation);
+            $('#email').val(res.email);
+            $('#hr_manager').val(res.hr_manager);
+            $('#remark').val(res.remark);
+            $('#total_employee').val(res.total_employee);
+
+            }
+        });
+    }
+
+
+
     //delete man power
    function deleteMan(id){
             if (confirm("Delete this request?") == true) {
@@ -684,6 +944,29 @@
             }
     }
 
+    //delete man power
+   function deleteDb(id){
+            if (confirm("Delete this item?") == true) {
+                var id = id;
+                var token = $("meta[name='csrf-token']").attr("content");
+                // ajax
+                $.ajax({
+                    type:"DELETE",
+                    url: "{{ URL::to('/') }}/crs/tenant_data/delete/"+id,
+                    data: { id: id},
+                    // dataType: 'json',
+                    success: function(res){
+
+                        toastMixin.fire({
+                            animation: true,
+                            title: 'Delete was successfully!'
+                        });
+                        table_db.ajax.reload();
+                    }
+                });
+            }
+    }
+
     function clearField(){
         $('#id').val('');
         $('#id').val('');
@@ -700,6 +983,21 @@
         $('#total_tenant ').val('');
         $('#total_employee ').val('');
         $('#total_foreign_worker').val('');
+
+        $('#id_db').val('');
+        $('#img').val('');
+        $('#image').val('');
+        $('#company ').val('');
+        $('#type_product').val('');
+        $('#start_date').val('');
+        $('#occupied_factory').val('');
+        $('#contact_no').val('');
+        $('#pic').val('');
+        $('#designation').val('');
+        $('#email').val('');
+        $('#hr_manager').val('');
+        $('#remark').val('');
+        $('#total_employee').val('');
     }
 </script>
 @endpush

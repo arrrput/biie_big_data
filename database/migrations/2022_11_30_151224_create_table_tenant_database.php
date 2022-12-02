@@ -15,7 +15,18 @@ return new class extends Migration
     {
         Schema::create('crs_tenant_database', function (Blueprint $table) {
             $table->id();
-            // $table->
+            $table->string('company');
+            $table->string('image')->default('tenant.png')->nullable();
+            $table->string('type_product');
+            $table->date('start_date');
+            $table->string('occupied_factory');
+            $table->string('contact_no')->nullable();
+            $table->string('pic');
+            $table->string('designation');
+            $table->string('email');
+            $table->string('hr_manager');
+            $table->string('remark')->nullable();
+            $table->string('total_employee')->nullable();
             $table->timestamps();
         });
     }

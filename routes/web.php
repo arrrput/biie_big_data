@@ -7,6 +7,7 @@ use App\Http\Controllers\bdv\BievOccupancyController;
 use App\Http\Controllers\cdd\CddController;
 use App\Http\Controllers\crs\InvestorVisitController;
 use App\Http\Controllers\crs\TenantController;
+use App\Http\Controllers\crs\TenantDatabseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\env\EnvController;
 use App\Http\Controllers\est\EstDormitoryController;
@@ -42,6 +43,7 @@ use App\Http\Controllers\pod\PODController;
 use App\Http\Controllers\pod\PortFacilityController;
 use App\Http\Controllers\pod\SbnpController;
 use App\Http\Controllers\UserController;
+use App\Models\crs\TenantDatabaseModel;
 use App\Models\hrga\EmployeeModel;
 use Illuminate\Support\Facades\Route;
 
@@ -359,6 +361,12 @@ Route::group(['middleware' => ['auth']], function() {
         // Investor
         Route::get('visitor',[InvestorVisitController::class, 'index'])->name('crs.investor_add');
         Route::post('add_visitor',[InvestorVisitController::class, 'store'])->name('crs.investor_add.store');
+
+        // tenant database
+        Route::get('tenant_data',[TenantDatabseController::class, 'index'])->name('crs.tenant_db');
+        Route::post('tenant_data/add', [TenantDatabseController::class, 'store'])->name('crs.tenant_data.add');
+        Route::get('tenant_data/show/{id}', [TenantDatabseController::class, 'show'])->name('crs.tenant_data.show');
+        Route::delete('tenant_data/delete/{id}', [TenantDatabseController::class, 'destroy'])->name('crs.tenant_data.delete');
     });
 
     Route::prefix("pod")->group(function(){
