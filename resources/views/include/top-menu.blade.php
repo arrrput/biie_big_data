@@ -14,7 +14,7 @@
             <a href="#" class="dropdown-toggle collapsed" data-toggle="collapse" aria-expanded="false">
                 <div class="">
                     <i class="las la-file-code"></i>
-                    <span>{{__('IT')}}</span>
+                    <span>{{__('IT & MEDIA')}}</span>
                 </div>
                 <div>
                     <i class="las la-angle-right sidemenu-right-icon"></i>
@@ -50,10 +50,13 @@
                     <i class="las la-angle-right sidemenu-right-icon"></i>
                 </div>
             </a>
+
             <ul class="collapse submenu list-unstyled" id="pages" data-parent="#accordionExample">
+                @if ( Auth::user()->hasRole('est building') || Auth::user()->hasRole('admin'))
                 <li class=" {{ active_class(['estate/list/factory']) }}">
                     <a data-active="{{ is_active_route(['estate/list/factory']) }}" href="{{ url('/estate/list/factory') }}"> {{__('Building Status')}} </a>
                 </li>
+                @endif
                 <li class="menu {{ active_class(['estate/utilities/*'])  }}">
                     <a href="#other_pages_one" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                         <div class="">
@@ -77,14 +80,32 @@
                 
             </ul>
         </li>
+
+       
         <li class="menu {{ active_class(['crs/*']) }} main-single-menu">
-            <a href="{{ route('crs') }}" aria-expanded="false" class="dropdown-toggle">
+            <a href="#mapscharts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <div class="">
                     <i class="las la-file-alt"></i>
                     <span>CRS</span>
                 </div>
+                <div>
+                    <i class="las la-angle-right sidemenu-right-icon"></i>
+                </div>
             </a>
+
+            <ul class="collapse submenu list-unstyled" id="starter-kit" data-parent="#accordionExample">
+                @if ( Auth::user()->hasRole('crs') || Auth::user()->hasRole('admin'))
+                <li class=" {{ active_class(route('crs')) }}">
+                    <a data-active="{{ is_active_route(['crs/index']) }}" href="{{ route('crs') }}"> {{__('CRS Database')}} </a>
+                </li>
+                @endif
+                <li class=" {{ active_class(route('crs.alltenant')) }}">
+                    <a data-active="{{ is_active_route(['crs/alltenant']) }}" href="{{ route('crs.alltenant') }}"> {{__('All Tenant')}} </a>
+                </li>
+
+            </ul>
         </li>
+       
         
         <li class="menu {{ active_class(['hrga/*']) }} main-single-menu">
             <a href="#mapscharts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -256,6 +277,44 @@
         </li>
 
         @endif
-        
+
+        @if ( Auth::user()->hasRole('hse') || Auth::user()->hasRole('admin'))
+        <li class="menu {{ active_class(['hse/*']) }} main-single-menu">
+            <a href="{{ route('hse') }}" aria-expanded="false" class="dropdown-toggle">
+                <div class="">
+                    <i class="las la-atom"></i>
+                    <span>HSE</span>
+                </div>
+            </a>
+        </li>
+        @endif
+
+        @if ( Auth::user()->hasRole('ssd') || Auth::user()->hasRole('admin'))
+        <li class="menu {{ active_class(['ssd/*']) }} main-single-menu">
+            <a href="#" aria-expanded="false" data-toggle="collapse" class="dropdown-toggle">
+                <div class="">
+                    <i class="las la-user-shield"></i>
+                    <span>SSD 
+                    </span> 
+                </div>
+                <div>
+                    <i class="las la-angle-right sidemenu-right-icon"></i>
+                </div>
+            </a>
+
+            <ul class="collapse submenu list-unstyled" id="mapscharts" data-parent="#accordionExample">
+                
+                <li class=" {{ active_class(['ssd/firesafety']) }}">
+                    <a data-active="{{ is_active_route(['ssd/firesafety']) }}" href="{{ url('/ssd/firesafety') }}"> {{__('Fire Safety')}} </a>
+                </li>
+
+                <li class=" {{ active_class(['ssd/security']) }}">
+                    <a data-active="{{ is_active_route(['ssd/security']) }}" href="{{ url('/ssd/security') }}"> {{__('Security')}} </a>
+                </li>
+
+            </ul>
+        </li>
+        @endif
+       
     </ul>
 </nav>

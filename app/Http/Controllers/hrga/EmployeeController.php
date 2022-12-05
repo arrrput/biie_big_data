@@ -20,6 +20,13 @@ class EmployeeController extends Controller
 {
     //
 
+    //permission
+    function __construct()
+    {
+         
+         $this->middleware('permission:hrga -manage', ['only' => ['index']]);
+    }
+
     public function index(Request $request){
 
 

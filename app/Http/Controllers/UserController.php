@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $data = User::orderBy('id','DESC')->paginate(15);
         return view('backend.users.index',compact('data'));
     }
     

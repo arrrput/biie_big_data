@@ -36,15 +36,15 @@ class AppServiceProvider extends ServiceProvider
         Carbon::setLocale('id');
         date_default_timezone_set('Asia/Jakarta');
 
-        $kategori = KategoriModel::all();
-        $request_download = EstateDownload::where('status','=', 0)
-                            ->count();
+        // $kategori = KategoriModel::all();
+        // $request_download = EstateDownload::where('status','=', 0)
+        //                     ->count();
         $ims_req = DownloadMaster::where('status',0)->count();
 
-        // ims
+        // // ims
         view()->share('ims_req', $ims_req);
-        view()->share('shareData', $kategori);
-        view()->share('req_download', $request_download);
+        // view()->share('shareData', $kategori);
+        // view()->share('req_download', $request_download);
 
         view()->composer('layouts.master', function($view) {
             $theme = Cookie::get('theme');
@@ -64,9 +64,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with('theme', $theme);
         });
 
-        if(env('APP_ENV')!== 'local'){
-            URL::forceScheme('https');
-        }
+        // if(env('APP_ENV')!== 'local'){
+        //     URL::forceScheme('https');
+        // }
         
     }
 }

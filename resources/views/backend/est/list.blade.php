@@ -589,9 +589,9 @@
                                         <li class="nav-item ">
                                             <a class="nav-link" id="export-tab" data-toggle="tab" href="#export" role="tab" aria-controls="export" aria-selected="false"><b> {{__('Town Center')}}</b></a>
                                         </li>
-                                        <li class="nav-item ">
+                                        {{-- <li class="nav-item ">
                                             <a class="nav-link" id="infra-tab" data-toggle="tab" href="#infra" role="tab" aria-controls="infra" aria-selected="false"><b> {{__('Infrastructure')}}</b></a>
-                                        </li>
+                                        </li> --}}
                                         
 
                                     </ul>

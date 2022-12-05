@@ -29,6 +29,12 @@ class FileEstController extends Controller
 {
     //
 
+    function __construct()
+    {
+         $this->middleware('permission:est building-manage', ['only' => ['list']]);
+         
+    }
+
     public function index(){
 
         $folder = DB::table('table_bangunan')->select(array('title', DB::raw('COUNT(name) as total')) )

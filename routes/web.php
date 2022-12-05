@@ -33,6 +33,7 @@ use App\Http\Controllers\hrga\ContractEmployeeController;
 use App\Http\Controllers\hrga\EmpDormController;
 use App\Http\Controllers\hrga\EmployeeController;
 use App\Http\Controllers\hrga\RecruitmentController;
+use App\Http\Controllers\hse\HseController;
 use App\Http\Controllers\ims\AksesDocumentController;
 use App\Http\Controllers\ims\ExternalDocController;
 use App\Http\Controllers\ims\MasterDocumentController;
@@ -42,6 +43,8 @@ use App\Http\Controllers\pod\ImportCargoController;
 use App\Http\Controllers\pod\PODController;
 use App\Http\Controllers\pod\PortFacilityController;
 use App\Http\Controllers\pod\SbnpController;
+use App\Http\Controllers\ssd\FireAlarmController;
+use App\Http\Controllers\ssd\FiresafetyController;
 use App\Http\Controllers\UserController;
 use App\Models\crs\TenantDatabaseModel;
 use App\Models\hrga\EmployeeModel;
@@ -233,6 +236,18 @@ Route::group(['middleware' => ['auth']], function() {
         // delete file
         Route::delete('delete-file/{id}',[SsdFileController::class, 'destroy'])->name('gmo.delete.file');
         Route::delete('delete-data/{id}', [SsdFileController::class, 'deleteData'])->name('gmo.delete.data');
+
+        // firesafety
+        Route::get('/firesafety', [FiresafetyController::class, 'index'])->name('ssd.firesafety');
+        Route::post('/firesafety/add', [FiresafetyController::class, 'store'])->name('ssd.firesafety.add');
+        Route::get('/firesafety/show/{id}', [FiresafetyController::class, 'show'])->name('ssd.firesafety.show');
+        Route::delete('/firesafety/delete/{id}', [FiresafetyController::class, 'destroy'])->name('ssd.firesafety.delete');
+
+        // fireAlarm
+        Route::get('/firealarm', [FireAlarmController::class, 'index'])->name('ssd.firealarm');
+        Route::post('/firealarm/add', [FireAlarmController::class, 'store'])->name('ssd.firealarm.add');
+        Route::get('/firealarm/show/{id}', [FireAlarmController::class, 'show'])->name('ssd.firealarm.show');
+        Route::delete('/firealarm/delete/{id}', [FireAlarmController::class, 'destroy'])->name('ssd.firealarm.delete');
      }); 
 
     //  GMO Route
@@ -367,6 +382,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('tenant_data/add', [TenantDatabseController::class, 'store'])->name('crs.tenant_data.add');
         Route::get('tenant_data/show/{id}', [TenantDatabseController::class, 'show'])->name('crs.tenant_data.show');
         Route::delete('tenant_data/delete/{id}', [TenantDatabseController::class, 'destroy'])->name('crs.tenant_data.delete');
+
+        //tenant list
+        Route::get('alltenant',[TenantDatabseController::class, 'list'])->name('crs.alltenant');
     });
 
     Route::prefix("pod")->group(function(){
@@ -446,6 +464,16 @@ Route::group(['middleware' => ['auth']], function() {
         
     });
 
+    //  HSE Route
+    Route::prefix("hse")->group(function(){
+
+        Route::get('index',[HseController::class, 'index'])->name('hse');
+        Route::post('incident/add', [HseController::class, 'store'])->name('hse.incident.add');
+        Route::get('incident/show/{id}', [HseController::class, 'show'])->name('hse.incident.show');
+        Route::delete('incident/delete/{id}', [HseController::class, 'destroy'])->name('hse.incident.delete');
+    });
+
+    
 });
 
 

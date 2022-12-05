@@ -670,6 +670,9 @@
                                             <li class="nav-item ">
                                                 <a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="false">{{__('Media')}}</a>
                                             </li>
+                                            <li class="nav-item ">
+                                                <a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="false">{{__('To do List')}}</a>
+                                            </li>
                                         </ul>
                                         <div class="tab-content" id="normaltabContent">
                                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">

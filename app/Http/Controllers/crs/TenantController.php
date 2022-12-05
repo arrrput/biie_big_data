@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class TenantController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('role:crs||admin', ['only' => ['index']]);
+         
+    }
     //
     public function index(Request $request){
 

@@ -91,4 +91,10 @@ class TenantDatabseController extends Controller
                 'message' => 'Data deleted successfully!'
             ]);
     }
+
+    public function list(){
+
+        $list = TenantDatabaseModel::all();
+        return view('backend.crs.all_tenant', compact('list'));
+    }
 }
