@@ -28,6 +28,7 @@ use App\Http\Controllers\fin\HalalController;
 use App\Http\Controllers\fin\LavController;
 use App\Http\Controllers\fin\ProcurementController;
 use App\Http\Controllers\gmo\GmoListController;
+use App\Http\Controllers\gmo\ITRequestController;
 use App\Http\Controllers\gmo\UserListController;
 use App\Http\Controllers\hrga\ContractEmployeeController;
 use App\Http\Controllers\hrga\EmpDormController;
@@ -282,6 +283,14 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('user_list/show/{id}', [UserListController::class, 'show'])->name('gmo.list.show');
         Route::delete('user_list/delete/{id}', [UserListController::class, 'destroy'])->name('gmo.user_list.delete');
         Route::get('export/user_list',[UserListController::class, 'export_excel'])->name('gmo.user_list.export');
+
+        // IT Request
+        Route::get('it_request', [ITRequestController::class, 'index'])->name('gmo.it_request');
+        Route::post('it_request/add', [ITRequestController::class, 'store'])->name('gmo.it_request.add');
+        Route::get('it_request/show/{id}', [ITRequestController::class, 'show'])->name('gmo.it_request.show');
+        Route::delete('it_request/delete/{id}', [ITRequestController::class, 'destroy'])->name('gmo.it_request.delete');
+        Route::get('list_request', [ITRequestController::class, 'requestList'])->name('gmo.list_request');
+        Route::post('it_request/update_progress', [ITRequestController::class, 'updateProgress'])->name('gmo.it_request.update_progress');
 
      }); 
 

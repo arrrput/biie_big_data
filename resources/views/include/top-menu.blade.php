@@ -16,15 +16,25 @@
                     <i class="las la-file-code"></i>
                     <span>{{__('IT & MEDIA')}}</span>
                 </div>
+                <div class="menu-badge-container">
+                    <span class="menu-badge badge-danger">{{__('1')}}</span>
+                </div>
                 <div>
                     <i class="las la-angle-right sidemenu-right-icon"></i>
                 </div>
             </a>
-            @can('itlist-manage')
+            
             <ul class="collapse submenu list-unstyled" id="apps" data-parent="#accordionExample">
-                
+                <li class=" {{ active_class(['gmo/it_request']) }}">
+                    <a data-active="{{ is_active_route(['gmo/it_request']) }}" href="{{ url('/gmo/it_request') }}"> {{__('Form IT Request')}} </a>
+                </li>
+                @can('itlist-manage')
+                    <li class=" {{ active_class(['gmo/list_request']) }}">
+                        <a data-active="{{ is_active_route(['gmo/list_request']) }}" href="{{ url('/gmo/list_request') }}"> {{__('List Request User')}} </a>
+                    </li>
+
                     <li class=" {{ active_class(['gmo/list']) }}">
-                        <a data-active="{{ is_active_route(['gmo/list']) }}" href="{{ url('/gmo/list') }}"> {{__('Add List')}} </a>
+                        <a data-active="{{ is_active_route(['gmo/list']) }}" href="{{ route('gmo.it_request') }}"> {{__('Add List')}} </a>
                     </li>
                     <li class=" {{ active_class(['gmo']) }}">
                         <a data-active="{{ is_active_route(['gmo']) }}" href="{{ url('/gmo') }}"> {{__('Add document')}} </a>
@@ -36,9 +46,10 @@
     
                     <li class=" {{ active_class(['apps/contacts']) }}">
                         <a data-active="{{ is_active_route(['apps/contacts']) }}" href="#"> {{__('IT Request Download')}} </a>
-                    </li>                
+                    </li>  
+                @endcan              
             </ul>
-            @endcan
+            
         </li>
         <li class="menu {{ active_class(['estate/*']) }} main-single-menu">
             <a href="#pages" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">

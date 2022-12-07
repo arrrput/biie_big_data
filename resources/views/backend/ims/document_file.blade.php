@@ -92,9 +92,15 @@
                                                             <td> {{ $list->department }}</td>
                                                             <td>
                                                                 @if (Auth()->user()->hasRole('ims') || Auth()->user()->hasRole('admin'))
+                                                                    @if ($list->stamp != '')
                                                                     <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
                                                                         <i class="las la-download"></i>  Download
                                                                     </a>
+                                                                    @else
+                                                                    <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                        <i class="las la-download"></i>  Download
+                                                                    </a>
+                                                                    @endif
                                                                 @else
                                                                     @php
                                                                         $cek = DB::table('ims_download_master')->select('*')
@@ -106,9 +112,15 @@
                                                                     @if ($cek != null)
                                                                        
                                                                        @if ($cek->status ==1)
-                                                                            <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
-                                                                                <i class="las la-download"></i>  Download
-                                                                            </a>
+                                                                            @if ($list->stamp != '')
+                                                                                <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                                    <i class="las la-download"></i>  Download
+                                                                                </a>
+                                                                            @else
+                                                                                <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                                    <i class="las la-download"></i>  Download
+                                                                                </a>
+                                                                            @endif
                                                                        @elseif ($cek->status ==0)
                                                                             <a href="#" class="btn btn-sm bg-gradient-dark   text-white">
                                                                                 <i class="las la-clock"></i>  Waiting
@@ -162,9 +174,15 @@
                                                             <td> {{ $list->department }}</td>
                                                             <td>
                                                                 @if (Auth()->user()->hasRole('ims') || Auth()->user()->hasRole('admin'))
+                                                                    @if ($list->stamp != '')
                                                                     <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
                                                                         <i class="las la-download"></i>  Download
                                                                     </a>
+                                                                    @else
+                                                                    <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                        <i class="las la-download"></i>  Download
+                                                                    </a>
+                                                                    @endif
                                                                 @else
                                                                     @php
                                                                         $cek = DB::table('ims_download_master')->select('*')
@@ -176,9 +194,15 @@
                                                                     @if ($cek != null)
                                                                        
                                                                        @if ($cek->status ==1)
-                                                                            <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
-                                                                                <i class="las la-download"></i>  Download
-                                                                            </a>
+                                                                            @if ($list->stamp != '')
+                                                                                <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                                    <i class="las la-download"></i>  Download
+                                                                                </a>
+                                                                            @else
+                                                                                <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                                    <i class="las la-download"></i>  Download
+                                                                                </a>
+                                                                            @endif
                                                                        @elseif ($cek->status ==0)
                                                                             <a href="#" class="btn btn-sm bg-gradient-dark   text-white">
                                                                                 <i class="las la-clock"></i>  Waiting
@@ -232,9 +256,16 @@
                                                             <td> {{ $list->department }}</td>
                                                             <td>
                                                                 @if (Auth()->user()->hasRole('ims') || Auth()->user()->hasRole('admin'))
+                                                                    @if ($list->stamp != '')
                                                                     <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
                                                                         <i class="las la-download"></i>  Download
                                                                     </a>
+                                                                    @else
+                                                                    <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                        <i class="las la-download"></i>  Download
+                                                                    </a>
+                                                                    @endif
+
                                                                 @else
                                                                     @php
                                                                         $cek = DB::table('ims_download_master')->select('*')
@@ -246,9 +277,15 @@
                                                                     @if ($cek != null)
                                                                        
                                                                        @if ($cek->status ==1)
-                                                                            <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
-                                                                                <i class="las la-download"></i>  Download
-                                                                            </a>
+                                                                            @if ($list->stamp != '')
+                                                                                <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                                    <i class="las la-download"></i>  Download
+                                                                                </a>
+                                                                            @else
+                                                                                <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                                    <i class="las la-download"></i>  Download
+                                                                                </a>
+                                                                            @endif
                                                                        @elseif ($cek->status ==0)
                                                                             <a href="#" class="btn btn-sm bg-gradient-dark   text-white">
                                                                                 <i class="las la-clock"></i>  Waiting
@@ -302,9 +339,15 @@
                                                             <td> {{ $list->department }}</td>
                                                             <td>
                                                                 @if (Auth()->user()->hasRole('ims') || Auth()->user()->hasRole('admin'))
+                                                                    @if ($list->stamp != '')
+                                                                    <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                        <i class="las la-download"></i>  Download
+                                                                    </a>
+                                                                    @else
                                                                     <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
                                                                         <i class="las la-download"></i>  Download
                                                                     </a>
+                                                                    @endif
                                                                 @else
                                                                     @php
                                                                         $cek = DB::table('ims_download_master')->select('*')
@@ -316,9 +359,15 @@
                                                                     @if ($cek != null)
                                                                        
                                                                        @if ($cek->status ==1)
-                                                                            <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
-                                                                                <i class="las la-download"></i>  Download
-                                                                            </a>
+                                                                            @if ($list->stamp != '')
+                                                                                    <a href="{{ route('ims.download.master',$list->stamp) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                                        <i class="las la-download"></i>  Download
+                                                                                    </a>
+                                                                            @else
+                                                                                <a href="{{ route('ims.download.master',$list->document) }}" class="btn btn-sm bg-gradient-warning   text-white">
+                                                                                    <i class="las la-download"></i>  Download
+                                                                                </a>
+                                                                            @endif
                                                                        @elseif ($cek->status ==0)
                                                                             <a href="#" class="btn btn-sm bg-gradient-dark   text-white">
                                                                                 <i class="las la-clock"></i>  Waiting 
