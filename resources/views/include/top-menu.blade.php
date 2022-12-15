@@ -109,9 +109,9 @@
                         
                     </ul>
                 </li>
-
-                
                 @endif
+
+                @can('est ph-manage')
                 <li class="menu {{ active_class(['estate/utilities/*'])  }}">
                     <a href="#other_pages_one" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                         <div class="">
@@ -123,18 +123,19 @@
                     </a>
                     <ul class="collapse list-unstyled sub-submenu" id="other_pages_one" data-parent="#pages">
                         <li>
-                            <a href="{{ url('/estate/power/status') }}"> {{__('Utilities list')}} </a>
+                            <a href="{{ url('/estate/power/status') }}"> {{__('Drawing List')}} </a>
                         </li>
-                        <li class="{{ active_class('estate/utilities/status') }}">
+                        {{-- <li class="{{ active_class('estate/utilities/status') }}">
                             <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('Drawing File')}}</a>
                         </li>
                         <li class="{{ active_class('estate/utilities/status') }}">
                             <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('Water')}}</a>
-                        </li>
+                        </li> --}}
                         
                     </ul>
                 </li>
-
+                @endcan
+                
                 <li class="menu {{ active_class(['estate/water/*'])  }}">
                     <a href="#other_pages_one" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                         <div class="">
@@ -324,6 +325,7 @@
             </a>
         </li>
 
+        @if ( Auth::user()->hasRole('cdd') || Auth::user()->hasRole('admin'))
         <li class="menu {{ active_class(['cdd']) }} main-single-menu">
             <a href="{{ route('cdd') }}" aria-expanded="false" class="dropdown-toggle">
                 <div class="">
@@ -332,6 +334,7 @@
                 </div>
             </a>
         </li>
+        @endif
 
         @if ( Auth::user()->hasRole('Env') || Auth::user()->hasRole('admin'))
 

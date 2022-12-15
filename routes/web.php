@@ -15,7 +15,9 @@ use App\Http\Controllers\est\EstDormitoryController;
 use App\Http\Controllers\est\EstSopController;
 use App\Http\Controllers\est\FileEstController;
 use App\Http\Controllers\est\MetereadingController;
+use App\Http\Controllers\est\ph\DwSwitchouseController;
 use App\Http\Controllers\est\PowerController;
+use App\Http\Controllers\est\st\SubstationController;
 use App\Http\Controllers\EstateRequestController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\gmo\GmoFileController;
@@ -49,6 +51,7 @@ use App\Http\Controllers\ssd\FireAlarmController;
 use App\Http\Controllers\ssd\FiresafetyController;
 use App\Http\Controllers\UserController;
 use App\Models\crs\TenantDatabaseModel;
+use App\Models\est\ph\DwSwitchouseModel;
 use App\Models\hrga\EmployeeModel;
 use Illuminate\Support\Facades\Route;
 
@@ -120,8 +123,21 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('estate/water/water_list', [UtilitiesController::class, 'index'])->name('estate.water.water_list');
 
 
-    //estate Power
+    //estate Power Switch House
     Route::get('estate/power/status', [PowerController::class, 'index'])->name('estate.power');
+    Route::get('estate/power/drawing_sw', [DwSwitchouseController::class, 'index'])->name('estate.ph.dw_sh');
+    Route::post('estate/power/drawing_sw/add', [DwSwitchouseController::class, 'store'])->name('estate.ph.dw_sh.add');
+    Route::get('estate/ph/sw/show/{id}', [DwSwitchouseController::class, 'show'])->name('estate.ph.sw.show');
+    Route::delete('estate/ph/sw/delete/{id}', [DwSwitchouseController::class, 'destroy'])->name('estate.ph.sw.delete');
+    Route::get('estate/ph/sw/download/{file}', [DwSwitchouseController::class, 'download'])->name('estate.ph.sw.download');
+
+    //estate Power Substation
+    Route::get('estate/power/drawing_st', [SubstationController::class, 'index'])->name('estate.ph.st');
+    // Route::get('estate/power/drawing_sw', [DwSwitchouseController::class, 'index'])->name('estate.ph.dw_sh');
+    Route::post('estate/power/drawing_st/add', [SubstationController::class, 'store'])->name('estate.ph.st.add');
+    Route::get('estate/ph/st/show/{id}', [SubstationController::class, 'show'])->name('estate.ph.st.show');
+    Route::delete('estate/ph/st/delete/{id}', [SubstationController::class, 'destroy'])->name('estate.ph.st.delete');
+    Route::get('estate/ph/st/download/{file}', [SubstationController::class, 'download'])->name('estate.ph.st.download');
 
     // estate dorm
     Route::post('estate/dorm/store', [EstDormitoryController::class, 'store'])->name('estate.dorm.store');
