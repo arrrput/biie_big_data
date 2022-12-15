@@ -6,6 +6,7 @@
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('assets/css/forms/form-widgets.css') !!}
     {!! Html::style('assets/css/forms/checkbox-theme.css') !!}
+    {!! Html::style('assets/css/apps/social.css') !!}
 @endpush
 
 @section('content')
@@ -31,6 +32,52 @@
     </div>
     <!--  Navbar Ends / Breadcrumb Area  -->
 
+
+    {{-- Modal show progress request--}}
+    <div class="modal fade bd-example-modal-m" id="it_show" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-m" role="document">
+                           
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title block text-primary" id="no_emp">
+                    <i class="lar la-comments"></i>
+                    Show Respon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="widget-content widget-content-area">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div id="content_2" class="tabcontent"> 
+                                <div class="story-container-2">
+                                    
+                                    <div class="single-story">
+                                        <div class="story-dp seen">
+                                            <img src="{{asset('storage/profile/'.Auth::user()->image)}}" alt="" id="img_res" >
+                                        </div>
+                                        <div class="story-author">
+                                            <p class="name" id="name_it"></p>
+                                            <p class="time" id="date_respon">Today, 02:33</p>
+                                            <p class="time" id="deskripsi_respon">Siap laksanakan</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
    
      {{-- Modal add Proposal--}}
      <div class="modal fade bd-example-modal-xl" id="it_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -378,6 +425,41 @@ function showPerangkat(){
   }
 }
 
+function verifyUser(id){
+        // ajax
+        $.ajax({
+                    type:"GET",
+                    url: "{{ URL::to('/') }}/gmo/it_request/verify_user/"+id,
+                    data: { id: id},
+                    // dataType: 'json',
+                    success: function(res){
+
+                        toastMixin.fire({
+                            animation: true,
+                            title: 'Verification successfully'
+                        });
+                        
+                        table_pro.ajax.reload();
+                    }
+                });
+    }
+
+// view request progress
+function viewReq(id){
+
+                $.ajax({
+                    type:"GET",
+                    url: "{{ URL::to('/') }}/gmo/it_request/show_respon/"+id,
+                    data: { id: id},
+                    // dataType: 'json',
+                    success: function(res){
+                        $('#it_show').modal('show');
+                        document.getElementById("name_it").innerHTML  = res.nama_it;
+                        document.getElementById("img_res").innerHTML  = "{{asset('storage/profile/')}}"+res.avatar;
+                        document.getElementById("deskripsi_respon").innerHTML  = res.catatan;
+                    }
+                });
+}
 
 //Edit procurement fin
 function editReq(id){

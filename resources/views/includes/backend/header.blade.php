@@ -36,7 +36,7 @@
           <a class="dropdown-item" data-toggle="dropdown" href="#"><i class="text-success fa fa-check nav-icon"></i> Utilities Status &raquo</a>
             <ul class="submenu dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('estate.power') }}">Power</a></li>
-              <li><a class="dropdown-item" href="{{ route('estate.utilities') }}">Water</a></li>
+              {{-- <li><a class="dropdown-item" href="{{ route('estate.utilities') }}">Water</a></li> --}}
             </ul>
             
           

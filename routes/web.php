@@ -4,6 +4,7 @@ use App\Http\Controllers\aml\PerizinanController;
 use App\Http\Controllers\aml\PermitController;
 use App\Http\Controllers\BangunanController;
 use App\Http\Controllers\bdv\BievOccupancyController;
+use App\Http\Controllers\bdv\SpecController;
 use App\Http\Controllers\cdd\CddController;
 use App\Http\Controllers\crs\InvestorVisitController;
 use App\Http\Controllers\crs\TenantController;
@@ -116,7 +117,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('estate/import/list',[FileEstController::class, 'import_excel'])->name('estate.list.import');
 
     // estate utilities
-    Route::get('estate/utilities/status', [UtilitiesController::class, 'index'])->name('estate.utilities');
+    Route::get('estate/water/water_list', [UtilitiesController::class, 'index'])->name('estate.water.water_list');
 
 
     //estate Power
@@ -291,7 +292,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::delete('it_request/delete/{id}', [ITRequestController::class, 'destroy'])->name('gmo.it_request.delete');
         Route::get('list_request', [ITRequestController::class, 'requestList'])->name('gmo.list_request');
         Route::post('it_request/update_progress', [ITRequestController::class, 'updateProgress'])->name('gmo.it_request.update_progress');
-
+        Route::get('it_request/approve_list',[ITRequestController::class,'approveList'])->name('gmo.it_request.approve_list');
+        Route::get('it_request/approve_user/{id}',[ITRequestController::class,'approveUser'])->name('gmo.it_request.approve_user');
+        Route::get('it_request/reject_user/{id}',[ITRequestController::class,'rejectUser'])->name('gmo.it_request.reject_user');
+        Route::get('it_request/verify_user/{id}',[ITRequestController::class,'verifyUser'])->name('gmo.it_request.verify_user');
+        Route::get('it_request/show_respon/{id}',[ITRequestController::class,'showRespon'])->name('gmo.it_request.show_respon');
+        Route::get('it_request/chart',[ITRequestController::class,'chart'])->name('gmo.it_request.chart');
      }); 
 
      //  HRGA Route
@@ -470,7 +476,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('occcupancy/show/{id}', [BievOccupancyController::class, 'show'])->name('bdv.occcupancy.show');
         Route::post('occcupancy/add', [BievOccupancyController::class, 'store'])->name('bdv.occcupancy.add');
         Route::delete('occcupancy/delete/{id}', [BievOccupancyController::class, 'destroy'])->name('bdv.occcupancy.delete');
-        
+
+        Route::get('spec',[SpecController::class, 'index'])->name('bdv.spec');
+        Route::get('spec/{id}/detail',[SpecController::class, 'detail'])->name('bdv.spec.detail');
+        Route::get('spec/form', function () { return view('backend.bdv.add_spec'); });
+        Route::post('spec/add', [SpecController::class, 'store'])->name('bdv.spec.add');
+        Route::delete('spec/delete/{id}', [SpecController::class, 'destroy'])->name('bdv.spec.delete');
     });
 
     //  HSE Route

@@ -12,7 +12,5 @@ class ITRequestModel extends Model
 
     protected $fillable = ['id_user', 'id_department', 'type_request', 'jenis_dukungan', 'email_req', 'user_req', 'internet_req', 'backup_req',
                 'download_req', 'perangkat_komputer_req', 'desain_req', 'email_desc', 'username_desc', 'download_desc', 'download_perangkat',
-                'deskripsi', 'verify_hod', 'work_by', 'status', 'catatan', 'date_start', 'date_end'];
-
-    
+                'deskripsi', 'verify_hod', 'work_by', 'status', 'catatan', 'date_start', 'date_end','verify_user'];
 }

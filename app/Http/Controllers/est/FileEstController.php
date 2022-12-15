@@ -49,7 +49,7 @@ class FileEstController extends Controller
     public function struktur($param){
         $title = "Struktural";
         $est_kategori = EstCategory::all();
-        if(Auth::user()->id_department == 3){
+        if(Auth::user()->hasRole('est building')|| Auth::user()->hasRole('admin')){
             $list_document =DataModel::select('table_data.*','table_bangunan.status as status')
                         ->where('table_data.kode_bangunan',$param)
                         ->where('table_data.id_category', 2)
@@ -73,7 +73,7 @@ class FileEstController extends Controller
 
         $title = "List Arsitektural";
         $est_kategori = EstCategory::all();
-        if(Auth::user()->id_department == 3){
+        if(Auth::user()->hasRole('est building')|| Auth::user()->hasRole('admin')){
             $list_document =DataModel::select('table_data.*','table_bangunan.status as status')
                         ->where('table_data.kode_bangunan',$param)
                         ->where('table_data.id_category', 1)
@@ -98,7 +98,7 @@ class FileEstController extends Controller
 
         $title = "List MEP"; 
         $est_kategori = EstCategory::all();
-        if(Auth::user()->id_department == 3){
+        if(Auth::user()->hasRole('est building')|| Auth::user()->hasRole('admin')){
             $list_document =DataModel::select('table_data.*','table_bangunan.status as status')
                         ->where('table_data.kode_bangunan',$param)
                         ->where('table_data.id_category', 3)

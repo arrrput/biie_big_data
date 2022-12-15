@@ -19,7 +19,7 @@ class ProfileController extends Controller
     }
 
     public function updateProfile(Request $request){
-        unlink(storage_path('app/public/profile/'.Auth::user()->image));
+        // unlink(storage_path('app/public/profile/'.Auth::user()->image));
         $data = $request->file('avatar');
             $data->storeAs('public/profile', $data->hashName());
             $name_file = $data->hashName();

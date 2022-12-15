@@ -1,37 +1,40 @@
-@extends('layouts.backend')
+@extends('layouts.master')
 
-@section('title')
-    Estate
-@endsection
+
+@push('plugin-styles')
+    {!! Html::style('assets/css/ui-elements/breadcrumbs.css') !!}
+    {!! Html::style('plugins/table/datatable/datatables.css') !!}
+    {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
+@endpush
 
 @section('content')
 
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-        
-                <div class="col-sm-12">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Selamat datang, <b>{{ Auth::user()->name }} </b></li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-           
-            @if (session('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-               {{ session('message') }}.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            @endif
-        </div><!-- /.container-fluid -->
+    <!--  Navbar Starts / Breadcrumb Area  -->
+    <div class="sub-header-container">
+        <header class="header navbar navbar-expand-sm">
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                <i class="las la-bars"></i>
+            </a>
+            <ul class="navbar-nav flex-row">
+                <li>
+                    <div class="page-header">
+                        <nav class="breadcrumb-one" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item " aria-current="page">EST</li>
+                                <li class="breadcrumb-item active"><a href="javascript:void(0);">{{__('Building Status')}}</a></li>
+                                
+                            </ol>
+                        </nav>
+                    </div>
+                </li>
+            </ul>
+        </header>
     </div>
 
+   
     {{-- modal view --}}
     <div class="modal fade bd-example-modal-xl" id="estate-view" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -269,320 +272,313 @@
     </div>
 
 
-    <section class="content">
-        <div class="container-fluid">
-        
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
-            @if (session('status'))
-          <div class="alert alert-primary alert-dismissible fade show" role="alert">
-             {{ session('status') }}.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          @endif
+     <!-- Main Body Starts -->
+     <div class="layout-px-spacing">
+        <div class="layout-top-spacing">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="container p-0">
+                        <div class="row layout-top-spacing">
+                            <div class="col-lg-12 layout-spacing">
+                                <!-- Your Content Here -->
 
-          
-         
-
-          <div class="col-12">
-              @can('estate-create')
-              <div class="card card-success">
-                
-                {{-- card header --}}
-                <div class="card-header">
-                    <h3 class="card-title">Drawing Input Estate </h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                {{-- end card header --}}
-                <form method="POST">
-                    
-                </form>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12 margin-tb">
-                            <div class="pull-left">
-                                <h2></h2>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                            <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                   
-                    <form action="{{ route('estate.store') }}" method="POST" enctype="multipart/form-data">                   
-                        @csrf
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputName" class="form-label">Type<span class="text-danger">(*)</span></label>
-                
-                                    {{-- {!! Form::text('title', null, array('placeholder' => 'Title','class' => 'form-control')) !!} --}}
-
-                                    <select class="custom-select rounded-0" placeholder="" name="title">
-                                        <option disable>-- Pilih -- </option>   
-                                        <option value="MAP">MAP</option>    
-                                        <option value="FACTORY">FACTORY </option> 
-                                        <option value="DORMITORY">DORMITORY</option>
-                                        <option value="PORT">PORT</option>  
-                                        <option value="TOWN CENTER">TOWN CENTER</option>  
-                                        <option value="POWER HOUSE">POWER HOUSE</option>
-                                        <option value="RWPS">RWPS</option>
-                                        <option value="STP">STP</option>
-                                        <option value="WTP">WTP</option>
-                                        <option value="WWTP">WWTP</option>
-                                        <option value="VILLA">VILLA</option>                           
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputName" class="form-label">Name<span class="text-danger">(*)</span></label>
-                                    {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-                                    {{-- <textarea name="deskripsi" class="form-control" placeholder="Deskripsi Singkat" style=""></textarea> --}}
-                                </div>
-                            </div>
-                            
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputName" class="form-label">Status Document<span class="text-danger">(*)</span></label>
-                                    <select class="custom-select rounded-0" placeholder="" name="status">
-                                        <option disable>-- Pilih -- </option>       
-                                        <option value="1">Public</option>
-                                        <option value="2">Request</option>                             
-                                    </select>
-                                    @error('status')
-                                        <span class="text-danger text-sm">{{ $message }}</span>                              
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputName" class="form-label">Status Akses<span class="text-danger">(*)</span></label>
-                                    <select class="custom-select rounded-0" placeholder="" name="status_akses">
-                                        <option disable>-- Pilih -- </option>       
-                                        <option value="1">All Department</option>
-                                        <option value="2">Internal Department</option>                             
-                                    </select>
-                                    @error('status')
-                                            <span class="text-danger text-sm">{{ $message }}</span>                              
-                                    @enderror
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputName" class="form-label">Category <span class="text-danger">(*)</span></label>
-                                    <select class="custom-select rounded-0" placeholder="" id="add_id_category" name="kategori">
-                                        <option disable>-- Pilih Kategori --</option>  
-                                        @foreach ($est_kategori as $kat)
-                                            <option value="{{ $kat->id }}">{{ $kat->name }}</option>
-                                        @endforeach 
-                                    </select>
-                                    @error('kategori')
-                                            <span class="text-danger text-sm">{{ $message }}</span>                              
-                                    @enderror
-                                    
-                                </div>
-                            </div>
-
-                            <div class="col-xs-6 col-sm-6 col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputName" class="form-label">Sub Category<span class="text-danger">(*)</span></label>
-                                    <select class="custom-select rounded-0" placeholder="" id="add_sub_category" name="sub_category">
-                                        <option value="" disable>-- Pilih -- </option>                                    
-                                    </select>
-                                    @error('sub_category')
-                                            <span class="text-danger text-sm">{{ $message }}</span>                              
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-xs-6 col-sm-6 col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputName" class="form-label">Due Date (Optional)</label>
-                                    <input type="date" name="due_date" class="date-picker form-control rounded-0" data-date-format="dd//yyyy" placeholder="Due Date"/>
-                                    @error('status')
-                                            <span class="text-danger text-sm">{{ $message }}</span>                              
-                                    @enderror
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        <div class="row">                          
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <table class="table table-stripped" id="dynamicAddRemove">
-                                    <tr>
-                                        <td>
-                                            <input type="file" name="addMoreInputFields[0][name]" placeholder="Nama Barang" class="form-control" />
-                                        </td>
-                                        <td>
-                                            <select class="custom-select rounded-0" placeholder="" id="id_category" name="addMoreInputFields[0][id_category]">
-                                                <option disable>-- Pilih Kategori --</option>  
-                                                @foreach ($est_kategori as $kat)
-                                                    <option value="{{ $kat->id }}">{{ $kat->name }}</option>
-                                                @endforeach 
-                                            </select>
+                                 <!-- BASIC -->
+                                <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                    <div class="widget-content widget-content-area br-6">
+                                        <h4 class="table-header"><i class="las la-pencil-ruler"></i> {{__('Add Drawing File')}}</h4>
+                                        <hr>
+                                        <div class="table-responsive mb-4">
                                             
-                                        </td>
-                                        <td>
-                                            <input type="text" name="addMoreInputFields[0][keterangan]" placeholder="Name" class="form-control" />
-                                        </td> 
-                                        <td>
-                                            <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary"><i class="fas fa-plus"></i></button>
-                                        </td>
-                                    </tr>
-                                </table>
+                                            @if (session('message'))
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                               {{ session('message') }}.
+                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            @endif
+                                            @if ($message = Session::get('success'))
+                                                <div class="alert alert-success">
+                                                    <p>{{ $message }}</p>
+                                                </div>
+                                            @endif
+                                            @if (session('status'))
+                                          <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                             {{ session('status') }}.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          @endif
+
+                                          <form method="POST">
+                                                
+                                            </form>
+
+                                          @can('estate-create')
+                                                                     
+                                            <form action="{{ route('estate.store') }}" method="POST" enctype="multipart/form-data">                   
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputName" class="form-label">Type<span class="text-danger">(*)</span></label>
+                                        
+                                                            {{-- {!! Form::text('title', null, array('placeholder' => 'Title','class' => 'form-control')) !!} --}}
+                        
+                                                            <select class="custom-select rounded-0" placeholder="" name="title">
+                                                                <option disable>-- Pilih -- </option>   
+                                                                <option value="MAP">MAP</option>    
+                                                                <option value="FACTORY">FACTORY </option> 
+                                                                <option value="DORMITORY">DORMITORY</option>
+                                                                <option value="PORT">PORT</option>  
+                                                                <option value="TOWN CENTER">TOWN CENTER</option>  
+                                                                <option value="POWER HOUSE">POWER HOUSE</option>
+                                                                <option value="RWPS">RWPS</option>
+                                                                <option value="STP">STP</option>
+                                                                <option value="WTP">WTP</option>
+                                                                <option value="WWTP">WWTP</option>
+                                                                <option value="VILLA">VILLA</option>                           
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputName" class="form-label">Name<span class="text-danger">(*)</span></label>
+                                                            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                                                            {{-- <textarea name="deskripsi" class="form-control" placeholder="Deskripsi Singkat" style=""></textarea> --}}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                        
+                                                <div class="row">
+                                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputName" class="form-label">Status Document<span class="text-danger">(*)</span></label>
+                                                            <select class="custom-select rounded-0" placeholder="" name="status">
+                                                                <option disable>-- Pilih -- </option>       
+                                                                <option value="1">Public</option>
+                                                                <option value="2">Request</option>                             
+                                                            </select>
+                                                            @error('status')
+                                                                <span class="text-danger text-sm">{{ $message }}</span>                              
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputName" class="form-label">Status Akses<span class="text-danger">(*)</span></label>
+                                                            <select class="custom-select rounded-0" placeholder="" name="status_akses">
+                                                                <option disable>-- Pilih -- </option>       
+                                                                <option value="1">All Department</option>
+                                                                <option value="2">Internal Department</option>                             
+                                                            </select>
+                                                            @error('status')
+                                                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                        
+                                                </div>
+                        
+                                                <div class="row">
+                                                    <div class="col-xs-6 col-sm-6 col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputName" class="form-label">Category <span class="text-danger">(*)</span></label>
+                                                            <select class="custom-select rounded-0" placeholder="" id="add_id_category" name="kategori">
+                                                                <option disable>-- Pilih Kategori --</option>  
+                                                                @foreach ($est_kategori as $kat)
+                                                                    <option value="{{ $kat->id }}">{{ $kat->name }}</option>
+                                                                @endforeach 
+                                                            </select>
+                                                            @error('kategori')
+                                                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                                                            @enderror
+                                                            
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="col-xs-6 col-sm-6 col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputName" class="form-label">Sub Category<span class="text-danger">(*)</span></label>
+                                                            <select class="custom-select rounded-0" placeholder="" id="add_sub_category" name="sub_category">
+                                                                <option value="" disable>-- Pilih -- </option>                                    
+                                                            </select>
+                                                            @error('sub_category')
+                                                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="col-xs-6 col-sm-6 col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputName" class="form-label">Due Date (Optional)</label>
+                                                            <input type="date" name="due_date" class="date-picker form-control rounded-0" data-date-format="dd//yyyy" placeholder="Due Date"/>
+                                                            @error('status')
+                                                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                        
+                        
+                                                </div>
+                        
+                                                <div class="row">                          
+                        
+                                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                                        <table class="table table-stripped" id="dynamicAddRemove">
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="file" name="addMoreInputFields[0][name]" placeholder="Nama Barang" class="form-control" />
+                                                                </td>
+                                                                <td>
+                                                                    <select class="custom-select rounded-0" placeholder="" id="id_category" name="addMoreInputFields[0][id_category]">
+                                                                        <option disable>-- Pilih Kategori --</option>  
+                                                                        @foreach ($est_kategori as $kat)
+                                                                            <option value="{{ $kat->id }}">{{ $kat->name }}</option>
+                                                                        @endforeach 
+                                                                    </select>
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="addMoreInputFields[0][keterangan]" placeholder="Name" class="form-control" />
+                                                                </td> 
+                                                                <td>
+                                                                    <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary"><i class="las la-plus"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                        
+                                              
+                                                @if (Session::has('success'))
+                                                <div class="alert alert-success text-center">
+                                                    <p>{{ Session::get('success') }}</p>
+                                                </div>
+                                                @endif
+                                                <button type="submit" class="btn btn-outline-primary btn-block mt-3 mb-3">Submit</button>
+                                            </form>
+                                            {{-- end form --}}
+                                            @endcan
+                                        </div>
+                                          
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                      
-                        @if (Session::has('success'))
-                        <div class="alert alert-success text-center">
-                            <p>{{ Session::get('success') }}</p>
-                        </div>
-                        @endif
-                        <button type="submit" class="btn btn-outline-success btn-block mt-3 mb-3">Submit</button>
-                    </form>
-                    {{-- end form --}}
-                        
-                    
+                    </div>
                 </div>
-                </div>
-
             </div>
-              @endcan
-            
-            
+        </div>
+    </div>
+    <!-- Main Body Ends -->
 
-            <div class="card card-success ml-2 mr-2">
-                
-                {{-- card header --}}
-                <div class="card-header">
-                    <h3 class="card-title">Estate </h3>
+    @can('list-estate')
+     <!-- Main Body Starts -->
+     <div class="layout-px-spacing">
+        <div class="layout-top-spacing mb-2">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="container p-0">
+                        <div class="row layout-top-spacing">
+                            <div class="col-lg-12 layout-spacing">
+                                <!-- Your Content Here -->
 
-                    <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    </div>
-                </div>
-                {{-- end card header --}}
-                
-                @can('list-estate')
-                <div class="card-body">
-
-                    {{-- Advanced Filter --}}
-                    <h4><i class="fa fa-filter"></i> Filter Estate</h4>
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-3">
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="id"/>
-                                <input type="text" name="etitle" placeholder="Title" id="etitle" class="form-control filter"/>
-                                
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="col-xs-6 col-sm-6 col-md-3">
-                            <div class="form-group">
-                                <input type="text" name="ename" placeholder="Name" id="ename" class="form-control filter"/>
-                            </div>
-                        </div>
-                        
-                        <div class="col-xs-6 col-sm-6 col-md-3">
-                            <div class="form-group">
-                                <select class="custom-select rounded-0 filter" placeholder="" id="cid_category" name="kategori">
-                                    <option disable>-- All Category -- </option>  
-                                    @foreach ($est_kategori as $kat)
-                                        <option value="{{ $kat->id }}">{{ $kat->name }}</option>
-                                    @endforeach 
-                                </select>
-                            </div>
-                        </div>
-    
-                        <div class="col-xs-6 col-sm-6 col-md-3">
-                            <div class="form-group">
-                                <select class="custom-select rounded-0 filter" placeholder="" id="csub_category" name="sub_category">
-                                    <option disable>-- All SubCategory -- </option>                                    
-                                </select>
-                            </div>
-                        </div>
-
-                        
-
-                    </div>
-    
-                    <hr>
-                    <table id="datatable_est" class="table table-hover">
-                        <thead>
-                            <tr>
-                                {{-- <th scope="col">#</th> --}}
-                                <th scope="col">Kode Bangunan</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Sub Category</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                                 <!-- BASIC -->
+                                <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                    <div class="widget-content widget-content-area br-6">
+                                        <h4 class="table-header"><i class="lab la-medapps text-success"></i> {{__('List Drawing File')}}</h4>
+                                        <div class="table-responsive mb-4">
+                                            <hr>
+                                           
+                                            <h4><i class="fa fa-filter"></i> Filter Estate</h4>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-6 col-md-3">
+                                                    <div class="form-group">
+                                                        <input type="hidden" class="form-control" id="id"/>
+                                                        <input type="text" name="etitle" placeholder="Title" id="etitle" class="form-control filter"/>
+                                                        
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="col-xs-6 col-sm-6 col-md-3">
+                                                    <div class="form-group">
+                                                        <input type="text" name="ename" placeholder="Name" id="ename" class="form-control filter"/>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-xs-6 col-sm-6 col-md-3">
+                                                    <div class="form-group">
+                                                        <select class="custom-select rounded-0 filter" placeholder="" id="cid_category" name="kategori">
+                                                            <option disable>-- All Category -- </option>  
+                                                            @foreach ($est_kategori as $kat)
+                                                                <option value="{{ $kat->id }}">{{ $kat->name }}</option>
+                                                            @endforeach 
+                                                        </select>
+                                                    </div>
+                                                </div>
                             
-                        </tbody>
-                    </table>
+                                                <div class="col-xs-6 col-sm-6 col-md-3">
+                                                    <div class="form-group">
+                                                        <select class="custom-select rounded-0 filter" placeholder="" id="csub_category" name="sub_category">
+                                                            <option disable>-- All SubCategory -- </option>                                    
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-                    {{-- {{ $list_estate->links() }} --}}
+                                                
+
+                                            </div>
+                            
+                                            <hr>
+                                            <table id="datatable_est" class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        {{-- <th scope="col">#</th> --}}
+                                                        <th scope="col">Kode Bangunan</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Category</th>
+                                                        <th scope="col">Sub Category</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                    
-                @endcan
-                
             </div>
-        
-        </div>       
-        
-            
-    </section>
-
+        </div>
+    </div>
+    <!-- Main Body Ends -->
+    @endcan
+   
 </div>
 
 @endsection
 
-@push('prepend-script')
+@push('plugin-scripts')
+    {!! Html::script('assets/js/loader.js') !!}
+    {!! Html::script('plugins/table/datatable/datatables.js') !!}
+    
+@endpush
+
+@push('custom-scripts')
     <script>
     
     // header request token
@@ -690,7 +686,7 @@
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
-        $("#dynamicAddRemove").append('<tr><td><input type="file" name="addMoreInputFields['+ i +'][name]" placeholder="Nama Barang" class="form-control" /></td> <td><select class="custom-select rounded-0" placeholder="" id="id_category" name="addMoreInputFields['+i+'][id_category]"><option disable>-- Pilih Kategori --</option>@foreach ($est_kategori as $kat)<option value="{{ $kat->id }}">{{ $kat->name }}</option>@endforeach </select></td> <td><input type="text" name="addMoreInputFields[' + i + '][keterangan]" placeholder="Name" class="form-control" /></td> <td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="fa fa-trash"></i></button></td></tr>');
+        $("#dynamicAddRemove").append('<tr><td><input type="file" name="addMoreInputFields['+ i +'][name]" placeholder="Nama Barang" class="form-control" /></td> <td><select class="custom-select rounded-0" placeholder="" id="id_category" name="addMoreInputFields['+i+'][id_category]"><option disable>-- Pilih Kategori --</option>@foreach ($est_kategori as $kat)<option value="{{ $kat->id }}">{{ $kat->name }}</option>@endforeach </select></td> <td><input type="text" name="addMoreInputFields[' + i + '][keterangan]" placeholder="Name" class="form-control" /></td> <td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="las la-trash"></i></button></td></tr>');
     });
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();

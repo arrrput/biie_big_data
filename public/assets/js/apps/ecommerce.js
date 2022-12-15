@@ -13,10 +13,7 @@
                 myId.classList.add("lar");
             }
         });
-        $('.item-content').on('click', function(){
-            window.location.href = '/apps/ecommerce/product-details';
-            return false;
-        });
+        
         $('#input-search').on('keyup', function() {
             var rex = new RegExp($(this).val(), 'i');
             $('.searchable-items .items:not(.items-header-section)').hide();

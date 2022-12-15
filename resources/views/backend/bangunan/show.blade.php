@@ -1,35 +1,35 @@
-@extends('layouts.backend')
+@extends('layouts.master')
 
-@section('title')
-    {{ $param }}
-@endsection
+
+{!! Html::style('assets/css/ui-elements/breadcrumbs.css') !!}
+{!! Html::style('plugins/table/datatable/datatables.css') !!}
+{!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
 
 @section('content')
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-        
-                <div class="col-sm-12 mr-2">
-                    <ol class="breadcrumb float-sm-right ">
-                        <li class="breadcrumb-item">Estate</li>
-                        <li class="breadcrumb-item">Detail</li>
-                        <li class="breadcrumb-item">{{ $param }}</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-           
-            @if (session('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-               {{ session('message') }}.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            @endif
-        </div><!-- /.container-fluid -->
+   
+     <!--  Navbar Starts / Breadcrumb Area  -->
+     <div class="sub-header-container">
+        <header class="header navbar navbar-expand-sm">
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                <i class="las la-bars"></i>
+            </a>
+            <ul class="navbar-nav flex-row">
+                <li>
+                    <div class="page-header">
+                        <nav class="breadcrumb-one" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('EST')}}</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('Details')}}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>{{$param}}</span></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </li>
+            </ul>
+        </header>
     </div>
+    <!--  Navbar Ends / Breadcrumb Area  -->
 
     <section class="content">
         <div class="container-fluid">
@@ -55,15 +55,6 @@
                 {{-- card header --}}
                 <div class="card-header">
                     <h3 class="card-title">{{ $param }} </h3>
-
-                    <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    </div>
                 </div>
                 {{-- end card header --}}
                 <div class="card-body">
@@ -71,7 +62,7 @@
                         <div class="row">
                             
                             <div class="col-sm-12">
-                                <h1 style="color: rgb(16, 145, 37);"><span><i class="fa fa-home"></i></span> {{ $data->title }}</h1>
+                                <h5 class="text-primary"><span><i class="las la-pencil-ruler"></i></i></span> {{ $data->title }}</h5>
                                 <h5><i class="fa fa-list"></i> {{ $data->estKategori->name }}  ({{ $data->estSubKategori->name }})</h5>
                                 <p> {{ $data->name }}</p>
                                 <h3>List Drawing Document</h3>
@@ -183,10 +174,26 @@
 </div>
 @endsection
 
-@push('prepend-script')
+
+@push('plugin-scripts')
+   
+    {!! Html::script('assets/js/loader.js') !!}
+    {!! Html::script('plugins/table/datatable/datatables.js') !!}
+    
+@endpush
+
+
+@push('custom-scripts')
 <script>
 $(document).ready( function () {
-    $('#tbl_data').DataTable();
+    $('#tbl_data').DataTable({
+        "language": {
+            "paginate": {
+            "previous": "<i class='las la-angle-left'></i>",
+            "next": "<i class='las la-angle-right'></i>"
+            }
+        }
+    });
 });
 </script>
 

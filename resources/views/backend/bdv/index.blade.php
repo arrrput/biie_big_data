@@ -160,7 +160,9 @@
                                         <li class="nav-item">
                                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Occupancy')}}</b></a>
                                         </li>
-                                       
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="spec-tab" data-toggle="tab" href="#spec" role="tab" aria-controls="spec" aria-selected="true"><b>{{__('Specifications')}}</b></a>
+                                        </li>
                                         
                                     </ul>
 
@@ -191,6 +193,12 @@
                                                     
                                                 </table>
                                             </div>
+                                        </div>
+
+                                        <div class="tab-pane fade show" id="spec" role="tabpanel" aria-labelledby="spec-tab">
+                                            <h4>Bintan Inti Executive Village</h4>
+
+                                            
                                         </div>
                                       
                                     </div>

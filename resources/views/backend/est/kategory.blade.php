@@ -1,118 +1,116 @@
-@extends('layouts.backend')
+@extends('layouts.master')
 
-@section('title')
-    {{ Auth::user()->name }} || EST
-@endsection
+
+{!! Html::style('assets/css/apps/file-manager.css') !!}
+{!! Html::style('assets/css/ui-elements/breadcrumbs.css') !!}
+{!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
+{!! Html::style('assets/css/ui-elements/alert.css') !!}
 
 @section('content')
 
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
-    <div class="content-header">
-        <div class="container-fluid">
-           
-            <div class="row mb-2">
-        
-                <div class="col-sm-12">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">EST</li>
-                        <li class="breadcrumb-item active">Estate Category</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-            @if (session('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-               {{ session('message') }}.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            @endif
-        </div><!-- /.container-fluid -->
+    <!--  Navbar Starts / Breadcrumb Area  -->
+    <div class="sub-header-container">
+        <header class="header navbar navbar-expand-sm">
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                <i class="las la-bars"></i>
+            </a>
+            <ul class="navbar-nav flex-row">
+                <li>
+                    <div class="page-header">
+                        <nav class="breadcrumb-one" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('EST')}}</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('Drawing')}}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>{{ $param }}</span></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </li>
+            </ul>
+        </header>
     </div>
+    <!--  Navbar Ends / Breadcrumb Area  -->
 
-    <section class="content">
-        <div class="container-fluid">
+     <!-- Main Body Starts -->
+     <div class="layout-px-spacing">
+        <div class="layout-top-spacing mb-2">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="container p-0">
+                        <div class="row layout-top-spacing">
+                            <div class="col-lg-12 layout-spacing">
+                                <!-- Your Content Here -->
 
-            <div class="col-12">
-                <div class="card card-success">
-                  
-                  {{-- card header --}}
-                  <div class="card-header">
-                      <h3 class="card-title">File Estate </h3>
-  
-                      <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                          <i class="fas fa-minus"></i>
-                      </button>
-                      <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                          <i class="fas fa-times"></i>
-                      </button>
-                      </div>
-                  </div>
-                  {{-- end card header --}}
-                  <form method="POST">
-                    
-                  </form>
-                  <div class="card-body">
+                                 <!-- BASIC -->
+                                <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                    <div class="widget-content widget-content-area br-6">
+                                        <h4 class="table-header"><i class="las la-pencil-ruler"></i> {{__('Estate Drawing file')}}</h4>
+                                        <div class="table-responsive mb-4">
+                                            <hr>
+                                            <div class="file-manager-bottom-default mt-3">
+                                                <div class="file-manager-right-bottom">
+                                                    <div class="mt-4 d-block">
+                                                        @php $no=0; @endphp
+                                                        
+                                                        <div class="folder-list">
+                                                           
+                                                            
+                                                            <a href="{{ route('estate.ars',$param) }}">
+                                                                <div class="folder">
+                                                                    <p class="main-title">{{ $arsitektur }} File</p>
+                                                                    <div class="d-flex">
+                                                                    </div>
+                                                                    <p></p>
+                                                                    <p class="sub-title">{{__('Arsitektural')}}</p>
+                                                                    <p class="folder-name">{{__('10 Oct 2022')}}</p>
+                                                                </div>
+                                                            </a>
 
-                    {{-- Public Estate File --}}
-                    <h3 class="mb-3 text-primary"> <span><i class="fa fa-folder active"></i></span> Public Estate File</h3>
-                    
-                    <div class="row">
-                   
-                        
-                        <div class="col-lg-4 col-6">
-                            <div class="small-box bg-light">
-                                <div class="inner">
-                                    <h5>{{ $arsitektur }}</h5>
-                                    <p>Arsitektural</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-folder"></i>
-                                </div>
-                                <a href="{{ route('estate.ars',$param) }}" class="small-box-footer">See File <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
+                                                            <a href="{{ route('estate.str',$param) }}">
+                                                                <div class="folder">
+                                                                    <p class="main-title">{{ $struktur }} File</p>
+                                                                    <div class="d-flex">
+                                                                    </div>
+                                                                    <p></p>
+                                                                    <p class="sub-title">{{__('Struktural')}}</p>
+                                                                    <p class="folder-name">{{__('10 Oct 2022')}}</p>
+                                                                </div>
+                                                            </a>
 
-                        <div class="col-lg-4 col-6">
-                            <div class="small-box bg-light">
-                                <div class="inner">
-                                    <h5>{{ $struktur }}</h5>
-                                    <p>Struktural</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-folder"></i>
-                                </div>
-                                <a href="{{ route('estate.str',$param) }}" class="small-box-footer">See File <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
+                                                            <a href="{{ route('estate.mapping',$param) }}">
+                                                                <div class="folder">
+                                                                    <p class="main-title">{{ $mep }} File</p>
+                                                                    <div class="d-flex">
+                                                                    </div>
+                                                                    <p></p>
+                                                                    <p class="sub-title">{{__('MEP')}}</p>
+                                                                    <p class="folder-name">{{__('10 Oct 2022')}}</p>
+                                                                </div>
+                                                            </a>
 
-                        <div class="col-lg-4 col-6">
-                            <div class="small-box bg-light">
-                                <div class="inner">
-                                    <h5>{{ $mep }}</h5>
-                                    <p>MEP</p>
+                                                            
+                                                        </div>
+                                                        
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="icon">
-                                    <i class="fa fa-folder"></i>
-                                </div>
-                                <a href="{{ route('estate.mapping',$param) }}" class="small-box-footer">See File <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
-
-
-                  </div>
-
-                  
-
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    
 
 </div>
     

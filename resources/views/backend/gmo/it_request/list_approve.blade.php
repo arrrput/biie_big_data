@@ -6,6 +6,7 @@
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('assets/css/forms/form-widgets.css') !!}
     {!! Html::style('assets/css/forms/checkbox-theme.css') !!}
+    {!! Html::style('assets/css/ui-elements/alert.css') !!}
 @endpush
 
 @section('content')
@@ -21,7 +22,7 @@
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item" aria-current="page"><span>{{__('IT & Media')}}</span></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>{{__('List Request User')}}</span></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>{{__('Approve Request User')}}</span></li>
                             </ol>
                         </nav>
                     </div>
@@ -49,14 +50,7 @@
                 
                 <div class="row">   
                     
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label for="exampleInputName" class="form-label">RESPON REQUEST</label>
-                            <input type="text" class="form-control rounded-1" id="catatan" name="catatan" placeholder="Respon request"/>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="exampleInputName" class="form-label">UPDATE PROGRESS </label>
                             <select class="custom-select rounded-1" placeholder="" id="status" name="status">
@@ -195,7 +189,18 @@
         </div>
     </div>
    
-
+    @if ($message = Session::get('success'))
+    <div class="alert alert-icon-button-left alert-light-success text-success mb-4" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="{{__('Close')}}">
+            <i class="las la-times text-warning"></i>
+        </button>
+        <i class="las la-check text-success font-20"></i>
+        <strong>{{__('Success!')}}</strong> {{ $message }}
+        <button type="button" class="btn btn-sm bg-gradient-success float-right mr-2 text-white" data-dismiss="alert" aria-label="{{__('Close')}}">
+            {{__('Dismiss')}}
+        </button>
+    </div>
+    @endif
 
      <!-- Main Body Starts -->
      <div class="layout-px-spacing">
@@ -218,26 +223,43 @@
                                 <div class="widget-content widget-content-area br-6">
                                     <h4 class="table-header text-primary">
                                         <i class="las la-desktop "></i> 
-                                        {{__('List Request User')}}
+                                        {{__('Approve Request User')}}
                                     </h4>
                                     <div class="table-responsive mb-4"> 
-
-                                        <table id="table_list" class="table table-hovered table-sm table-striped" style="width: 100%;">
+                                        <table id="table" class="table table-hovered table-sm table-striped" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th scope="col" style="width: 15px;">No</th>
                                                     <th scope="col">Nama</th>
                                                     <th scope="col">Department</th>
-                                                    <th scope="col">Jenis Dukkungan</th>
-                                                    <th scope="col">Deskripsi</th>    
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Jenis Dukungan</th>
+                                                    <th scope="col">Deskripsi</th>  
                                                     <th class="no-content"></th>
                                                     
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            
+                                                @php $no=1; @endphp
+                                                @foreach ($req as $list)
+                                                <tr>
+                                                    @php
+                                                        if($list->type_request ==1){
+                                                            $type ='IT';
+                                                        }else {
+                                                            $type ='Media';
+                                                        }
+                                                    @endphp
+                                                    <td>{{ $no++ }}</td>
+                                                    <td>{{ $list->nama }}</td>
+                                                    <td>{{ $list->department }}</td>
+                                                    <td>{{ $type }}({{ $list->jenis_dukungan }} )</td>
+                                                    <td>{{ $list->deskripsi }}</td>
+                                                    <td>
+                                                        <a href="{{ route('gmo.it_request.approve_user', $list->id) }}" class="btn btn-sm btn-primary"><i class="las la-check "></i></a>
+                                                        <a href="{{ route('gmo.it_request.reject_user', $list->id) }}" class="btn btn-sm btn-danger font-8">X</i></a> 
+                                                    </td>
+                                                </tr>                                                    
+                                                @endforeach
                                             </tbody>
                                         </table>
                                         
@@ -271,6 +293,17 @@
     });
     // table recruitment
     var table_list, table_act;
+
+    $(document).ready( function () {
+        $('#table').DataTable({
+            "language": {
+                "paginate": {
+                "previous": "<i class='las la-angle-left'></i>",
+                "next": "<i class='las la-angle-right'></i>"
+                }
+            },
+        });
+    } );
 
     table_list = $('#table_list').DataTable({
             "language": {
@@ -364,7 +397,7 @@
             })
         });
 
-    
+
        
 
 function showEmail(){
@@ -419,7 +452,6 @@ function viewReq(id){
                 $('#id').val(res.id);
                 $('#type_request').val(res.type_request);
                 $('#jenis_dukungan').val(res.jenis_dukungan);
-                $('#catatan').val(res.catatan);
                 $('#name').val(res.name);
                 $('#department').val(res.department);
                 $('#email_desc').val(res.email_desc);
@@ -492,7 +524,6 @@ function viewReq(id){
         $('#download_desc').val('');
         $('#download_perangkat').val('');
         $('#deskripsi').val('');
-        $('#catatan').val('');
         $('#type_request').prop('selectedIndex', 0);
         $('#jenis_dukungan').prop('selectedIndex', 0);
 
@@ -507,13 +538,5 @@ function viewReq(id){
         
 
     }
-
-
-    
-
-
-
-  
-
 </script>
 @endpush

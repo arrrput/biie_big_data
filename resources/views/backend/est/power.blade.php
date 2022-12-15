@@ -51,7 +51,14 @@
                                 <div class="widget-content widget-content-area br-12">
                                     <ul class="nav nav-tabs mb-2 mt-2" id="normaltab" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Machine Drawing')}}</b></a>
+                                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Engine Drawing')}}</b></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " id="sw-tab" data-toggle="tab" href="#sw" role="tab" aria-controls="sw" aria-selected="true"><b>{{__('Switchouse Drawing')}}</b></a>
+                                        </li>
+                                        
+                                        <li class="nav-item">
+                                            <a class="nav-link " id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Substation Drawing')}}</b></a>
                                         </li>
                                         
                                         
@@ -79,6 +86,12 @@
                                                     
                                                 </table>
                                             </div>
+                                        </div>
+
+                                        <div class="tab-pane fade show" id="sw" role="tabpanel" aria-labelledby="sw-tab">
+                                            <h6>Switchouse Drawing</h6>
+
+                                            
                                         </div>
                                         
                                     </div>

@@ -1,4 +1,16 @@
-@if ($verify_hod == 0)
+@if ($verify_user ==1)
+
+    <i class="las la-check-double text-primary"></i>
+
+@elseif ($status == 2)
+    <a href="javascript:void(0);" onClick="verifyUser({{ $id }})" class="btn btn-sm bg-gradient-success text-white">Verify</a>
+
+@elseif ($status == 1)
+    <a class="font-20 text-primary" href="javascript:void(0);" onClick="viewReq({{ $id }})">
+        <i class="lar la-comments"></i>
+    </a>
+
+@elseif ($verify_hod == 0)
 <div class="dropdown custom-dropdown">
     <a class="dropdown-toggle font-20 text-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="las la-cog"></i>
@@ -9,10 +21,7 @@
     </div>
   </div>
 
-@elseif ($verify_hod == 1)
-<a class="font-20 text-warning" href="javascript:void(0);" onClick="viewReq({{ $id }})">
-    <i class="las la-eye"></i>
-</a>
+
 @else
 <a class="font-20 text-danger" >
     <i class="las la-ban"></i>

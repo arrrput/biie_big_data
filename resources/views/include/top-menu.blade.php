@@ -16,9 +16,13 @@
                     <i class="las la-file-code"></i>
                     <span>{{__('IT & MEDIA')}}</span>
                 </div>
-                <div class="menu-badge-container">
-                    <span class="menu-badge badge-danger">{{__('1')}}</span>
-                </div>
+                @can('approve - request')
+                    @if ($it_request_notif >0)
+                        <div class="menu-badge-container">
+                            <span class="menu-badge badge-danger">{{$it_request_notif}}</span>
+                        </div>                    
+                    @endif
+                @endcan
                 <div>
                     <i class="las la-angle-right sidemenu-right-icon"></i>
                 </div>
@@ -28,15 +32,33 @@
                 <li class=" {{ active_class(['gmo/it_request']) }}">
                     <a data-active="{{ is_active_route(['gmo/it_request']) }}" href="{{ url('/gmo/it_request') }}"> {{__('Form IT Request')}} </a>
                 </li>
+                @can('approve - request')
+                    <li class=" {{ active_class(['gmo/it_request/approve_list']) }}">
+                        <a data-active="{{ is_active_route(['gmo/it_request/approve_list']) }}" href="{{ route('gmo.it_request.approve_list') }}"> 
+                            {{__('Approve Request')}} 
+                            @if ($it_request_notif >0)
+                                <div class="menu-badge-container">
+                                    <span class="menu-badge badge-danger">{{$it_request_notif}}</span>
+                                </div>
+                            @endif
+                        </a>
+                        
+                    </li>
+                @endcan
+                
                 @can('itlist-manage')
                     <li class=" {{ active_class(['gmo/list_request']) }}">
                         <a data-active="{{ is_active_route(['gmo/list_request']) }}" href="{{ url('/gmo/list_request') }}"> {{__('List Request User')}} </a>
                     </li>
 
-                    <li class=" {{ active_class(['gmo/list']) }}">
-                        <a data-active="{{ is_active_route(['gmo/list']) }}" href="{{ route('gmo.it_request') }}"> {{__('Add List')}} </a>
+                    <li class=" {{ active_class(['gmo/it_request/chart']) }}">
+                        <a data-active="{{ is_active_route(['gmo/it_request/chart']) }}" href="{{ url('/gmo/it_request/chart') }}"> {{__('Report Monthly Request')}} </a>
                     </li>
-                    <li class=" {{ active_class(['gmo']) }}">
+
+                    <li class=" {{ active_class(['gmo/list']) }}">
+                        <a data-active="{{ is_active_route(['gmo/list']) }}" href="{{ route('gmo.list') }}"> {{__('Add List')}} </a>
+                    </li>
+                    {{-- <li class=" {{ active_class(['gmo']) }}">
                         <a data-active="{{ is_active_route(['gmo']) }}" href="{{ url('/gmo') }}"> {{__('Add document')}} </a>
                     </li>
                    
@@ -46,7 +68,7 @@
     
                     <li class=" {{ active_class(['apps/contacts']) }}">
                         <a data-active="{{ is_active_route(['apps/contacts']) }}" href="#"> {{__('IT Request Download')}} </a>
-                    </li>  
+                    </li>   --}}
                 @endcan              
             </ul>
             
@@ -64,14 +86,36 @@
 
             <ul class="collapse submenu list-unstyled" id="pages" data-parent="#accordionExample">
                 @if ( Auth::user()->hasRole('est building') || Auth::user()->hasRole('admin'))
-                <li class=" {{ active_class(['estate/list/factory']) }}">
-                    <a data-active="{{ is_active_route(['estate/list/factory']) }}" href="{{ url('/estate/list/factory') }}"> {{__('Building Status')}} </a>
+
+                <li class="menu {{ active_class(['estate/list/*'])  }}">
+                    <a href="#other_pages_one" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
+                        <div class="">
+                            <span>{{__('Building')}}</span>
+                        </div>
+                        <div>
+                            <i class="las la-angle-right sidemenu-right-icon"></i>
+                        </div>
+                    </a>
+                    <ul class="collapse list-unstyled sub-submenu" id="other_pages_one" data-parent="#pages">
+                        <li class=" {{ active_class(['estate/list/factory']) }}">
+                            <a data-active="{{ is_active_route(['estate/list/factory']) }}" href="{{ url('/estate/list/factory') }}"> {{__('Building Status')}} </a>
+                        </li>
+                        <li class=" {{ active_class(['estate']) }}">
+                            <a data-active="{{ is_active_route(['estate']) }}" href="{{ url('/estate') }}"> {{__('Add Drawing Building')}} </a>
+                        </li>
+                        <li class=" {{ active_class(['estate/file/folder']) }}">
+                            <a data-active="{{ is_active_route(['estate/file/folder']) }}" href="{{ url('/estate/file/folder') }}"> {{__('Drawing Folder')}} </a>
+                        </li>
+                        
+                    </ul>
                 </li>
+
+                
                 @endif
                 <li class="menu {{ active_class(['estate/utilities/*'])  }}">
                     <a href="#other_pages_one" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                         <div class="">
-                            <span>{{__('Utilities Status')}}</span>
+                            <span>{{__('Power House')}}</span>
                         </div>
                         <div>
                             <i class="las la-angle-right sidemenu-right-icon"></i>
@@ -79,10 +123,34 @@
                     </a>
                     <ul class="collapse list-unstyled sub-submenu" id="other_pages_one" data-parent="#pages">
                         <li>
-                            <a href="{{ url('/estate/power/status') }}"> {{__('Power')}} </a>
+                            <a href="{{ url('/estate/power/status') }}"> {{__('Utilities list')}} </a>
+                        </li>
+                        <li class="{{ active_class('estate/utilities/status') }}">
+                            <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('Drawing File')}}</a>
                         </li>
                         <li class="{{ active_class('estate/utilities/status') }}">
                             <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('Water')}}</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+
+                <li class="menu {{ active_class(['estate/water/*'])  }}">
+                    <a href="#other_pages_one" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
+                        <div class="">
+                            <span>{{__('Water Section')}}</span>
+                        </div>
+                        <div>
+                            <i class="las la-angle-right sidemenu-right-icon"></i>
+                        </div>
+                    </a>
+                    <ul class="collapse list-unstyled sub-submenu" id="other_pages_one" data-parent="#pages">
+                        
+                        <li class="{{ active_class('estate/water/water_list') }}">
+                            <a data-active="{{ is_active_route(['estate/water/water_list']) }}" href="{{ url('/estate/water/water_list') }}"> {{__('Water List')}}</a>
+                        </li>
+                        <li class="{{ active_class('estate/utilities/status') }}">
+                            <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('Drawing File')}}</a>
                         </li>
                         
                     </ul>
@@ -162,8 +230,8 @@
             <a href="#" aria-expanded="false" data-toggle="collapse" class="dropdown-toggle">
                 <div class="">
                     <i class="lab la-medapps"></i>
-                    <span>IMS 
-                        
+                    <span>
+                        IMS 
                     </span> 
                 </div>
                 <div>
@@ -239,7 +307,7 @@
         </li>
 
         <li class="menu {{ active_class(['bdv/*']) }} main-single-menu">
-            <a href="{{ route('bdv') }}" aria-expanded="false" class="dropdown-toggle">
+            <a href="{{ route('bdv.spec') }}" aria-expanded="false" class="dropdown-toggle">
                 <div class="">
                     <i class="las la-hotel"></i>
                     <span>BDV</span>
@@ -300,7 +368,7 @@
         </li>
         @endif
 
-        @if ( Auth::user()->hasRole('ssd') || Auth::user()->hasRole('admin'))
+        @if ( Auth::user()->hasRole('ssd') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('ssd firesafty'))
         <li class="menu {{ active_class(['ssd/*']) }} main-single-menu">
             <a href="#" aria-expanded="false" data-toggle="collapse" class="dropdown-toggle">
                 <div class="">
