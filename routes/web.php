@@ -16,6 +16,7 @@ use App\Http\Controllers\est\EstSopController;
 use App\Http\Controllers\est\FileEstController;
 use App\Http\Controllers\est\MetereadingController;
 use App\Http\Controllers\est\ph\DwSwitchouseController;
+use App\Http\Controllers\est\ph\EngineDrawingController;
 use App\Http\Controllers\est\PowerController;
 use App\Http\Controllers\est\st\SubstationController;
 use App\Http\Controllers\EstateRequestController;
@@ -41,6 +42,7 @@ use App\Http\Controllers\hse\HseController;
 use App\Http\Controllers\ims\AksesDocumentController;
 use App\Http\Controllers\ims\ExternalDocController;
 use App\Http\Controllers\ims\MasterDocumentController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\pod\BeaconController;
 use App\Http\Controllers\pod\ExportCargoController;
 use App\Http\Controllers\pod\ImportCargoController;
@@ -89,6 +91,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
     Route::get('/',[DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('home',[HomeController::class, 'index'])->name('home');
@@ -138,6 +141,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('estate/ph/st/show/{id}', [SubstationController::class, 'show'])->name('estate.ph.st.show');
     Route::delete('estate/ph/st/delete/{id}', [SubstationController::class, 'destroy'])->name('estate.ph.st.delete');
     Route::get('estate/ph/st/download/{file}', [SubstationController::class, 'download'])->name('estate.ph.st.download');
+
+
+    //estate Power Substation
+    Route::get('estate/power/engine_drawing', [EngineDrawingController::class, 'index'])->name('estate.ph.engine_drawing');
+    Route::post('estate/power/drawing_st/add', [EngineDrawingController::class, 'store'])->name('estate.ph.engine.add');
+    // Route::get('estate/ph/st/show/{id}', [SubstationController::class, 'show'])->name('estate.ph.st.show');
+    // Route::delete('estate/ph/st/delete/{id}', [SubstationController::class, 'destroy'])->name('estate.ph.st.delete');
+    // Route::get('estate/ph/st/download/{file}', [SubstationController::class, 'download'])->name('estate.ph.st.download');
 
     // estate dorm
     Route::post('estate/dorm/store', [EstDormitoryController::class, 'store'])->name('estate.dorm.store');

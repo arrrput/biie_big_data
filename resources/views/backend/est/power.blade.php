@@ -31,6 +31,94 @@
     <!--  Navbar Ends / Breadcrumb Area  -->
 
     {{-- Modal Switchouse --}}
+    <div class="modal fade bd-example-modal-xl" id="engine_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="javascript:void(0)" id="form_engine_add" name="form_engine_add" method="POST" enctype="multipart/form-data" >                   
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title block text-primary" id="no_emp">
+                    <i class="las la-pencil-ruler"></i>
+                    Add Drawing File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">                            
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">ENGINE SERIES<span class="text-danger">(*)</span></label>
+                            <input type="hidden" name="id_sh" id="id_sh"/>
+                            <input type="hidden" name="doc_sh" id="doc_sh"/>
+                            <input type="text" name="engine_series" id="engine_series" class=" rounded-1 form-control" placeholder="Engine Series"/>
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">ENGINE CODE<span class="text-danger">(*)</span></label>
+                            <input type="text" class="form-control rounded-1" placeholder="Engine Code" id="engine_code" name="engine_code">
+                           
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">VOLTAGE OUTPUT<span class="text-danger">(*)</span></label>
+                            <input type="text" class="form-control rounded-1" placeholder="Voltage Output" id="voltage_output" name="voltage_output">
+                           
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">CAPACITY<span class="text-danger">(*)</span></label>
+                            <input type="text" class="form-control rounded-1" placeholder="Capacity" id="capacity" name="capacity">
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">MERK<span class="text-danger">(*)</span></label>
+                            <input type="text" class="form-control rounded-1" placeholder="Merk" id="merk" name="merk">
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-12">
+                        <table class="table table-stripped" id="dynamicAddRemove">
+                            <tr>
+                                <td>
+                                    <input type="file" name="addMoreInputFields[0][document]" placeholder="File" class="form-control" />
+                                </td>
+                                
+                                <td>
+                                    <input type="text" name="addMoreInputFields[0][manual_book]" placeholder="Manual Book" class="form-control" />
+                                </td> 
+                                <td>
+                                    <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary"><i class="las la-plus"></i></button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>              
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btn-save-permit" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- Modal Switchouse --}}
     <div class="modal fade bd-example-modal-xl" id="sh_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form action="javascript:void(0)" id="form_sh_add" name="form_sh_add" method="POST" enctype="multipart/form-data" >                   
@@ -293,7 +381,11 @@
                                             {{-- content tenant --}}
                                             <div class="table-responsive mb-4">
         
-                                                <table id="table_sop" class="table table-hover" style="width:100%">
+                                                <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#engine_add">
+                                                    <i class="las la-plus sidemenu-right-icon"></i>Add Drawing 
+                                                </button>
+
+                                                <table id="table_engine" class="table table-hover" style="width:100%">
                                                     <thead>
                                                     <tr>
                                                         <th style="width:20px;">{{__('No')}}</th>
@@ -301,6 +393,7 @@
                                                         <th>{{__('Engine Code')}}</th>
                                                         <th>{{__('Engine Type')}}</th>
                                                         <th>{{__('Voltage Output')}}</th>
+                                                        <th class="no-content"></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -383,12 +476,22 @@
 @push('custom-scripts')
 <script>
 
-    var table_sw_sh, table_st;
+    var table_sw_sh, table_st, table_engine;
     var SITEURL = '{{URL::to('')}}';
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    // dynamin form upload
+    var i = 0;
+    $("#dynamic-ar").click(function () {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="file" name="addMoreInputFields['+ i +'][document]" placeholder="Document" class="form-control" /></td>  <td><input type="text" name="addMoreInputFields[' + i + '][manual_book]" placeholder="Manual Book" class="form-control" /></td> <td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="las la-trash"></i></button></td></tr>');
+    });
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('tr').remove();
     });
 
     $(document).ready( function () {
@@ -417,6 +520,32 @@
                 }
             }
         });
+
+        table_engine = $('#table_engine').DataTable({
+            "language": {
+            "paginate": {
+            "previous": "<i class='las la-angle-left'></i>",
+            "next": "<i class='las la-angle-right'></i>"
+            }
+        },
+        processing: true,
+        serverSide: true,
+        ajax: {
+            
+            url: "{{ route('estate.ph.engine_drawing') }}",
+            type: "GET"
+            
+        },
+            columns: [
+               
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                {data:'engine_series', name : 'engine_series',orderable: true, searchable: true},
+                {data: 'engine_code', name: 'engine_code', orderable: true, searchable: true},  
+                {data: 'engine_type', name: 'engine_type', orderable: true, searchable: true},  
+                {data: 'voltage_output', name: 'voltage_output', orderable: true, searchable: true},  
+                {data: 'action', name: 'action'},
+            ]
+        }); 
 
         table_sw_sh = $('#table_sw_sh').DataTable({
             "language": {

@@ -7,6 +7,7 @@ use App\Models\DepartmentModel;
 use App\Models\ims\HirarkiDocModel;
 use App\Models\ims\MasterDocumentModel;
 use Illuminate\Http\Request;
+use setasign\Fpdi\Fpdi;
 
 class MasterDocumentController extends Controller
 {
@@ -101,9 +102,53 @@ class MasterDocumentController extends Controller
 
 
     public function downloadMaster($file){
-        $filePath = public_path("storage/ims/masterdocument/".$file);
-    	//$fileName = time().'-BIIE.dwg';
 
-    	return response()->download($filePath, $file);
+        $cek_file = MasterDocumentModel::select('hirarki_doc')
+                    ->where('document',$file)
+                    ->orWhere('stamp', $file)
+                    ->first();
+        // dd($cek_file);
+
+        if($cek_file->hirarki_doc != 4){
+            $filePath = public_path("storage/ims/masterdocument/".$file);
+            $outputfilepath = public_path("storage/ims/masterdocument/output_".$file);
+        
+            $this->filePDF($filePath, $outputfilepath);
+        
+            return response()->file($outputfilepath);
+        }else{
+            $filePath = public_path("storage/ims/masterdocument/".$file);
+    	    //$fileName = time().'-BIIE.dwg';
+
+    	    return response()->download($filePath, $file);
+        }
+        
     }
+
+    public function filePDF($file, $outputfilepath){
+
+       
+
+        $fpdi = new Fpdi();
+        $count = $fpdi->setSourceFile($file);
+  
+        for($i = 1; $i<= $count; $i++){
+          $template = $fpdi->importPage($i);
+          $size = $fpdi->getTemplateSize($template);
+          $fpdi->AddPage($size['orientation'], array($size['width'], $size['height']));
+          $fpdi->useTemplate($template);
+          $fpdi->SetFont("helvetica", "", 15);
+          $fpdi->SetFillColor(153,0,153);
+  
+          $left =10;
+          $top = 10;
+          $text = "UNCONTROLLED DOCUMENT";
+  
+        //   $fpdi->Text($left, $top, $text);
+          $fpdi->Image(public_path("storage/ims/masterdocument/stmap_a4.png"), $top, $left, 50,12);
+  
+        }
+  
+        return $fpdi->Output($outputfilepath, 'F');
+      }
 }

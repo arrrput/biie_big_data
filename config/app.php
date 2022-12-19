@@ -183,6 +183,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -198,6 +199,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
         // File manager
         // UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
         // Intervention\Image\ImageServiceProvider::class,
@@ -223,6 +225,7 @@ return [
         'Datatables' => yajra\Datatables\Datatables::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class,
         // 'Image' => Intervention\Image\Facades\Image::class,
 
     ])->toArray(),
