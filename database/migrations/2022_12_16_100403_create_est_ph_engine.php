@@ -26,7 +26,7 @@ return new class extends Migration
         //     $table->timestamps();
         // });
 
-        Schema::schema('est_engine_file', function (Blueprint $table) {
+        Schema::table('est_engine_file', function (Blueprint $table) {
             $table->integer('id_enginee');
         });
     }

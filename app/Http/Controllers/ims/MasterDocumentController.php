@@ -55,15 +55,7 @@ class MasterDocumentController extends Controller
             $name_file = $request->input('doc');
         }
 
-        if($request->file('stamp') != null){
-            $data = $request->file('stamp');
-            $data->storeAs('public/ims/masterdocument', $data->hashName());
-            $name_stamp = $data
-            ->hashName();
-
-        }else{
-            $name_stamp = $request->input('doc_stamp');
-        }
+        
 
         $fm = MasterDocumentModel::updateOrCreate(
             ['id' => $request->input('id')],
@@ -73,8 +65,7 @@ class MasterDocumentController extends Controller
             'hirarki_doc' => $request->input('hirarki_doc'),
             'id_dept' => $request->input('id_dept'),
             'remark' => $request->input('remark'),
-            'document' => $name_file,
-            'stamp' => $name_stamp
+            'document' => $name_file
             ]
             
         );
@@ -105,7 +96,6 @@ class MasterDocumentController extends Controller
 
         $cek_file = MasterDocumentModel::select('hirarki_doc')
                     ->where('document',$file)
-                    ->orWhere('stamp', $file)
                     ->first();
         // dd($cek_file);
 
@@ -126,8 +116,6 @@ class MasterDocumentController extends Controller
     }
 
     public function filePDF($file, $outputfilepath){
-
-       
 
         $fpdi = new Fpdi();
         $count = $fpdi->setSourceFile($file);

@@ -18,19 +18,6 @@ class PDFController extends Controller
       
       return response()->file($outputfilepath);
 
-        // $data = [
-        //     'foo' => 'bar'
-        //   ];
-
-        // $pdf = PDF::loadFile(public_path().'/storage/env/nicesnippets.pdf', $data, [], [
-        //     'title'      => 'Another Title',
-        //     'margin_top' => 0,
-        //     'watermark'=> 'test',
-        //     'watermark_text_alpha' => 0.1,
-        //     'show_watermark' => true,
-        //   ]);
-        // return $pdf->stream('document.pdf');
-
     }
 
     public function filePDF($file, $outputfilepath){

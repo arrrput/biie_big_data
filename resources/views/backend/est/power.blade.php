@@ -50,8 +50,7 @@
                     <div class="col-xs-6 col-sm-6 col-md-6">
                         <div class="form-group">
                             <label for="exampleInputName" class="form-label">ENGINE SERIES<span class="text-danger">(*)</span></label>
-                            <input type="hidden" name="id_sh" id="id_sh"/>
-                            <input type="hidden" name="doc_sh" id="doc_sh"/>
+                            <input type="hidden" name="id_engine" id="id_engine"/>
                             <input type="text" name="engine_series" id="engine_series" class=" rounded-1 form-control" placeholder="Engine Series"/>
                            
                         </div>
@@ -664,6 +663,39 @@
             if(data.success == 1){
                 $("#st_add").modal('hide');
                 table_st.ajax.reload();
+                
+            }
+            
+        },
+            error: function(data){
+                console.log(data);
+            }
+        })
+    });
+
+    
+    $('#form_engine_add').submit(function(e) {
+        // document.getElementById("hrga_title").innerHTML = '<i class="fas fa-plus"></i> Add Employee';
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+        type:'POST',
+        url: "{{ route('estate.ph.engine.add')}}",
+        data: formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `Data succesfully!`,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            if(data.success == 1){
+                $("#engine_add").modal('hide');
+                table_engine.ajax.reload();
                 
             }
             

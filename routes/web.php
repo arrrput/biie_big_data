@@ -28,6 +28,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ssd\SsdFileController;
 use App\Http\Controllers\est\TownCenterController;
 use App\Http\Controllers\est\UtilitiesController;
+use App\Http\Controllers\est\water\WaterAnalysController;
 use App\Http\Controllers\fin\HalalController;
 use App\Http\Controllers\fin\LavController;
 use App\Http\Controllers\fin\ProcurementController;
@@ -122,9 +123,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('estate/export/list',[FileEstController::class, 'export_excel'])->name('estate.list.export');
     Route::post('estate/import/list',[FileEstController::class, 'import_excel'])->name('estate.list.import');
 
-    // estate utilities
+    // estate water
     Route::get('estate/water/water_list', [UtilitiesController::class, 'index'])->name('estate.water.water_list');
 
+    // estate water in analys
+    Route::get('estate/water/analys', [WaterAnalysController::class, 'index'])->name('estate.water_analys');
+    Route::post('estate/water_analys/add', [WaterAnalysController::class, 'store'])->name('estate.water_analys.add');
+    Route::get('estate/water_analys/show/{id}', [WaterAnalysController::class, 'show'])->name('estate.water_analys.show');
+    Route::delete('estate/water_analys/delete/{id}', [WaterAnalysController::class, 'destroy'])->name('estate.water_analys.delete');
 
     //estate Power Switch House
     Route::get('estate/power/status', [PowerController::class, 'index'])->name('estate.power');
@@ -137,7 +143,7 @@ Route::group(['middleware' => ['auth']], function() {
     //estate Power Substation
     Route::get('estate/power/drawing_st', [SubstationController::class, 'index'])->name('estate.ph.st');
     // Route::get('estate/power/drawing_sw', [DwSwitchouseController::class, 'index'])->name('estate.ph.dw_sh');
-    Route::post('estate/power/drawing_st/add', [SubstationController::class, 'store'])->name('estate.ph.st.add');
+    Route::post('estate/power/st/add', [SubstationController::class, 'store'])->name('estate.ph.st.add');
     Route::get('estate/ph/st/show/{id}', [SubstationController::class, 'show'])->name('estate.ph.st.show');
     Route::delete('estate/ph/st/delete/{id}', [SubstationController::class, 'destroy'])->name('estate.ph.st.delete');
     Route::get('estate/ph/st/download/{file}', [SubstationController::class, 'download'])->name('estate.ph.st.download');
@@ -146,9 +152,12 @@ Route::group(['middleware' => ['auth']], function() {
     //estate Power Substation
     Route::get('estate/power/engine_drawing', [EngineDrawingController::class, 'index'])->name('estate.ph.engine_drawing');
     Route::post('estate/power/drawing_st/add', [EngineDrawingController::class, 'store'])->name('estate.ph.engine.add');
-    // Route::get('estate/ph/st/show/{id}', [SubstationController::class, 'show'])->name('estate.ph.st.show');
+    Route::get('estate/ph/st/{param}/edit', [EngineDrawingController::class, 'edit'])->name('estate.ph.engine.edit');
+    Route::get('estate/ph/st/{param}/drawing', [EngineDrawingController::class, 'drawing'])->name('estate.ph.engine.drawing');
     // Route::delete('estate/ph/st/delete/{id}', [SubstationController::class, 'destroy'])->name('estate.ph.st.delete');
     // Route::get('estate/ph/st/download/{file}', [SubstationController::class, 'download'])->name('estate.ph.st.download');
+
+
 
     // estate dorm
     Route::post('estate/dorm/store', [EstDormitoryController::class, 'store'])->name('estate.dorm.store');

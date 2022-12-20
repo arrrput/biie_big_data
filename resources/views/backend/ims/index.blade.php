@@ -131,15 +131,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label for="exampleInputName" class="form-label">UPLOAD STAMP</label>
-                            <input type="file" name="stamp" id="stamp" class="form-control"  />
-                            @error('stamp')
-                                    <span class="text-danger text-sm">{{ $message }}</span>                              
-                            @enderror
-                        </div>
-                    </div>
+                    
                 </div>
 
             </div>

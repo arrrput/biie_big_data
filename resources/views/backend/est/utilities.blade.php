@@ -133,6 +133,78 @@
         </div>
     </div>
 
+     {{-- modal ADD water in analys --}}
+     <div class="modal fade bd-example-modal-xl" id="wia_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="javascript:void(0)" id="form_wia_add" name="form_wia_add" method="POST" >                   
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="k_bangunan"><i class="fa fa-plus"></i> Add Water In Analys</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">                            
+                    
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">PARAMETER <span class="text-danger">(*)</span></label>
+                            <input type="hidden" name="id_wia" id="id_wia"/>
+                            {!! Form::text('parameter', null, array('id'=> 'parameter','placeholder' => 'Parameter','class' => 'form-control', 'required')) !!}
+                        </div>
+                    </div>
+
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">UNIT <span class="text-danger">(*)</span></label>
+                            {!! Form::text('unit', null, array('id'=> 'unit','placeholder' => 'Unit','class' => 'form-control', 'required')) !!}
+                            {{-- <textarea name="deskripsi" class="form-control" placeholder="Deskripsi Singkat" style=""></textarea> --}}
+                        </div>
+                    </div>                            
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">RESULT <span class="text-danger">(*)</span></label>
+                            <input type="number" class="form-control" placeholder="Result" name="result" id="result"  />
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">STANDART MAX</label>
+                            <input type="number" class="form-control" placeholder="Standart Max" name="standart_max" id="standart_max"  />
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">METHOD</label>
+                            <input type="text" class="form-control" placeholder="Method" name="method" id="method"  />
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btn-save-town" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
     <!-- Main Body Starts -->
     <div class="">
         <div class="layout-top-spacing">
@@ -146,7 +218,10 @@
                                 <div class="widget-content widget-content-area br-6">
                                     <ul class="nav nav-tabs mb-2 mt-2" id="normaltab" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Meter reading')}}</b></a>
+                                            <a class="nav-link active" id="wia-tab" data-toggle="tab" href="#wia" role="tab" aria-controls="wia" aria-selected="true"><b>{{__('Water In Analys')}}</b></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Meter reading')}}</b></a>
                                         </li>
                                        
                                         
@@ -154,7 +229,35 @@
                                     </ul>
 
                                     <div class="tab-content" id="normaltabContent">
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="tab-pane fade show active" id="wia" role="tabpanel" aria-labelledby="wia-tab">
+                                            <div class="table-responsive mb-4">
+
+                                                <a href="{{ route('estate.meter.export') }}" class="btn  btn-danger mb-2">
+                                                    <i class="las la-file-export"></i> Export
+                                                </a>
+                                                <button class="btn btn-primary btn-md pull-left mb-2" onclick="clearField()" data-toggle="modal" data-target="#wia_add"><i class="las la-plus"></i> Add List</button>
+                                                    <table id="tbl_wia" class="table table-sm table-hovered table-sm table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col" style="width: 20px;">No</th>
+                                                                <th scope="col">PARAMETER</th>
+                                                                <th scope="col">UNIT</th>
+                                                                <th scope="col">RESULT</th>
+                                                                <th scope="col">STANDART MAX</th>
+                                                                <th scope="col">METHOD</th>
+                                                                <th scope="no-content" ></th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        
+                                                        
+                                                        </tbody>
+                                                    </table> 
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
                                             {{-- content factory --}}
                                             <div class="table-responsive mb-4">
 
@@ -217,8 +320,9 @@
         }
     });
 
-    var table, table_dorm, tbl_town, tbl_meter;
+    var table, table_wia, tbl_town, tbl_meter;
 
+    // $('#tbl_wia').DataTable();
     tbl_meter = $('#tbl_meter').DataTable({
         "language": {
             "paginate": {
@@ -250,7 +354,7 @@
         }); 
 
 
-    table_dorm = $('#tbl_dorm').DataTable({
+    table_wia = $('#tbl_wia').DataTable({
         "language": {
             "paginate": {
             "previous": "<i class='las la-angle-left'></i>",
@@ -261,19 +365,18 @@
         serverSide: true,
         ajax: {
             
-            url: "{{ route('estate.dorm.index') }}",
+            url: "{{ route('estate.water_analys') }}",
             type: "GET"
             
         },
             columns: [
-                // {data: 'rownum', name: 'id', orderable: false},
-                // let name = 'ee'
+                
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                {data: 'name_block', name: 'name_block', orderable: true, searchable: true},
+                {data: 'parameter', name: 'parameter', orderable: true, searchable: true},
                 {data:'unit', name : 'unit',orderable: true, searchable: true},
-                {data:'name_tenant', name : 'name_tenant',orderable: true, searchable: false},
-                {data:'status', name : 'status',orderable: true, searchable: true},
-                {data: 'vacant', name: 'vacant'},
+                {data:'result', name : 'result',orderable: true, searchable: false},
+                {data:'standart_max', name : 'standart_max',orderable: true, searchable: true},
+                {data: 'method', name: 'method'},
                 {data: 'action', name: 'action'},
             //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
             ]
@@ -309,67 +412,7 @@
         }); 
 
     //factory 
-    $(document).ready( function () {
-        // $('#tbl_est').DataTable();
-
-        table = $('#tbl_est').DataTable({
-        "language": {
-            "paginate": {
-            "previous": "<i class='las la-angle-left'></i>",
-            "next": "<i class='las la-angle-right'></i>"
-            }
-        },
-        processing: true,
-        serverSide: true,
-        ajax: {
-            
-            url: "{{ route('estate.list') }}",
-            type: "GET"
-            
-        },
-            columns: [
-                // {data: 'rownum', name: 'id', orderable: false},
-                // let name = 'ee'
-                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                {data: 'category', name: 'category', orderable: true, searchable: true},
-                {data:'lot', name : 'lot',orderable: true, searchable: true},
-                {data:'name_tenant', name : 'name_tenant',orderable: true, searchable: true},
-                {data:'status', name : 'status',orderable: true, searchable: true},
-                {data: 'status_building', name: 'status_building'},
-                {data: 'action', name: 'action'},
-            //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
-            ]
-        }); 
-
-        
-    });
-
-
-    //Edit factory estate
-    function editEstate(id){
-        $.ajax({
-        type:"GET",
-        url: "{{ URL::to('/') }}/estate/list/show/"+id,
-        dataType: 'json',
-        success: function(res){
-            $('#env_add').modal('show');
-            console.log(res.id);
-            $('#id').val(res.id);
-            $('#tenant').val(res.name_tenant);
-            $('#category').val(res.id_factory_category);
-            $('#lot').val(res.lot);
-            $('#occupied').val(res.status_vacant);
-            $('#hod').val(res.hod);
-            $('#eol').val(res.eol);
-            $('#land_area').val(res.land_area);
-            $('#satuan').val(res.satuan);
-            $('#status_building').val(res.status_building);
-            document.getElementById("sop_title").innerHTML = '<i class="fas fa-edit"></i> Edit Form';
-            // $('#efile').attr('src', SITEURL +'public/file/'+res.cover);
-
-            }
-        });
-    }
+    
 
     //delete Estate
    function deleteFunc(id){
@@ -396,31 +439,15 @@
     }
 
     function clearField(){
-        $('#id').val('');
-        $('#tenant').val('');
-        $('#category').prop('selectedIndex', 0);
-        $('#lot').val('');
-        $('#occupied').prop('selectedIndex', 0);
-        $('#hod').val('');
-        $('#eol').val('');
-        $('#land_area').val('');
-        $('#satuan').prop('selectedIndex', 0);
-        // dorm
-            $('#id_dorm').val('');
-            $('#tenant').val('');
+       
+        // wia
+            $('#id_wia').val('');
+            $('#parameter').val('');
             $('#unit').val('');
-            $('#block').prop('selectedIndex', 0);
-            $('#occupied').prop('selectedIndex', 0);
-            $('#vacant').val('0');
-            $('#hod').val('');
-            $('#remark').val('');
-        //town center
-            $('#id_town').val('');
-            $('#type').prop('selectedIndex', 0);
-            $('#stall_no').val('');
-            $('#name_stall').val('');
-            $('#hod_town').val('');
-            $('#remark_town').val('');
+            $('#result').val('');
+            $('#standart_max').val('');
+            $('#method').val('');
+        
         //metereading
             $('#id_meter').val('');
             $('#name').val('');
@@ -432,109 +459,22 @@
 
     }
 
-    $('#estate_list_add').submit(function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-        type:'POST',
-        url: "{{ route('estate.list.add')}}",
-        data: formData,
-        cache:false,
-        contentType: false,
-        processData: false,
-        success: (data) => {
-            if(data.success == 1){
-                $("#env_add").modal('hide');
-                
-                $("#btn-save").html('Submit');
-                $("#btn-save"). attr("disabled", false);
-
-                 //show success message
-                 Swal.fire({
-                    type: 'success',
-                    icon: 'success',
-                    title: `Data succesfully!`,
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                
-            }
-            
-        },
-            error: function(data){
-                console.log(data);
-            }
-    })
-    });
+    
 
     
-    $('#dorm_list_add').submit(function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-        type:'POST',
-        url: "{{ route('estate.dorm.store')}}",
-        data: formData,
-        cache:false,
-        contentType: false,
-        processData: false,
-        success: (data) => {
-            if(data.success == 1){
-                $("#dorm_add").modal('hide');
-                table_dorm.ajax.reload();
-                $("#btn-save").html('Submit');
-                $("#btn-save"). attr("disabled", false);
+    
 
-                 //show success message
-                 Swal.fire({
-                    type: 'success',
-                    icon: 'success',
-                    title: `Data succesfully!`,
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                
-            }
-            
-        },
-            error: function(data){
-                console.log(data);
-            }
-        })
-    });
-
-    function editDorm(id){
-        $.ajax({
-        type:"GET",
-        url: "{{ URL::to('/') }}/estate/dorm/show/"+id,
-        dataType: 'json',
-        success: function(res){
-            $('#dorm_add').modal('show');
-            console.log(res.id);
-            $('#id_dorm').val(res.id);
-            $('#tenant').val(res.name_tenant);
-            $('#unit').val(res.unit);
-            $('#block').val(res.block);
-            $('#occupied').val(res.status_vacant);
-            $('#vacant').val(res.vacant);
-            $('#hod').val(res.hod);
-            $('#remark').val(res.remark);
-            document.getElementById("sop_title").innerHTML = '<i class="fas fa-edit"></i> Edit Form';
-            // $('#efile').attr('src', SITEURL +'public/file/'+res.cover);
-
-            }
-        });
-    }
+    
 
     //delete Estate
-   function deleteDorm(id){
-            if (confirm("Delete list ini?") == true) {
+   function deleteWia(id){
+            if (confirm("Delete this list?") == true) {
                 var id = id;
                 var token = $("meta[name='csrf-token']").attr("content");
                 // ajax
                 $.ajax({
                     type:"DELETE",
-                    url: "{{ URL::to('/') }}/estate/dorm/delete/"+id,
+                    url: "{{ URL::to('/') }}/estate/water_analys/delete/"+id,
                     data: { id: id},
                     // dataType: 'json',
                     success: function(res){
@@ -544,27 +484,28 @@
                             animation: true,
                             title: 'Delete was successfully!'
                         });
-                        table_dorm.ajax.reload();
+                        table_wia.ajax.reload();
                     }
                 });
             }
     }
 
 
-    $('#town_list_add').submit(function(e) {
+    $('#form_wia_add').submit(function(e) {
         e.preventDefault();
+        $("#btn-save"). attr("disabled", true);
         var formData = new FormData(this);
         $.ajax({
         type:'POST',
-        url: "{{ route('estate.town.store')}}",
+        url: "{{ route('estate.water_analys.add')}}",
         data: formData,
         cache:false,
         contentType: false,
         processData: false,
         success: (data) => {
             if(data.success == 1){
-                $("#town_add").modal('hide');
-                tbl_town.ajax.reload();
+                $("#wia_add").modal('hide');
+                tbl_wia.ajax.reload();
                 $("#btn-save").html('Submit');
                 $("#btn-save"). attr("disabled", false);
 
@@ -586,22 +527,20 @@
         })
     });
     
-    function editTown(id){
+    function editWia(id){
         $.ajax({
         type:"GET",
-        url: "{{ URL::to('/') }}/estate/town/show/"+id,
+        url: "{{ URL::to('/') }}/estate/water_analys/show/"+id,
         dataType: 'json',
         success: function(res){
-            $('#town_add').modal('show');
-            console.log(res.id);
-            $('#id_town').val(res.id);
-            $('#type').val(res.id_type);
-            $('#stall_no').val(res.stall_no);
-            $('#name_stall').val(res.name_stall);
-            $('#hod_town').val(res.hod);
-            $('#remark_town').val(res.remark);
-            document.getElementById("sop_title").innerHTML = '<i class="fas fa-edit"></i> Edit Form';
-            // $('#efile').attr('src', SITEURL +'public/file/'+res.cover);
+            $('#wia_add').modal('show');
+            $('#id_wia').val(res.id);
+            $('#parameter').val(res.parameter);
+            $('#unit').val(res.unit);
+            $('#result').val(res.result);
+            $('#standart_max').val(res.standart_max);
+            $('#method').val(res.method);
+          
 
             }
         });
