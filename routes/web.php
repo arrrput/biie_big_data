@@ -29,17 +29,20 @@ use App\Http\Controllers\ssd\SsdFileController;
 use App\Http\Controllers\est\TownCenterController;
 use App\Http\Controllers\est\UtilitiesController;
 use App\Http\Controllers\est\water\WaterAnalysController;
+use App\Http\Controllers\est\water\wtp\ListcontentController;
 use App\Http\Controllers\fin\HalalController;
 use App\Http\Controllers\fin\LavController;
 use App\Http\Controllers\fin\ProcurementController;
 use App\Http\Controllers\gmo\GmoListController;
 use App\Http\Controllers\gmo\ITRequestController;
 use App\Http\Controllers\gmo\UserListController;
+use App\Http\Controllers\hrga\CarStatusController;
 use App\Http\Controllers\hrga\ContractEmployeeController;
 use App\Http\Controllers\hrga\EmpDormController;
 use App\Http\Controllers\hrga\EmployeeController;
 use App\Http\Controllers\hrga\RecruitmentController;
 use App\Http\Controllers\hse\HseController;
+use App\Http\Controllers\hse\P3KController;
 use App\Http\Controllers\ims\AksesDocumentController;
 use App\Http\Controllers\ims\ExternalDocController;
 use App\Http\Controllers\ims\MasterDocumentController;
@@ -157,7 +160,8 @@ Route::group(['middleware' => ['auth']], function() {
     // Route::delete('estate/ph/st/delete/{id}', [SubstationController::class, 'destroy'])->name('estate.ph.st.delete');
     // Route::get('estate/ph/st/download/{file}', [SubstationController::class, 'download'])->name('estate.ph.st.download');
 
-
+    // estate Water WWTP
+    Route::get('estate/water/wwtp', [ListcontentController::class, 'index'])->name('estate.water.wwtp.list_content');
 
     // estate dorm
     Route::post('estate/dorm/store', [EstDormitoryController::class, 'store'])->name('estate.dorm.store');
@@ -366,6 +370,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('hrga/dorm/add', [EmpDormController::class, 'store'])->name('hrga.dorm.add');
         Route::delete('dorm/delete/{id}', [EmpDormController::class, 'destroy'])->name('hrga.dorm.delete');
 
+        // Car status
+        Route::get('car_status',[CarStatusController::class, 'index'])->name('hrga.car_status');
+        Route::post('car_status/add', [CarStatusController::class, 'store'])->name('hrga.car_status.add');
+        Route::delete('car_status/delete/{id}', [CarStatusController::class, 'destroy'])->name('hrga.car_status.delete');
+        Route::get('car_status/show/{id}', [CarStatusController::class, 'show'])->name('hrga.car_status.show');
+
     });
 
     //  Finance Route
@@ -390,6 +400,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::delete('lav/delete/{id}', [LavController::class, 'destroy'])->name('fin.lav.delete');
         Route::get('lav/download', [LavController::class, 'export_excel'])->name('fin.download.lav');
         Route::post('lav/import',[LavController::class, 'import_excel'])->name('fin.import');
+
     }); 
 
     Route::prefix("aml")->group(function(){
@@ -527,6 +538,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('incident/add', [HseController::class, 'store'])->name('hse.incident.add');
         Route::get('incident/show/{id}', [HseController::class, 'show'])->name('hse.incident.show');
         Route::delete('incident/delete/{id}', [HseController::class, 'destroy'])->name('hse.incident.delete');
+
+        // HSE P3K
+        Route::get('p3k', [P3KController::class, 'index'])->name('hse.p3k');
+        Route::post('p3k/add', [P3KController::class, 'store'])->name('hse.p3k.add');
+        Route::get('p3k/show/{id}', [P3KController::class, 'show'])->name('hse.p3k.show');
+        Route::delete('p3k/delete/{id}', [P3KController::class, 'destroy'])->name('hse.p3k.delete');
     });
 
     

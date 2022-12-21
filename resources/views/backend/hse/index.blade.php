@@ -29,7 +29,7 @@
     </div>
     <!--  Navbar Ends / Breadcrumb Area  -->
 
-    {{-- Modal add Procurement--}}
+    {{-- Modal Incident report--}}
     <div class="modal fade bd-example-modal-xl" id="inc_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form action="javascript:void(0)" id="form_inc_add" name="form_inc_add" method="POST" >                   
@@ -245,6 +245,78 @@
     </div>
 
 
+     {{-- Modal add p3k--}}
+     <div class="modal fade bd-example-modal-xl" id="p3k_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="javascript:void(0)" id="form_p3k_add" name="form_p3k_add" method="POST" >                   
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title block text-primary" id="no_emp">
+                    <i class="las la-plus"></i> 
+                    Add P3K</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">                            
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">NO P3K <span class="text-danger">(*)</span></label>
+                            <input type="hidden" name="id_pk" id="id_pk"/>
+                            {!! Form::text('no_p3k', null, array('id'=> 'no_p3k','placeholder' => 'No P3K','class' => 'rounded-1 form-control', 'required')) !!}
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">TANGGAL <span class="text-danger">(*)</span></label>
+                            {!! Form::date('tgl_pk', null, array('id'=> 'tgl_pk','placeholder' => 'Tanggal','class' => 'date-picker rounded-1 form-control', 'required')) !!}
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">CONTACT  <span class="text-danger">(*)</span></label>
+                            {!! Form::text('contact_pk', null, array('id'=> 'contact_pk','placeholder' => 'Contact','class' => 'rounded-1 form-control', 'required')) !!}
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">NAMA  <span class="text-danger">(*)</span></label>
+                            {!! Form::text('nama_pk', null, array('id'=> 'nama_pk','placeholder' => 'Nama','class' => 'rounded-1 form-control', 'required')) !!}
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">LOKASI  <span class="text-danger">(*)</span></label>
+                            {!! Form::text('lokasi_pk', null, array('id'=> 'lokasi_pk','placeholder' => 'Lokasi','class' => 'rounded-1 form-control', 'required')) !!}
+                            
+                        </div>
+                    </div>
+                    
+
+                </div>
+               
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btn-save-recruitment" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Main Body Starts -->
     <div class="layout-px-spacing">
         <div class="layout-top-spacing mb-2">
@@ -269,11 +341,13 @@
                                         <li class="nav-item">
                                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><b>{{__('Incident Report')}}</b></a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="apar-tab" data-toggle="tab" href="#apar" role="tab" aria-controls="apar" aria-selected="true"><b>{{__('APAR')}}</b></a>
-                                        </li>
+                                        
                                         <li class="nav-item">
                                             <a class="nav-link" id="p3k-tab" data-toggle="tab" href="#p3k" role="tab" aria-controls="p3k" aria-selected="true"><b>{{__('P3K')}}</b></a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="apar-tab" data-toggle="tab" href="#apar" role="tab" aria-controls="apar" aria-selected="true"><b>{{__('APAR')}}</b></a>
                                         </li>
                                         
                                     </ul>
@@ -307,14 +381,36 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <div class="tab-pane fade show" id="p3k" role="tabpanel" aria-labelledby="p3k-tab">
 
+                                            <button class="btn bg-gradient-success text-white btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#p3k_add">
+                                                <i class="las la-plus sidemenu-right-icon"></i>Add P3K
+                                            </button>
+
+                                            <table id="table_p3k" class="table table-hover" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:20px;">{{__('No')}}</th>
+                                                    <th>{{__('No P3K')}}</th>
+                                                    <th>{{__('Lokasi')}}</th>
+                                                    <th>{{__('Tanggal')}}</th>
+                                                    <th>{{__('Nama')}}</th>
+                                                    <th>{{__('Contact')}}</th>
+                                                    <th class="no-content"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    
+                                                </tbody>
+                                                
+                                            </table>
+                                        </div>
                                         <div class="tab-pane fade show" id="apar" role="tabpanel" aria-labelledby="apar-tab">
 
                                         </div>
 
-                                        <div class="tab-pane fade show" id="p3k" role="tabpanel" aria-labelledby="p3k-tab">
-
-                                        </div>
+                                       
                                       
                                     </div>
                                 </div>
@@ -339,7 +435,7 @@
 
      // header request token
      var SITEURL = '{{URL::to('')}}';
-     var table_occ;
+     var table_occ, table_p3k;
 
     $.ajaxSetup({
         headers: {
@@ -379,6 +475,37 @@
             //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
             ]
         }); 
+
+
+        // table p3K
+        table_p3k = $('#table_p3k').DataTable({
+            "language": {
+                "paginate": {
+                "previous": "<i class='las la-angle-left'></i>",
+                "next": "<i class='las la-angle-right'></i>"
+                }
+        },
+        processing: true,
+        serverSide: true,
+        ajax: {
+            
+            url: "{{ route('hse.p3k') }}",
+            type: "GET"
+            
+        },
+            columns: [
+                // {data: 'rownum', name: 'id', orderable: false},
+                // let name = 'ee'
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    {data:'no_p3k', name : 'no_p3k',orderable: true, searchable: true},
+                    {data: 'lokasi', name: 'lokasi', orderable: true, searchable: true},  
+                    {data:'tgl', name : 'tgl',orderable: true, searchable: true},
+                    {data: 'nama', name: 'nama', orderable: true, searchable: true},                     
+                    {data: 'contact', name: 'contact', orderable: true, searchable: true}, 
+                    {data: 'action', name: 'action'},
+            //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
+            ]
+        }); 
         
          // halal add
          $('#form_inc_add').submit(function(e) {
@@ -412,6 +539,40 @@
                 }
             })
         });
+
+        $('#form_p3k_add').submit(function(e) {
+        // document.getElementById("hrga_title").innerHTML = '<i class="fas fa-plus"></i> Add Employee';
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+        type:'POST',
+        url: "{{ route('hse.p3k.add')}}",
+        data: formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `Data succesfully!`,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            if(data.success == 1){
+                $("#p3k_add").modal('hide');
+                table_p3k.ajax.reload();
+                
+            }
+            
+        },
+            error: function(data){
+                    console.log(data);
+                }
+            })
+        });
+
+
     });
 
      //Edit procurement fin
@@ -440,6 +601,25 @@
 
     }
 
+    //Edit procurement fin
+    function editPk(id){
+        $.ajax({
+        type:"GET",
+        url: "{{ URL::to('/') }}/hse/p3k/show/"+id,
+        dataType: 'json',
+        success: function(res){
+            $('#p3k_add').modal('show');
+            $('#id_pk').val(res.id);
+            $('#nama_pk').val(res.nama);
+            $('#tgl_pk').val(res.tgl);
+            $('#contact_pk').val(res.contact);
+            $('#lokasi_pk').val(res.lokasi);
+            $('#no_p3k').val(res.no_p3k);
+            }
+        });
+
+    }
+
     //delete procurement
    function deleteInc(id){
             if (confirm("Delete this record?") == true) {
@@ -463,6 +643,29 @@
             }
     }
 
+    //delete p3k
+   function deletePk(id){
+            if (confirm("Delete this record?") == true) {
+                var id = id;
+                var token = $("meta[name='csrf-token']").attr("content");
+                // ajax
+                $.ajax({
+                    type:"DELETE",
+                    url: "{{ URL::to('/') }}/hse/p3k/delete/"+id,
+                    data: { id: id},
+                    // dataType: 'json',
+                    success: function(res){
+
+                        toastMixin.fire({
+                            animation: true,
+                            title: 'Delete was successfully!'
+                        });
+                        table_p3k.ajax.reload();
+                    }
+                });
+            }
+    }
+
     function clearField(){
         $('#id').val('');
         $('#room').val('');
@@ -471,6 +674,13 @@
         $('#period').prop('selectedIndex', 0);
         $('#cekin_cekout').prop('selectedIndex', 0);
         $('#status').prop('selectedIndex', 0);
+
+        $('#id_pk').val('');
+        $('#nama_pk').val('');
+        $('#tgl_pk').val('');
+        $('#contact_pk').val('');
+        $('#lokasi_pk').val('');
+        $('#no_p3k').val('');
     }
 </script>
 @endpush

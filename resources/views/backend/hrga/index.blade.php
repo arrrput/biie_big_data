@@ -31,6 +31,61 @@
     <!--  Navbar Ends / Breadcrumb Area  -->
 
     {{-- modal add gasoline --}}
+    <div class="modal fade bd-example-modal-xl" id="car_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="javascript:void(0)" id="form_car_add" name="form_car_add" method="POST" >                   
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title block text-primary" id="no_emp">
+                    <i class="fa fa-plus"></i> 
+                    Car Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">                            
+
+                    <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">NAME USER<span class="text-danger">(*)</span></label>
+                            <input type="hidden" name="id_car" id="id_car"/>
+                            {!! Form::text('name_user_car', null, array('id'=> 'name_user_car','placeholder' => 'Name of user','class' => 'rounded-1 form-control', 'required')) !!}
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">CAR NAME/MERK <span class="text-danger">(*)</span> </label>
+                            <input type="text" name="car_name" id="car_name" class="form-control" placeholder="Exm : Datsun/ Agya/ Etc" required />
+                            @error('driver')
+                                    <span class="text-danger text-sm">{{ $message }}</span>                              
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <div class="form-group">
+                            <label for="exampleInputName" class="form-label">VHICLE PLAT <span class="text-danger">(*)</span> </label>
+                            <input type="text" name="plat_no" id="plat_no" class="form-control" placeholder="Plat No" required />
+                           
+                        </div>
+                    </div>
+
+                </div>         
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btn-save-recruitment" class="btn btn-primary" value="Submit" />
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- modal add gasoline --}}
     <div class="modal fade bd-example-modal-xl" id="gasoline_add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form action="javascript:void(0)" id="form_gasoline" name="form_gasoline" method="POST" >                   
@@ -294,7 +349,24 @@
                                         </div>
 
                                         <div class="tab-pane fade" id="car" role="tabpanel" aria-labelledby="car-tab">
-
+                                            <button class="btn btn-primary btn-sm mb-2 mt-2" onclick="clearField()" data-toggle="modal" data-target="#car_add">
+                                                <i class="las la-plus sidemenu-right-icon"></i>Add Car 
+                                            </button>
+                                            <table id="table_car" class="table table-hovered table-sm table-striped" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" style="width: 15px;">No</th>
+                                                        <th scope="col">Name User</th>
+                                                        <th scope="col">Car Name / Merk</th>  
+                                                        <th scope="col">Vehicles Plate</th>
+                                                        <th class="no-content"></th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                
+                                                </tbody>
+                                            </table> 
                                         </div>
                                         
                                     </div>
@@ -321,7 +393,7 @@
 
     var SITEURL = '{{URL::to('')}}';
 
-    var table_gs, table_dorm;
+    var table_gs, table_dorm, table_car;
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -387,6 +459,35 @@
                 {data: 'name', name: 'name', orderable: true, searchable: true},  
                 {data: 'department', name: 'department', orderable: true, searchable: true},  
                 {data: 'room_no', name: 'room_no', orderable: true, searchable: true},           
+                {data:'action', name : 'action',orderable: true, searchable: false},
+            //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
+            ]
+        }); 
+
+
+        table_car = $('#table_car').DataTable({
+        "language": {
+            "paginate": {
+            "previous": "<i class='las la-angle-left'></i>",
+            "next": "<i class='las la-angle-right'></i>"
+            }
+        },
+        processing: true,
+        serverSide: true,
+        
+        ajax: {
+            
+            url: "{{ route('hrga.car_status') }}",
+            type: "GET"
+            
+        },
+            columns: [
+                // {data: 'rownum', name: 'id', orderable: false},
+                // let name = 'ee'
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                {data:'name', name : 'name',orderable: true, searchable: true},
+                {data: 'car_name', name: 'car_name', orderable: true, searchable: true},
+                {data: 'plat_no', name: 'plat_no', orderable: true, searchable: true},          
                 {data:'action', name : 'action',orderable: true, searchable: false},
             //    ,render: $.fn.dataTable.render.number( ',', '.', 0, '$' )
             ]
@@ -480,6 +581,40 @@
         })
     });
 
+    // car status add
+    // gasoline add
+    $('#form_car_add').submit(function(e) {
+        // document.getElementById("hrga_title").innerHTML = '<i class="fas fa-plus"></i> Add Employee';
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+        type:'POST',
+        url: "{{ route('hrga.car_status.add')}}",
+        data: formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `Data succesfully!`,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            if(data.success == 1){
+                $("#car_add").modal('hide');
+                table_car.ajax.reload();
+                
+            }
+            
+        },
+            error: function(data){
+                console.log(data);
+            }
+        })
+    });
+
     //Edit Dorm
     function editDorm(id){
         $.ajax({
@@ -495,6 +630,22 @@
             $('#id_dept').val(res.id_dept);
             $('#room_no').val(res.room_no);
             $('#remark').val(res.remark);
+            }
+        });
+    }
+
+    //Edit Dorm
+    function editCar(id){
+        $.ajax({
+        type:"GET",
+        url: "{{ URL::to('/') }}/hrga/car_status/show/"+id,
+        dataType: 'json',
+        success: function(res){
+            $('#car_add').modal('show');
+            $('#id_car').val(res.id);
+            $('#name_user_car').val(res.name);
+            $('#car_name').val(res.car_name);
+            $('#plat_no').val(res.plat_no);
             }
         });
     }
@@ -538,6 +689,11 @@
         $('#name').val(''); 
         $('#id_dept').val(''); 
         $('#room_no').val(''); 
+
+        $('#id_car').val('');
+            $('#name_user_car').val('');
+            $('#car_name').val('');
+            $('#plat_no').val('');
     }
 
 
@@ -562,6 +718,32 @@
                             timer: 3000
                         });
                         table_gs.ajax.reload();
+                    }
+                });
+            }
+    }
+
+    // delete car status
+    function deleteCar(id){
+        if (confirm("Delete this item?") == true) {
+                var id = id;
+                var token = $("meta[name='csrf-token']").attr("content");
+                // ajax
+                $.ajax({
+                    type:"DELETE",
+                    url: "{{ URL::to('/') }}/hrga/car_status/delete/"+id,
+                    data: { id: id},
+                    // dataType: 'json',
+                    success: function(res){
+
+                        Swal.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: `Delete succesfully!`,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        table_car.ajax.reload();
                     }
                 });
             }

@@ -150,8 +150,18 @@
                         <li class="{{ active_class('estate/water/water_list') }}">
                             <a data-active="{{ is_active_route(['estate/water/water_list']) }}" href="{{ url('/estate/water/water_list') }}"> {{__('Water List')}}</a>
                         </li>
+                       
+                        <li class="{{ active_class('estate/water/wwtp') }}">
+                            <a data-active="{{ is_active_route(['estate/water/wwtp']) }}" href="{{ url('/estate/water/wwtp') }}"> {{__('WWTP')}}</a>
+                        </li>
                         <li class="{{ active_class('estate/utilities/status') }}">
-                            <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('Drawing File')}}</a>
+                            <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('STP')}}</a>
+                        </li>
+                        <li class="{{ active_class('estate/utilities/status') }}">
+                            <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('RWPS')}}</a>
+                        </li>
+                        <li class="{{ active_class('estate/utilities/status') }}">
+                            <a data-active="{{ is_active_route(['estate/utilities/status']) }}" href="{{ url('/estate/utilities/status') }}"> {{__('WTP')}}</a>
                         </li>
                         
                     </ul>
