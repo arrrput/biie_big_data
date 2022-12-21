@@ -127,6 +127,7 @@
                                 <option value="TERGELINCIR">TERGELINCIR</option>
                                 <option value="TERTUMPAH BAHAN KIMIA">TERTUMPAH BAHAN KIMIA</option>
                                 <option value="TERSENGAT LISTRIK">TERSENGAT LISTRIK</option>
+                                <option value="TERGORES">TERGORES</option>
                                 <option value="LAIN-LAIN">LAIN-LAIN</option>
                                 
                             </select>
